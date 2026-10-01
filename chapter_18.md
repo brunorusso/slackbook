@@ -1,0 +1,31 @@
+# 18. Keeping Track of Updates
+
+## 18.1 The -stable Branch
+
+After a new version of Slackware is released, the Slackware team will, as needed, release updated packages to fix serious security vulnerabilities and particularly nasty bugs. Therefore, it's important to keep up with all of the patches for your version of Slackware, which is referred to as the *-stable* branch. There is also a *-current* branch, which is where we do our development work toward the next stable release (and as such, there are often intrusive changes there), but unless you're willing to work with a possibly broken system and are able to fix things on your own, we strongly recommend that you stick with the -stable branch.
+
+Since -stable updates aren't distributed on the disks, you'll need to obtain them from the Internet. Many people and organizations offer mirrors from which you can download the entire Slackware tree (or only the `patches/` directory) in any number of ways. While some mirrors offer web access, the most common ways of obtaining updates are via ftp and/or rsync servers. The Slackware project maintains a small list (organized by country) of known mirrors. If you're unsure which mirror to use, simply consult http://www.slackware.com/getslack/ for suggestions. If you have a major university near you, there's a good chance that they offer a mirror of numerous open source projects, and Slackware may be among them. The only real requirement for a mirror is that it be complete; usually it's best to use a mirror near where you live in order to achieve the fastest transfer times and use the least amount of Internet resources.
+
+So how do you know when there are updates? The best way is to consult the `ChangeLog.txt` on any up-to-date mirror. You can always find the latest changelogs for the -current and most recent -stable branch on the Slackware Project's web page, but if you're running an older version of Slackware, you'll need to check a mirror.
+
+```text
+
+darkstar:~# wget -O - \ ftp://slackware.osuosl.org/pub/slackware/slackware64-current/ChangeLog.txt \ | less Thu Aug 16 04:01:31 UTC 2012 Getting close! Hopefully we've cleared out most of the remaining issues and are nearly ready here. We'll call this release candidate 2. Unless there's a very good rationale, versions are frozen. Any reports of remaining bugs will be gladly taken, though. #include <more/cowbell.h> a/aaa_base-14.0-x86_64-4.txz: Rebuilt. Remove mention of HAL in the initial welcome email (mention udisks2 instead). Thanks to Dave Margell. a/bash-4.2.037-x86_64-1.txz: Upgraded.
+
+```
+
+## 18.2 Security Update Mailing List
+
+While the Slackware team does release updated bugfix-only packages (i.e. not security fixes) occasionally, you're probably most interested in security fixes for vulnerabilities discovered after the -stable release. The Slackware Project maintains a mailing list that will notify you of any updated packages for such serious issues. In order to subscribe to the mailing list, send an e-mail to <majordomo@slackware.com> with the words 'subscribe slackware-security' in the body of the message. The majordomo will be happy to add your name to the list, and when new packages are released, it will mail an advisory to you.
+
+## 18.3 Upgrading Slackware Versions
+
+Now that we've gone this far, you should feel reasonably competent in your ability to manage your Slackware system. But what do we do with it when there's a new release? Updating from one release of Slackware to another is a lot more complicated than simply updating a few packages. Each release changes a lot of things, and while many of these changes are small, some of them can completely break your system if you haven't prepared for them and/or don't understand what is changing and why. While some Linux distributions provide highly automated tools that attempt to handle every tiny detail for you, Slackware takes a much more hands-on approach to things.
+
+The very first thing you should do before attempting an upgrade is the one that many people neglect: decide if it's really necessary to upgrade. If the old system is stable and doing everything you want it to do, there may be no need to do an operating system upgrade at all.
+
+Assuming you decide to do the upgrade, then the second thing you should do is read the `CHANGES_AND_HINTS.TXT` file on your upgrade discs or a mirror. This file is updated during the development period before every release, and it lists a lot of helpful hints and tips to aid you in dealing with the changes.
+
+Finally, read the `UPGRADE.TXT` file before proceeding. After doing these things, you may decide that it's less trouble and potential for problems to backup your configuration files and data and do a fresh installation of the new Slackware release rather than attempt a possibly tricky upgrade. However, if you still wish to continue, make backups of your data and configuration files first. At a minimum, it's good practice to backup the `/etc` and `/home` directories. This will give you a chance to perform a reinstall if something goes wrong with the upgrade.
+
+Since every new version of Slackware has a few differences, giving complete instructions here is not only futile but potentially misleading. You should always consult the documentation included on your Slackware disks or your favorite mirror.
