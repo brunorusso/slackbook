@@ -12,7 +12,22 @@ Once your computer boots from the CD you'll be taken to a screen that allows you
 
 ```text
 
-Welcome to Slackware version 14.0 (Linux kernel 3.2.27)! If you need to pass extra parameters to the kernel, enter them at the prompt below after the name of the kernel to boot (huge.s etc). In a pinch, you can boot your system from here with a command like: boot: huge.s root=/dev/sda1 rdinit= ro In the example above, /dev/sda1 is the / Linux partition. To test your memory with memtest86+, enter memtest on the boot line below. This prompt is just for entering extra parameters. If you don't need to enter any parameters, hit ENTER to boot the default kernel "huge.s" or press [F2] for a listing of more kernel choices.
+Welcome to Slackware version 14.0 (Linux kernel 3.2.27)! 
+
+If you need to pass extra parameters to the kernel, enter them at the prompt 
+below after the name of the kernel to boot (huge.s etc). 
+
+In a pinch, you can boot your system from here with a command like: 
+
+boot: huge.s root=/dev/sda1 rdinit= ro 
+
+In the example above, /dev/sda1 is the / Linux partition. 
+
+To test your memory with memtest86+, enter memtest on the boot line below. 
+
+This prompt is just for entering extra parameters. If you don't need to enter 
+any parameters, hit ENTER to boot the default kernel "huge.s" or press [F2] 
+for a listing of more kernel choices.
 
 ```
 
@@ -20,7 +35,13 @@ After pressing <kbd>ENTER</kbd> you should see a lot of text go flying across yo
 
 ```text
 
-<OPTION TO LOAD SUPPORT FOR NON-US KEYBOARD> If you are not using a US keyboard, you may need to load a different keyboard map. To select a different keyboard map, please enter 1 now. To continue using the US map, just hit enter. Enter 1 to select a keyboard map: _
+<OPTION TO LOAD SUPPORT FOR NON-US KEYBOARD> 
+
+If you are not using a US keyboard, you may need to load a different 
+keyboard map. To select a different keyboard map, please enter 1 
+now. To continue using the US map, just hit enter. 
+
+Enter 1 to select a keyboard map: _
 
 ```
 
@@ -28,7 +49,25 @@ Entering <kbd>1</kbd> and pressing <kbd>ENTER</kbd> will give you a list of keyb
 
 ```text
 
-Welcome to the Slackware Linux installation disk! (version 14.0) ###### IMPORTANT! READ THE INFORMATION BELOW CAREFULLY. ###### - You will need one or more partitions of type 'Linux' prepared. It is also recommended that you create a swap partition (type 'Linux swap') prior to installation. For more information, run 'setup' and read the help file. - If you're having problems that you think might be related to low memory, you can try activating a swap partition before you run setup. After making a swap partition (type 82) with cfdisk or fdisk, activate it like this: mkswap /dev/<partition> ; swapon /dev/<partition> - Once you have prepared the disk partitions for Linux, type 'setup' to begin the installation process. - If you do not have a color monitor, type: TERM=vt100 before you start 'setup'. You may now login as 'root'. slackware login: root
+Welcome to the Slackware Linux installation disk! (version 14.0) 
+
+###### IMPORTANT! READ THE INFORMATION BELOW CAREFULLY. ###### 
+
+- You will need one or more partitions of type 'Linux' prepared. It is also 
+  recommended that you create a swap partition (type 'Linux swap') prior 
+  to installation. For more information, run 'setup' and read the help file. 
+- If you're having problems that you think might be related to low memory, you 
+  can try activating a swap partition before you run setup. After making a 
+  swap partition (type 82) with cfdisk or fdisk, activate it like this: 
+    mkswap /dev/<partition> ; swapon /dev/<partition> 
+- Once you have prepared the disk partitions for Linux, type 'setup' to begin 
+  the installation process. 
+- If you do not have a color monitor, type: TERM=vt100 
+  before you start 'setup'. 
+
+You may now login as 'root'. 
+
+slackware login: root
 
 ```
 
@@ -44,7 +83,11 @@ If you don't know which device node is assigned to your hard drive, `fdisk` can 
 
 ```text
 
-root@slackware:/# fdisk -l Disk /dev/sda: 72.7 GB, 72725037056 bytes 255 heads, 63 sectors/track, 8841 cylinders Units = cylinders of 16065 * 512 = 8225280 bytes
+root@slackware:/# fdisk -l 
+
+Disk /dev/sda: 72.7 GB, 72725037056 bytes 
+255 heads, 63 sectors/track, 8841 cylinders 
+Units = cylinders of 16065 * 512 = 8225280 bytes
 
 ```
 
@@ -52,7 +95,15 @@ Here, you can see that my system has a hard drive located at `/dev/sda` that is 
 
 ```text
 
-root@slackware:/# fdisk /dev/sda The number of cylinders for this disk is set to 8841. There is nothing wrong with that, but this is larger than 1024, and could in certain setups cause problems with: 1) software that runs at boot time (e.g., old versions of LILO) 2) booting and partitioning software from other OSs (e.g., DOS FDISK, OS/2 FDISK) Command (m for help):
+root@slackware:/# fdisk /dev/sda 
+
+The number of cylinders for this disk is set to 8841. 
+There is nothing wrong with that, but this is larger than 1024, 
+and could in certain setups cause problems with: 
+1) software that runs at boot time (e.g., old versions of LILO) 
+2) booting and partitioning software from other OSs (e.g., DOS FDISK, OS/2 FDISK) 
+
+Command (m for help):
 
 ```
 
@@ -60,7 +111,26 @@ Now we've told fdisk what disk we wish to partition, and it has dropped us into 
 
 ```text
 
-Command (m for help): m Command action a toggle a bootable flag b edit bsd disklabel c toggle the dos compatibility flag d delete a partition l list known partition types m print this menu n add a new partition o create a new empty DOS partition table p print the partition table q quit without saving changes s create a new empty Sun disklabel t change a partition's system id u change display/entry units v verify the partition table w write table to disk and exit x extra functionality (experts only)
+Command (m for help): m 
+
+Command action 
+
+  a toggle a bootable flag 
+  b edit bsd disklabel 
+  c toggle the dos compatibility flag 
+  d delete a partition 
+  l list known partition types 
+  m print this menu 
+  n add a new partition 
+  o create a new empty DOS partition table 
+  p print the partition table 
+  q quit without saving changes 
+  s create a new empty Sun disklabel 
+  t change a partition's system id 
+  u change display/entry units 
+  v verify the partition table 
+  w write table to disk and exit 
+  x extra functionality (experts only)
 
 ```
 
@@ -68,7 +138,25 @@ Now that we know what commands will do what, it's time to begin partitioning our
 
 ```text
 
-Command: (m for help): n Command action e extended p primary partition (1-4) p Partition number (1-4): 1 First cylinder (1-8841, default 1): 1 Last cylinder or +size or +sizeM or +sizeK (1-8841, default 8841): +8G Command (m for help): n Command action e extended p primary partition (1-4) p Partition number (1-4): 2 First cylinder (975-8841, default 975): 975 Last cylinder or +size or +sizeM or +sizeK (975-8841, default 8841): +1G
+Command: (m for help): n 
+
+Command action 
+  e extended 
+  p primary partition (1-4) 
+p 
+
+Partition number (1-4): 1 
+First cylinder (1-8841, default 1): 1 
+Last cylinder or +size or +sizeM or +sizeK (1-8841, default 8841): +8G 
+
+Command (m for help): n 
+Command action 
+  e extended 
+  p primary partition (1-4) 
+p 
+Partition number (1-4): 2 
+First cylinder (975-8841, default 975): 975 
+Last cylinder or +size or +sizeM or +sizeK (975-8841, default 8841): +1G
 
 ```
 
@@ -76,7 +164,15 @@ Here we have created two partitions. The first is 8GB in size, and the second is
 
 ```text
 
-Command (m for help): p Disk /dev/sda: 72.7 GB, 72725037056 bytes 255 heads, 63 sectors/track, 8841 cylinders Units = cylinders of 16065 * 512 = 8225280 bytes Device Boot Start End Blocks Id System /dev/sda1 1 974 7823623+ 83 Linux /dev/sda2 975 1097 987997+ 83 Linux
+Command (m for help): p 
+
+Disk /dev/sda: 72.7 GB, 72725037056 bytes 
+255 heads, 63 sectors/track, 8841 cylinders 
+Units = cylinders of 16065 * 512 = 8225280 bytes 
+
+  Device Boot       Start       End         Blocks      Id      System 
+  /dev/sda1             1       974         7823623+    83      Linux 
+  /dev/sda2           975       1097        987997+     83      Linux
 
 ```
 
@@ -84,7 +180,19 @@ Both of these partitions are of type "83" which is the standard Linux filesystem
 
 ```text
 
-Command (m for help): t Partition number (1-4): 2 Hex code (type L to list codes): 82 Command (me for help): p Disk /dev/sda: 72.7 GB, 72725037056 bytes 255 heads, 63 sectors/track, 8841 cylinders Units = cylinders of 16065 * 512 = 8225280 bytes Device Boot Start End Blocks Id System /dev/sda1 1 974 7823623+ 83 Linux /dev/sda2 975 1097 987997+ 82 Linux swap
+Command (m for help): t 
+Partition number (1-4): 2 
+Hex code (type L to list codes): 82 
+
+Command (me for help): p 
+
+Disk /dev/sda: 72.7 GB, 72725037056 bytes 
+255 heads, 63 sectors/track, 8841 cylinders 
+Units = cylinders of 16065 * 512 = 8225280 bytes 
+
+  Device Boot       Start       End         Blocks      Id      System 
+  /dev/sda1             1       974         7823623+    83      Linux 
+  /dev/sda2           975      1097         987997+     82      Linux swap
 
 ```
 
@@ -94,7 +202,14 @@ At this point we can stop, write these changes to the disk, and continue on, but
 
 ```text
 
-Command: (me for help): n Command action e extended p primary partition (1-4) p Partition number (1-4): 3 First cylinder (1098-8841, default 1098): 1098 Last cylinder or +size or +sizeM or +sizeK (1098-8841, default 8841): 8841
+Command: (me for help): n 
+Command action 
+  e extended 
+  p primary partition (1-4) 
+p 
+Partition number (1-4): 3 
+First cylinder (1098-8841, default 1098): 1098 
+Last cylinder or +size or +sizeM or +sizeK (1098-8841, default 8841): 8841
 
 ```
 
@@ -102,7 +217,12 @@ Now it's time to finish up and write these changes to disk.
 
 ```text
 
-Command: (me for help): w The partition table has been altered! Calling ioctl() to re-read partition table. Syncing disks. root@slackware:/#
+Command: (me for help): w 
+The partition table has been altered! 
+
+Calling ioctl() to re-read partition table. 
+Syncing disks. 
+root@slackware:/#
 
 ```
 
@@ -208,4 +328,4 @@ With this last step complete, you can now exit the Slackware installer and reboo
 
 When you have rebooted into your new Slackware installation, the very first step you should take is to create a user. By default, the only user that exists after the install is the root user, and it's dangerous to use your computer as root, given that there are no restrictions as to what that user can do.
 
-The quickest and easiest way to create a normal user for yourself is to log in as root with the root password that you created at the end of the intallation process, and then issue the `adduser` command. This will interactively assist you in creating a user; see for more information.
+The quickest and easiest way to create a normal user for yourself is to log in as root with the root password that you created at the end of the intallation process, and then issue the `adduser` command. This will interactively assist you in creating a user; see  the section called “Managing Users and Groups” for more information.
