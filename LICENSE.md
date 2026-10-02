@@ -1,0 +1,1 @@
+Creative Commons Attribution Share and Share-Alike license

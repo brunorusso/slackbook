@@ -5,7 +5,7 @@
  - [ ] Improve script to build pdf output
  - [ ] Check licence
  - [ ] Check old authors
-
+ - [ ] Clean eps files and migrate png files to img directory 
 
 ------------------------------------------------------------
 # This sesion is old ToDo
