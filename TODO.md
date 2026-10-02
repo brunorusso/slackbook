@@ -1,5 +1,14 @@
-General
+# General
+ - [ ] Create a README file
+ - [ ] Check if all content was migrated do markdown
+ - [ ] Improve script to build
+ - [ ] Improve script to build pdf output
+ - [ ] Check licence
+ - [ ] Check old authors
+ - [ ] Clean eps files and migrate png files to img directory 
 
+------------------------------------------------------------
+# This sesion is old ToDo
 * Make damn certain our Docbook markup is both _CORRECT_ and
   _CONSISTANT_. There's many places where the <screen> sections
   are very different. They should all be of this form.
