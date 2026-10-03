@@ -16,7 +16,21 @@ While `pkgtool` scores points for convenience, `installpkg` (8) is much more cap
 
 ```text
 
-darkstar:~# installpkg blackbox-0.70.1-i486-2.txz Verifying package blackbox-0.70.1-i486-2.txz. Installing package blackbox-0.70.1-i486-2.txz: PACKAGE DESCRIPTION: # blackbox (Blackbox window manager) # # Blackbox is that fast, light window manager you have been looking for # without all those annoying library dependencies. # # Also included in this package is the bbkeys utility for controlling # keyboard shortcut commands from within Blackbox. # # The Blackbox home page is http://blackboxwm.sourceforge.net # Package blackbox-0.70.1-i486-2.txz installed.
+darkstar:~# installpkg blackbox-0.70.1-i486-2.txz 
+Verifying package blackbox-0.70.1-i486-2.txz. 
+Installing package blackbox-0.70.1-i486-2.txz: 
+PACKAGE DESCRIPTION: 
+# blackbox (Blackbox window manager) 
+# 
+# Blackbox is that fast, light window manager you have been looking for 
+# without all those annoying library dependencies. 
+# 
+# Also included in this package is the bbkeys utility for controlling 
+# keyboard shortcut commands from within Blackbox. 
+# 
+# The Blackbox home page is http://blackboxwm.sourceforge.net 
+# 
+Package blackbox-0.70.1-i486-2.txz installed.
 
 ```
 
@@ -50,7 +64,24 @@ Finally, upgrading is just as easy with (you guessed it), `upgradepkg` (8) which
 
 ```text
 
-darkstar:~# upgradepkg blackbox-0.70.1-i486-2.txz +============================================================================== | Upgrading blackbox-0.65.0-x86_64-4 package using ./blackbox-0.70.1-i486-2.txz +============================================================================== Pre-installing package blackbox-0.70.1-i486-2... Removing package /var/log/packages/blackbox-0.65.0-x86_64-4-upgraded-2010-02-23,16:50:51... --> Deleting symlink /usr/share/blackbox/nls/POSIX --> Deleting symlink /usr/share/blackbox/nls/US_ASCII --> Deleting symlink /usr/share/blackbox/nls/de --> Deleting symlink /usr/share/blackbox/nls/en --> Deleting symlink /usr/share/blackbox/nls/en_GB ... Package blackbox-0.65.0-x86_64-4 upgraded with new package ./blackbox-0.70.1-i486-2.txz.
+darkstar:~# upgradepkg blackbox-0.70.1-i486-2.txz
++============================================================================== 
+| Upgrading blackbox-0.65.0-x86_64-4 package using 
+./blackbox-0.70.1-i486-2.txz 
++============================================================================== 
+
+Pre-installing package blackbox-0.70.1-i486-2... 
+
+Removing package 
+/var/log/packages/blackbox-0.65.0-x86_64-4-upgraded-2010-02-23,16:50:51... 
+    --> Deleting symlink /usr/share/blackbox/nls/POSIX 
+    --> Deleting symlink /usr/share/blackbox/nls/US_ASCII 
+    --> Deleting symlink /usr/share/blackbox/nls/de 
+    --> Deleting symlink /usr/share/blackbox/nls/en 
+    --> Deleting symlink /usr/share/blackbox/nls/en_GB 
+... 
+Package blackbox-0.65.0-x86_64-4 upgraded with new package 
+./blackbox-0.70.1-i486-2.txz.
 
 ```
 
@@ -74,17 +105,17 @@ Without `slackpkg` , the process would be:
 
 1. Notice in the Slackware changelog that an update has been released.
 
-1. Look on your local Slackware mirror to find a download link of the package.
+2. Look on your local Slackware mirror to find a download link of the package.
 
-1. Download the package from a Slackware mirror to your hard drive.
+3. Download the package from a Slackware mirror to your hard drive.
 
-1. `installpkg` `pkgtool`
+4. `installpkg` `pkgtool`
 
 With `slackpkg` , this is reduced to:
 
 1. Notice in the Slackware changelog that an update for `foo` has been released.
 
-1. `slackpkg` `install` foo
+2. `slackpkg` `install` foo
 
 Clearly, this streamlines a fairly common task.
 
@@ -94,7 +125,7 @@ Once a mirror has been selected, update the list of remote files by issuing the 
 
 To search for a package, use `slackpkg search foo` , and to install use `slackpkg install foo` .
 
-Once a package has been installed with `slackpkg` , it can be removed or upgraded using `pkgtool` and the other package management commands as detailed in .
+Once a package has been installed with `slackpkg` , it can be removed or upgraded using `pkgtool` and the other package management commands as detailed in the section called “Installing, Removing, and Upgrading Packages”.
 
 For more information see the `man` pages for slackpkg(8) and slackpkg.conf(5), and see its website at http://www.slackpkg.org/
 
@@ -104,9 +135,9 @@ One of the most ubiquitous package formats for Linux software is RPM; it's not u
 
 1. Build your own Slackware package.
 
-1. Compile and install directly from source code.
+2. Compile and install directly from source code.
 
-1. Convert and install from RPM.
+3. Convert and install from RPM.
 
 Building from source code or creating your own Slackware package is usually not as complex as you might think but installing directly from source code is generally discouraged because there is no easy way to track what has been installed on your system after issuing the `make install` command. Building your own Slackware packages is outside the scope of this chapter. So this leaves us with the helpful tool `rpm2tgz` .
 
