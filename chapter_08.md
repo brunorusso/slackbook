@@ -16,15 +16,15 @@ There are, essentially, three types of printer drivers:
 
 1. Postscript printers use the unversal-ish language of Postscript to communicate with computers. A driver for postscript printers is usually not needed, since a postscript-compatible subsystem called `Ghostscript` is already installed.
 
-1. Gutenprint are drivers engineered by GNU Linux developers. It provides support for roughly 700 printers.
+2. Gutenprint are drivers engineered by GNU Linux developers. It provides support for roughly 700 printers.
 
-1. Manufacturers may provide Linux drivers for their printers. Find out by going to the manufacturer's driver and support website and searching for your model.
+3. Manufacturers may provide Linux drivers for their printers. Find out by going to the manufacturer's driver and support website and searching for your model.
 
 Since `gutenprint` is already installed on Slackware, from this set of three categories, we have two methods of installing drivers:
 
 1. For the manufacturer's drivers, installation is usually the same as any other software on your system; use `installpkg` or `rpm2tgz` to install the driver package. Be sure to read the documentation bundled with the drivers.
 
-1. For Postscript printers, there is no "installation" as such; simply download the appropriate `PPD` file and keep it in a sensible location on your hard drive.
+2. For Postscript printers, there is no "installation" as such; simply download the appropriate `PPD` file and keep it in a sensible location on your hard drive.
 
 Once you've located and installed or downloaded the necessary components, you're ready to run `CUPS` .
 
@@ -38,7 +38,26 @@ A typical entry would look something like this:
 
 ```text
 
-<Printer r1060> Info Ricoh 1060 Location Downstairs MakeModel Ricoh Aficio 1060 - CUPS+Gutenprint v5.2.6 DeviceURI lpd://192.168.4.8 State Idle StateTime 1316011347 Type 12308 Filter application/vnd.cups-raw 0 - Filter application/vnd.cups-raster 100 rastertogutenprint.5.2 # standard-ish stuff below here Accepting Yes Shared No JobSheets none none QuotaPeriod 0 PageLimit 0 KLimit 0 OpPolicy default ErrorPolicy stop-printer </Printer>
+  <Printer r1060>
+  Info Ricoh 1060
+  Location Downstairs
+  MakeModel Ricoh Aficio 1060 - CUPS+Gutenprint v5.2.6
+  DeviceURI lpd://192.168.4.8
+  State Idle
+  StateTime 1316011347
+  Type 12308
+  Filter application/vnd.cups-raw 0 -
+  Filter application/vnd.cups-raster 100 rastertogutenprint.5.2
+  # standard-ish stuff below here
+  Accepting Yes
+  Shared No
+  JobSheets none none
+  QuotaPeriod 0
+  PageLimit 0
+  KLimit 0
+  OpPolicy default
+  ErrorPolicy stop-printer
+  </Printer>
 
 ```
 
@@ -56,7 +75,8 @@ This lists the drivers that you have installed, grepping for the string 1060:
 
 ```text
 
-gutenprint.5.2://brother-hl-1060/expert Brother HL-1060 - CUPS+Gutenprint v5.2.6 gutenprint.5.2://ricoh-afc_1060/expert Ricoh Aficio 1060 - CUPS+Gutenprint v5.2.6
+gutenprint.5.2://brother-hl-1060/expert Brother HL-1060 - CUPS+Gutenprint v5.2.6 
+gutenprint.5.2://ricoh-afc_1060/expert Ricoh Aficio 1060 - CUPS+Gutenprint v5.2.6
 
 ```
 
@@ -92,13 +112,15 @@ Now that you have successfully installed and configured your printer, you may al
 
 ```
 
+**Note**
 In this example, `r1060` is the human readable name given to the printer in either `/etc/cups/printers.conf` or in the `CUPS` configuration.
 
 If you do not have root privileges on the workstation you are using, you can also set the `PRINTER` environment variable:
 
 ```text
 
-$ PRINTER=r1060 $ export PRINTER
+$ PRINTER=r1060 
+$ export PRINTER
 
 ```
 
