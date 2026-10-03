@@ -10,7 +10,10 @@ If you look inside your `/boot` directory, you'll see the various kernels instal
 
 ```text
 
-darkstar:~# ls -1 /boot/vmlinuz* /boot/vmlinuz-huge-2.6.29.4 /boot/vmlinuz-generic-2.6.29.4
+darkstar:~# ls -1 /boot/vmlinuz* 
+
+/boot/vmlinuz-huge-2.6.29.4 
+/boot/vmlinuz-generic-2.6.29.4
 
 ```
 
@@ -26,7 +29,13 @@ An initrd is a compressed `cpio` (1) archive, so creating one isn't very straigh
 
 ```text
 
-darkstar:~# mkinitrd --help mkinitrd creates an initial ramdisk (actually an initramfs cpio+gzip archive) used to load kernel modules that are needed to mount the root filesystem, or other modules that might be needed before the root filesystem is available. Other binaries may be added to the initrd, and the script is easy to modify. Be creative. :-) .... many more lines deleted ....
+darkstar:~# mkinitrd --help 
+mkinitrd creates an initial ramdisk (actually an initramfs cpio+gzip 
+archive) used to load kernel modules that are needed to mount the 
+root filesystem, or other modules that might be needed before the 
+root filesystem is available. Other binaries may be added to the 
+initrd, and the script is easy to modify. Be creative. :-) 
+.... many more lines deleted ....
 
 ```
 
@@ -34,7 +43,13 @@ When using `mkinitrd` , you'll need to know a few items of information: your roo
 
 ```text
 
-darkstar:~# mount /dev/sda1 on / type ext4 (rw,barrier=1,data=ordered) proc on /proc type proc (rw) sysfs on /sys type sysfs (rw) usbfs on /proc/bus/usb type usbfs (rw) /dev/sda2 on /home type jfs (rw) tmpfs on /dev/shm type tmpfs (rw)
+darkstar:~# mount 
+/dev/sda1 on / type ext4 (rw,barrier=1,data=ordered) 
+proc on /proc type proc (rw) 
+sysfs on /sys type sysfs (rw) 
+usbfs on /proc/bus/usb type usbfs (rw) 
+/dev/sda2 on /home type jfs (rw) 
+tmpfs on /dev/shm type tmpfs (rw)
 
 ```
 
@@ -52,7 +67,21 @@ Looking up all those different options for `mkinitrd` or worse, memorizing them,
 
 ```text
 
-darkstar:~# >/prompt>cat /etc/mkinitrd.conf.sample # See "man mkinitrd.conf" for details on the syntax of this file # SOURCE_TREE="/boot/initrd-tree" CLEAR_TREE="0" OUTPUT_IMAGE="/boot/initrd.gz" KERNEL_VERSION="$(uname -r)" #KEYMAP="us" MODULE_LIST="ext3:ext4:jfs" #LUKSDEV="/dev/hda1" ROOTDEV="/dev/sda1 ROOTFS="ext4" #RESUMEDEV="/dev/hda2" #RAID="0" LVM="1" #WAIT="1"
+darkstar:~# >/prompt>cat /etc/mkinitrd.conf.sample 
+# See "man mkinitrd.conf" for details on the syntax of this file # 
+SOURCE_TREE="/boot/initrd-tree" 
+CLEAR_TREE="0" 
+OUTPUT_IMAGE="/boot/initrd.gz" 
+KERNEL_VERSION="$(uname -r)" 
+#KEYMAP="us" 
+MODULE_LIST="ext3:ext4:jfs" 
+#LUKSDEV="/dev/hda1" 
+ROOTDEV="/dev/sda1 
+ROOTFS="ext4" 
+#RESUMEDEV="/dev/hda2" 
+#RAID="0" 
+LVM="1" 
+#WAIT="1"
 
 ```
 
@@ -72,6 +101,8 @@ LILO is the Linux Loader and is currently the default boot loader installed with
 
 Configuring LILO can be a little daunting for new users, so Slackware comes with a special setup tool called `liloconfig` . Normally, `liloconfig` is first run by the installer, but you can run it at any time from a terminal.
 
+![image](ps-imgs/setup-lilo.png)
+
 `liloconfig` has two modes of operation: simple and expert. The "simple" mode tries to automatically configure lilo for you. If Slackware is the only operating system installed on your computer, the "simple" mode will almost always do the right thing quickly and easily. It is also very good at detecting Windows installations and adding them to `/etc/lilo.conf` so that you can choose which operating system to boot when you turn your computer on.
 
 In order to use "expert" mode, you'll need to know Slackware's root partition. You can also setup other linux operating systems if you know their root partitions, but this may not work as well as you expect. `liloconfig` will try to boot each linux operating system with Slackware's kernel, and this is probably not what you want. Fortunately, setting up Windows partitions in expert mode is trivial. One hint when using expert mode: you should almost always install LILO to the Master Boot Record (MBR). Once upon a time, it was recommended to install the boot loader onto the root partition and set that partition as bootable. Today, LILO has matured greatly and is safe to install on the MBR. In fact, you will encounter fewer problems if you do so.
@@ -80,7 +111,21 @@ In order to use "expert" mode, you'll need to know Slackware's root partition. Y
 
 ```text
 
-# LILO configuration file boot = /dev/sda bitmap = /boot/slack.bmp bmp-colors = 255,0,255,0,255,0 bmp-table = 60,6,1,16 bmp-timer = 65,27,0,255 append=" vt.default_utf8=0" prompt timeout = 50 # VESA framebuffer console @ 1024x768x256 vga = 773 .... many more lines ommitted ....
+# LILO configuration file 
+
+boot = /dev/sda 
+    bitmap = /boot/slack.bmp 
+    bmp-colors = 255,0,255,0,255,0 
+    bmp-table = 60,6,1,16 
+    bmp-timer = 65,27,0,255 
+    
+append=" vt.default_utf8=0" 
+prompt 
+timeout = 50 
+
+# VESA framebuffer console @ 1024x768x256 
+vga = 773 
+.... many more lines ommitted ....
 
 ```
 
@@ -94,7 +139,20 @@ Now that we've looked into the global section, let's take a look at the operatin
 
 ```text
 
-# LILO configuration file ... global section ommitted .... # Linux bootable partition config begins image = /boot/vmlinuz-generic-2.6.29.4 root = /dev/sda1 initrd = /boot/initrd.gz label = Slackware64 read-only # Linux bootable partition config ends # Windows bootable partition config begins other = /dev/sda3 label = Windows table = /dev/sda # Windows bootable partition config ends
+# LILO configuration file 
+... global section ommitted .... 
+# Linux bootable partition config begins 
+image = /boot/vmlinuz-generic-2.6.29.4 
+    root = /dev/sda1 
+    initrd = /boot/initrd.gz 
+    label = Slackware64 
+    read-only 
+# Linux bootable partition config ends 
+# Windows bootable partition config begins 
+other = /dev/sda3 
+    label = Windows 
+    table = /dev/sda 
+# Windows bootable partition config ends
 
 ```
 
@@ -104,7 +162,11 @@ Once you've gotten `/etc/lilo.conf` set up for your machine, simply run `lilo` (
 
 ```text
 
-darkstar:~# lilo Warning: LBA32 addressing assumed Added Slackware * Added Backup 6 warnings were issued.
+darkstar:~# lilo 
+Warning: LBA32 addressing assumed 
+Added Slackware * 
+Added Backup 
+6 warnings were issued.
 
 ```
 
@@ -122,11 +184,11 @@ There are two ways to dual (or multi) boot; you can put each operating system on
 
 ### 3.3.1 Dual Booting with Partitions
 
-In order to set up a dual-boot system with each operating system on its own partition, you must first create partitions. This is easiest if done prior to installing the first operating system, in which case it's a simple case of pre-planning and carving up your hard drive as you feel necessary. See for information on using the `fdisk` or `cfdisk` partitioning applications.
+In order to set up a dual-boot system with each operating system on its own partition, you must first create partitions. This is easiest if done prior to installing the first operating system, in which case it's a simple case of pre-planning and carving up your hard drive as you feel necessary. See the section called “Partitioning” for information on using the `fdisk` or `cfdisk` partitioning applications.
 
-If you're dual booting two Linux distributions, it is inadvisable to attempt to share a /home directory between the systems. While it is technically possible, doing so will increase the chance of your personal configurations from becoming mauled by competing desktop environments or versions.
-
-It is, however, safe to use a common swap partition.
+> **Important**
+> If you're dual booting two Linux distributions, it is inadvisable to attempt to share a /home directory between the systems. While it is technically possible, doing so will increase the chance of your personal configurations from becoming mauled by competing desktop environments or versions.
+> It is, however, safe to use a common swap partition.
 
 You should partition your drive into at least three parts:
 
@@ -136,23 +198,31 @@ You should partition your drive into at least three parts:
 
 - One partition for swap
 
-First, install Slackware Linux onto the first partition of the hard drive as described in .
+First, install Slackware Linux onto the first partition of the hard drive as described in  Chapter, Installation.
 
 After Slackware has been installed, booted, and you've confirmed that everything works as expected, then reboot to the installer for the second OS. This OS will invariably offer to utilize the entire drive; you obviously do *not* want to do that, so constrain it to only the second partition. Furthermore, the OS will attempt to install a boot loader to the beginning of the hard drive, overwriting LILO.
 
 You have a few possible courses of action with regards to the boot loader:
 
+**Possible Boot Loader Scenarios**
+
+If the secondary OS is Linux, disallow it from installing a boot manager.
+
 If you're dual booting to another Linux distribution, the installer of that distribution usually asks if you want a boot loader installed. You're certainly free to not install a boot manager for it at all, and manually manage both Slackware and the other distribution with LILO.
 
 Depending on the distribution, you might be editing LILO more frequently than you would if you were only running Slackware; some distributions are notorious for frequent kernel updates, meaning that you'll need to edit LILO to reflect the new configuration after such an update. But if you didn't want to edit configuration files every now and again, you probably wouldn't have chosen Slackware.
+
+If the secondary OS is Linux, let it overwrite LILO with GRUB.
 
 If you're dual booting to another Linux distribution, you are perfectly capable of just using GRUB rather than LILO, or install Slackware last and use LILO for both. Both LILO and GRUB have very good auto-detection features, so whichever one gets installed last should pick up the other distribution's presence and make an entry for it.
 
 Since other distributions often attempt to auto-update their GRUB menus, there is always the chance that during an update something will become maligned and you suddenly find you can't boot into Slackware. If this happens, don't panic; just boot into the other Linux partition and manually edit GRUB so that it points to the correct partition, kernel, and initrd (if applicable) for Slackware in its menu.
 
+Allow the secondary OS to overwrite LILO and go back later to manually re-install and re-configure LILO.
+
 This is not a bad choice, especially when Windows is the secondary OS, but potential pitfalls are that when Windows updates itself, it may attempt to overwrite the MBR (master boot record) again, and you'll have to re-install LILO manually again.
 
-To re-establish LILO after another OS has erased it, you can boot from your Slackware install media and enter the setup stage. Do *not* re-partition your drive or re-install Slackware; skip immediately to .
+To re-establish LILO after another OS has erased it, you can boot from your Slackware install media and enter the setup stage. Do *not* re-partition your drive or re-install Slackware; skip immediately to the section called “Configure”.
 
 Even when using the "simple" option to install, LILO should detect both operating systems and automatically configure a sensible menu for you. If it fails, then add the entries yourself.
 
