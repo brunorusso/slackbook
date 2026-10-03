@@ -10,7 +10,19 @@ So how do you know when there are updates? The best way is to consult the `Chang
 
 ```text
 
-darkstar:~# wget -O - \ ftp://slackware.osuosl.org/pub/slackware/slackware64-current/ChangeLog.txt \ | less Thu Aug 16 04:01:31 UTC 2012 Getting close! Hopefully we've cleared out most of the remaining issues and are nearly ready here. We'll call this release candidate 2. Unless there's a very good rationale, versions are frozen. Any reports of remaining bugs will be gladly taken, though. #include <more/cowbell.h> a/aaa_base-14.0-x86_64-4.txz: Rebuilt. Remove mention of HAL in the initial welcome email (mention udisks2 instead). Thanks to Dave Margell. a/bash-4.2.037-x86_64-1.txz: Upgraded.
+darkstar:~# wget -O - 
+\ ftp://slackware.osuosl.org/pub/slackware/slackware64-current/ChangeLog.txt \ 
+| less 
+Thu Aug 16 04:01:31 UTC 2012 
+Getting close! Hopefully we've cleared out most of the remaining issues 
+and are nearly ready here. We'll call this release candidate 2. 
+Unless there's a very good rationale, versions are frozen. 
+Any reports of remaining bugs will be gladly taken, though. 
+    #include <more/cowbell.h> 
+a/aaa_base-14.0-x86_64-4.txz: Rebuilt. 
+    Remove mention of HAL in the initial welcome email (mention udisks2 
+    instead). Thanks to Dave Margell. 
+a/bash-4.2.037-x86_64-1.txz: Upgraded.
 
 ```
 
