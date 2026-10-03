@@ -10,7 +10,69 @@ The easiest way to add new users in Slackware is through the use of our very fin
 
 ```text
 
-darkstar:~# adduser Login name for new user []: david User ID ('UID') [ defaults to next available ]: Initial group [ users ]: Additional UNIX groups: Users can belong to additional UNIX groups on the system. For local users using graphical desktop login managers such as XDM/KDM, users may need to be members of additional groups to access the full functionality of removable media devices. * Security implications * Please be aware that by adding users to additional groups may potentially give access to the removable media of other users. If you are creating a new user for remote shell access only, users do not need to belong to any additional groups as standard, so you may press ENTER at the next prompt. Press ENTER to continue without adding any additional groups Or press the UP arrow to add/select/edit additional groups : audio cdrom floppy plugdev video Home directory [ /home/david ] Shell [ /bin/bash ] Expiry date (YYYY-MM-DD) []: New account will be created as follows: --------------------------------------- Login name.......: david UID..............: [ Next available ] Initial group....: users Additional groups: audio,cdrom,floppy,plugdev,video Home directory...: /home/david Shell............: /bin/bash Expiry date......: [ Never ] This is it... if you want to bail out, hit Control-C. Otherwise, press ENTER to go ahead and make the account. Creating new account... Changing the user information for david Enter the new value, or press ENTER for the default Full Name []: Room Number []: Work Phone []: Home Phone []: Other []: Changing password for david Enter the new password (minimum of 5, maximum of 127 characters) Please use a combination of upper and lower case letters and numbers. New password: Re-enter new password: Password changed. Account setup complete.
+darkstar:~# adduser 
+
+Login name for new user []: david 
+
+User ID ('UID') [ defaults to next available ]: 
+
+Initial group [ users ]: 
+Additional UNIX groups: 
+
+Users can belong to additional UNIX groups on the system. 
+For local users using graphical desktop login managers such 
+as XDM/KDM, users may need to be members of additional groups 
+to access the full functionality of removable media devices. 
+
+* Security implications * 
+Please be aware that by adding users to additional groups may 
+potentially give access to the removable media of other users. 
+
+If you are creating a new user for remote shell access only, 
+users do not need to belong to any additional groups as standard, 
+so you may press ENTER at the next prompt. 
+
+Press ENTER to continue without adding any additional groups 
+Or press the UP arrow to add/select/edit additional groups 
+: audio cdrom floppy plugdev video 
+
+Home directory [ /home/david ] 
+
+Shell [ /bin/bash ] 
+
+Expiry date (YYYY-MM-DD) []: 
+
+New account will be created as follows: 
+
+--------------------------------------- 
+Login name.......: david 
+UID..............: [ Next available ] 
+Initial group....: users 
+Additional groups: audio,cdrom,floppy,plugdev,video 
+Home directory...: /home/david 
+Shell............: /bin/bash 
+Expiry date......: [ Never ] 
+
+This is it... if you want to bail out, hit Control-C. Otherwise, press 
+ENTER to go ahead and make the account. 
+
+Creating new account... 
+
+Changing the user information for david 
+Enter the new value, or press ENTER for the default 
+    Full Name []: 
+    Room Number []: 
+    Work Phone []: 
+    Home Phone []: 
+    Other []: 
+Changing password for david 
+Enter the new password (minimum of 5, maximum of 127 characters) 
+Please use a combination of upper and lower case letters and numbers. 
+New password: 
+Re-enter new password: 
+Password changed. 
+
+Account setup complete.
 
 ```
 
@@ -44,7 +106,8 @@ The easiest way for modifying a user's information is the `usermod` (8) utility 
 
 ```text
 
-darkstar:~# usermod -a -G wheel alan darkstar:~# usermod -G wheel alan
+darkstar:~# usermod -a -G wheel alan 
+darkstar:~# usermod -G wheel alan
 
 ```
 
