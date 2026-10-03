@@ -16,7 +16,34 @@ Once upon a time, the X configuration file was located at `/etc/X11/xorg.conf` ,
 
 ```text
 
-darkstar:~$ cat /etc/X11/xorg.conf.d/synaptics.conf Section "InputDevice" Identifier "Synaptics Touchpad" Driver "synaptics" Option "SendCoreEvents" "true" Option "Device" "/dev/psaux" Option "Protocol" "auto-dev" Option "SHMConfig" "on" Option "LeftEdge" "100" Option "RightEdge" "1120" Option "TopEdge" "50" Option "BottomEdge" "310" Option "FingerLow" "25" Option "FingerHigh" "30" Option "VertScrollDelta" "20" Option "HorizScrollDelta" "50" Option "MinSpeed" "0.79" Option "MaxSpeed" "0.88" Option "AccelFactor" "0.0015" Option "TapButton1" "1" Option "TapButton2" "2" Option "TapButton3" "3" Option "MaxTapMove" "100" Option "HorizScrollDelta" "0" Option "HorizEdgeScroll" "0" Option "VertEdgeScroll" "1" Option "VertTwoFingerScroll" "0" EndSection
+darkstar:~$ cat /etc/X11/xorg.conf.d/synaptics.conf 
+Section "InputDevice"
+    Identifier      "Synaptics Touchpad"
+    Driver          "synaptics"
+    Option          "SendCoreEvents"        "true"
+    Option          "Device"                "/dev/psaux"
+    Option          "Protocol"              "auto-dev"
+    Option          "SHMConfig"             "on"
+    Option          "LeftEdge"              "100"
+    Option          "RightEdge"             "1120"
+    Option          "TopEdge"               "50"
+    Option          "BottomEdge"            "310"
+    Option          "FingerLow"             "25"
+    Option          "FingerHigh"            "30"
+    Option          "VertScrollDelta"       "20"
+    Option          "HorizScrollDelta"      "50"
+    Option          "MinSpeed"              "0.79"
+    Option          "MaxSpeed"              "0.88"
+    Option          "AccelFactor"           "0.0015"
+    Option          "TapButton1"            "1"
+    Option          "TapButton2"            "2"
+    Option          "TapButton3"            "3"
+    Option          "MaxTapMove"            "100"
+    Option          "HorizScrollDelta"      "0"
+    Option          "HorizEdgeScroll"       "0"
+    Option          "VertEdgeScroll"        "1"
+    Option          "VertTwoFingerScroll"   "0"
+EndSection
 
 ```
 
@@ -40,7 +67,17 @@ Runlevels are configured in `inittab` (5). The most common ones are runlevel 3 (
 
 ```text
 
-# These are the default runlevels in Slackware: # 0 = halt # 1 = single user mode # 2 = unused (but configured the same as runlevel 3) # 3 = multiuser mode (default Slackware runlevel) # 4 = X11 with KDM/GDM/XDM (session managers) # 5 = unused (but configured the same as runlevel 3) # 6 = reboot # Default runlevel. (Do not set to 0 or 6) id:3:initdefault:
+# These are the default runlevels in Slackware: 
+# 0 = halt 
+# 1 = single user mode 
+# 2 = unused (but configured the same as runlevel 3) 
+# 3 = multiuser mode (default Slackware runlevel) 
+# 4 = X11 with KDM/GDM/XDM (session managers) 
+# 5 = unused (but configured the same as runlevel 3) 
+# 6 = reboot 
+
+# Default runlevel. (Do not set to 0 or 6) 
+id:3:initdefault:
 
 ```
 
@@ -48,6 +85,16 @@ In this file (along with most configuration files) anything following a hash sym
 
 ```text
 
-# These are the default runlevels in Slackware: # 0 = halt # 1 = single user mode # 2 = unused (but configured the same as runlevel 3) # 3 = multiuser mode (default Slackware runlevel) # 4 = X11 with KDM/GDM/XDM (session managers) # 5 = unused (but configured the same as runlevel 3) # 6 = reboot # Default runlevel. (Do not set to 0 or 6) id:4:initdefault:
+# These are the default runlevels in Slackware: 
+# 0 = halt 
+# 1 = single user mode 
+# 2 = unused (but configured the same as runlevel 3) 
+# 3 = multiuser mode (default Slackware runlevel) 
+# 4 = X11 with KDM/GDM/XDM (session managers) 
+# 5 = unused (but configured the same as runlevel 3) 
+# 6 = reboot 
+
+# Default runlevel. (Do not set to 0 or 6) 
+id:4:initdefault:
 
 ```
