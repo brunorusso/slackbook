@@ -8,7 +8,10 @@ The first step in managing processes is figuring out what processes are currentl
 
 ```text
 
-darkstar:~$ ps PID TTY TIME CMD 12220 pts/4 00:00:00 bash 12236 pts/4 00:00:00 ps
+darkstar:~$ ps 
+  PID TTY           TIME CMD 
+12220 pts/4     00:00:00 bash 
+12236 pts/4     00:00:00 ps
 
 ```
 
@@ -18,9 +21,23 @@ Viewing only our own processes isn't very much fun, so let's take a look at all 
 
 ```text
 
-darkstar:~$ ps -e PID TTY TIME CMD 1 ? 00:00:00 init 2 ? 00:00:00 kthreadd 3 ? 00:00:00 migration/0 4 ? 00:00:00 ksoftirqd/0 7 ? 00:00:11 events/0 9 ? 00:00:01 work_on_cpu/0 11 ? 00:00:00 khelper 102 ? 00:00:02 kblockd/0 105 ? 00:01:19 kacpid 106 ? 00:00:01 kacpi_notify ... many more lines omitted ...
+darkstar:~$ ps -e 
+PID TTY         TIME     CMD 
+  1 ?           00:00:00 init 
+  2 ?           00:00:00 kthreadd 
+  3 ?           00:00:00 migration/0 
+  4 ?           00:00:00 ksoftirqd/0 
+  7 ?           00:00:11 events/0 
+  9 ?           00:00:01 work_on_cpu/0 
+ 11 ?           00:00:00 khelper 
+102 ?           00:00:02 kblockd/0 
+105 ?           00:01:19 kacpid 
+106 ?           00:00:01 kacpi_notify 
+... many more lines omitted ...
 
 ```
+
+**Note**
 
 The above example uses the standard `ps` syntax, but much more information can be discovered if we use BSD syntax. In order to do so, we must use the `aux` argument.
 
@@ -28,7 +45,16 @@ This is distinct from the `-aux` argument, but in most cases the two arguments a
 
 ```text
 
-darkstar:~$ ps aux USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND root 1 0.0 0.0 3928 632 ? Ss Apr05 0:00 init [3] root 2 0.0 0.0 0 0 ? S Apr05 0:00 [kthreadd] root 3 0.0 0.0 0 0 ? S Apr05 0:00 [migration/0] root 4 0.0 0.0 0 0 ? S Apr05 0:00 [ksoftirqd/0] root 7 0.0 0.0 0 0 ? S Apr05 0:11 [events/0] root 9 0.0 0.0 0 0 ? S Apr05 0:01 [work_on_cpu/0] root 11 0.0 0.0 0 0 ? S Apr05 0:00 [khelper] ... many more lines omitted ....
+darkstar:~$ ps aux 
+USER    PID     %CPU    %MEM    VSZ     RSS TTY STAT START TIME COMMAND 
+root      1     0.0     0.0     3928    632 ?   Ss   Apr05 0:00 init [3] 
+root      2     0.0     0.0     0       0 ?     S    Apr05 0:00 [kthreadd] 
+root      3     0.0     0.0     0       0 ?     S    Apr05 0:00 [migration/0] 
+root      4     0.0     0.0     0       0 ?     S    Apr05 0:00 [ksoftirqd/0] 
+root      7     0.0     0.0     0       0 ?     S    Apr05 0:11 [events/0] 
+root      9     0.0     0.0     0       0 ?     S    Apr05 0:01 [work_on_cpu/0] 
+root     11     0.0     0.0     0       0 ?     S    Apr05 0:00 [khelper] 
+... many more lines omitted ....
 
 ```
 
@@ -38,7 +64,9 @@ To accomplish bits of this, on a per process basis, `ps` allows one or more proc
 
 ```text
 
-darkstar:~$ ps -o cmd -o etime $$ CMD ELAPSED /bin/bash 12:22
+darkstar:~$ ps -o cmd -o etime $$ 
+CMD         ELAPSED 
+/bin/bash   12:22
 
 ```
 
@@ -48,7 +76,19 @@ Using the `pgrep` (1) command, this can get more automatable.
 
 ```text
 
-darkstar:~$ ps -o cmd -o rss -o vsz $(pgrep httpd) CMD RSS VSZ /usr/sbin/httpd -k restart 33456 84816 /usr/sbin/httpd -k restart 33460 84716 /usr/sbin/httpd -k restart 33588 84472 /usr/sbin/httpd -k restart 30424 81608 /usr/sbin/httpd -k restart 33104 84900 /usr/sbin/httpd -k restart 33268 85112 /usr/sbin/httpd -k restart 30640 82724 /usr/sbin/httpd -k restart 15168 67396 /usr/sbin/httpd -k restart 33180 84416 /usr/sbin/httpd -k restart 33396 84592 /usr/sbin/httpd -k restart 32804 84232
+darkstar:~$ ps -o cmd -o rss -o vsz $(pgrep httpd) 
+CMD                          RSS   VSZ 
+/usr/sbin/httpd -k restart 33456 84816 
+/usr/sbin/httpd -k restart 33460 84716 
+/usr/sbin/httpd -k restart 33588 84472 
+/usr/sbin/httpd -k restart 30424 81608 
+/usr/sbin/httpd -k restart 33104 84900 
+/usr/sbin/httpd -k restart 33268 85112 
+/usr/sbin/httpd -k restart 30640 82724 
+/usr/sbin/httpd -k restart 15168 67396 
+/usr/sbin/httpd -k restart 33180 84416 
+/usr/sbin/httpd -k restart 33396 84592 
+/usr/sbin/httpd -k restart 32804 84232
 
 ```
 
@@ -58,7 +98,18 @@ Finally, `ps` can also create a process tree. This shows you which processes hav
 
 ```text
 
-darkstar:~$ ps -ejH ... many lines omitted ... 3660 3660 3660 tty1 00:00:00 bash 29947 29947 3660 tty1 00:00:00 startx 29963 29947 3660 tty1 00:00:00 xinit 29964 29964 29964 tty7 00:27:11 X 29972 29972 3660 tty1 00:00:00 sh 29977 29972 3660 tty1 00:00:05 xscreensaver 29988 29972 3660 tty1 00:00:04 xfce4-session 29997 29972 3660 tty1 00:00:16 xfwm4 29999 29972 3660 tty1 00:00:02 Thunar ... many more lines omitted ...
+darkstar:~$ ps -ejH 
+... many lines omitted ... 
+ 3660  3660 3660 tty1 00:00:00 bash 
+29947 29947 3660 tty1 00:00:00  startx 
+29963 29947 3660 tty1 00:00:00   xinit 
+29964 29964 29964 tty7 00:27:11   X 
+29972 29972 3660 tty1 00:00:00    sh 
+29977 29972 3660 tty1 00:00:05     xscreensaver 
+29988 29972 3660 tty1 00:00:04     xfce4-session 
+29997 29972 3660 tty1 00:00:16      xfwm4 
+29999 29972 3660 tty1 00:00:02      Thunar 
+... many more lines omitted ...
 
 ```
 
@@ -68,7 +119,22 @@ As is the case with many of the applications, there is often several tools for t
 
 ```text
 
-darkstar:~$ pstree init-+-atd |-crond |-dbus-daemon |-httpd---10*[httpd] |-inetd |-klogd |-mysqld_safe---mysqld---8*[{mysqld}] |-screen-+-4*[bash] | |-bash---pstree | |-2*[bash---ssh] | `-bash---irssi |-2*[sendmail] |-ssh-agent |-sshd---sshd---sshd---bash---screen `-syslogd
+darkstar:~$ pstree 
+init-+-atd 
+|-crond 
+|-dbus-daemon 
+|-httpd---10*[httpd] 
+|-inetd 
+|-klogd 
+|-mysqld_safe---mysqld---8*[{mysqld}] 
+|-screen-+-4*[bash] 
+|        |-bash---pstree 
+|        |-2*[bash---ssh] 
+|        `-bash---irssi 
+|-2*[sendmail] 
+|-ssh-agent 
+|-sshd---sshd---sshd---bash---screen 
+`-syslogd
 
 ```
 
@@ -82,7 +148,16 @@ In order to signal a process, we first need to know it's PID. You can get this e
 
 ```text
 
-darkstar:~$ kill -l 1) SIGHUP 2) SIGINT 3) SIGQUIT 4) SIGILL 5) SIGTRAP 6) SIGABRT 7) SIGBUS 8) SIGFPE 9) SIGKILL 10) SIGUSR1 11) SIGSEGV 12) SIGUSR2 13) SIGPIPE 14) SIGALRM 15) SIGTERM 16) SIGSTKFLT ... many more lines omitted ... darkstar:~$ kill 1234 # SIGTERM darkstar:~$ kill -s 9 1234 # SIGKILL darkstar:~$ kill -s 1 1234 # SIGHUP darkstar:~$ kill -s HUP 1234 # SIGHUP
+darkstar:~$ kill -l 
+ 1) SIGHUP   2) SIGINT   3) SIGQUIT  4) SIGILL 
+ 5) SIGTRAP  6) SIGABRT  7) SIGBUS   8) SIGFPE 
+ 9) SIGKILL 10) SIGUSR1 11) SIGSEGV 12) SIGUSR2 
+13) SIGPIPE 14) SIGALRM 15) SIGTERM 16) SIGSTKFLT 
+... many more lines omitted ... 
+darkstar:~$ kill 1234 # SIGTERM 
+darkstar:~$ kill -s 9 1234 # SIGKILL 
+darkstar:~$ kill -s 1 1234 # SIGHUP 
+darkstar:~$ kill -s HUP 1234 # SIGHUP
 
 ```
 
@@ -90,7 +165,10 @@ Sometimes you may wish to terminate all running processes with a certain name. Y
 
 ```text
 
-darkstar:~$ killall bash # SIGTERM darkstar:~$ killall -s 9 bash # SIGKILL darkstar:~$ killall -s 1 bash # SIGHUP darkstar:~$ killall -s HUP bash # SIGHUP
+darkstar:~$ killall bash # SIGTERM 
+darkstar:~$ killall -s 9 bash # SIGKILL 
+darkstar:~$ killall -s 1 bash # SIGHUP 
+darkstar:~$ killall -s HUP bash # SIGHUP
 
 ```
 
@@ -100,7 +178,31 @@ So far we've learned how to look at the active processes for a moment in time, b
 
 ```text
 
-darkstar:~$ top top - 16:44:15 up 26 days, 5:53, 5 users, load average: 0.08, 0.03, 0.03 Tasks: 122 total, 1 running, 119 sleeping, 0 stopped, 2 zombie Cpu(s): 3.4%us, 0.7%sy, 0.0%ni, 95.5%id, 0.1%wa, 0.0%hi, 0.2%si, 0.0%st Mem: 3058360k total, 2853780k used, 204580k free, 154956k buffers Swap: 0k total, 0k used, 0k free, 2082652k cached PID USER PR NI VIRT RES SHR S %CPU %MEM TIME+ COMMAND 1 root 20 0 3928 632 544 S 0 0.0 0:00.99 init 2 root 15 -5 0 0 0 S 0 0.0 0:00.00 kthreadd 3 root RT -5 0 0 0 S 0 0.0 0:00.82 migration/0 4 root 15 -5 0 0 0 S 0 0.0 0:00.01 ksoftirqd/0 7 root 15 -5 0 0 0 S 0 0.0 0:11.22 events/0 9 root 15 -5 0 0 0 S 0 0.0 0:01.19 work_on_cpu/0 11 root 15 -5 0 0 0 S 0 0.0 0:00.01 khelper 102 root 15 -5 0 0 0 S 0 0.0 0:02.04 kblockd/0 105 root 15 -5 0 0 0 S 0 0.0 1:20.08 kacpid 106 root 15 -5 0 0 0 S 0 0.0 0:01.92 kacpi_notify 175 root 15 -5 0 0 0 S 0 0.0 0:00.00 ata/0 177 root 15 -5 0 0 0 S 0 0.0 0:00.00 ata_aux 178 root 15 -5 0 0 0 S 0 0.0 0:00.00 ksuspend_usbd 184 root 15 -5 0 0 0 S 0 0.0 0:00.02 khubd 187 root 15 -5 0 0 0 S 0 0.0 0:00.00 kseriod 242 root 20 0 0 0 0 S 0 0.0 0:03.37 pdflush 243 root 15 -5 0 0 0 S 0 0.0 0:02.65 kswapd0
+darkstar:~$ top 
+top - 16:44:15 up 26 days,  5:53,  5 users,  load average: 0.08, 0.03, 0.03
+Tasks: 122 total,   1 running, 119 sleeping,   0 stopped,   2 zombie
+Cpu(s):  3.4%us,  0.7%sy,  0.0%ni, 95.5%id,  0.1%wa,  0.0%hi,  0.2%si, 0.0%st
+Mem:   3058360k total,  2853780k used,   204580k free,   154956k buffers
+Swap:        0k total,        0k used,        0k free,  2082652k cached
+
+  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND            
+    1 root      20   0  3928  632  544 S    0  0.0   0:00.99 init               
+    2 root      15  -5     0    0    0 S    0  0.0   0:00.00 kthreadd           
+    3 root      RT  -5     0    0    0 S    0  0.0   0:00.82 migration/0        
+    4 root      15  -5     0    0    0 S    0  0.0   0:00.01 ksoftirqd/0        
+    7 root      15  -5     0    0    0 S    0  0.0   0:11.22 events/0           
+    9 root      15  -5     0    0    0 S    0  0.0   0:01.19 work_on_cpu/0      
+   11 root      15  -5     0    0    0 S    0  0.0   0:00.01 khelper            
+  102 root      15  -5     0    0    0 S    0  0.0   0:02.04 kblockd/0          
+  105 root      15  -5     0    0    0 S    0  0.0   1:20.08 kacpid             
+  106 root      15  -5     0    0    0 S    0  0.0   0:01.92 kacpi_notify       
+  175 root      15  -5     0    0    0 S    0  0.0   0:00.00 ata/0              
+  177 root      15  -5     0    0    0 S    0  0.0   0:00.00 ata_aux            
+  178 root      15  -5     0    0    0 S    0  0.0   0:00.00 ksuspend_usbd      
+  184 root      15  -5     0    0    0 S    0  0.0   0:00.02 khubd              
+  187 root      15  -5     0    0    0 S    0  0.0   0:00.00 kseriod            
+  242 root      20   0     0    0    0 S    0  0.0   0:03.37 pdflush            
+  243 root      15  -5     0    0    0 S    0  0.0   0:02.65 kswapd0
 
 ```
 
@@ -116,7 +218,9 @@ The cron database entries may seem a little archaic at first, but they are highl
 
 ```text
 
-darkstar:~$ crontab -e # Keep current with slackware 30 02 * * * /usr/local/bin/rsync-slackware64.sh 1>/dev/null 2>&1
+darkstar:~$ crontab -e 
+#Keep current with slackware 
+30 02 * * * /usr/local/bin/rsync-slackware64.sh 1>/dev/null 2>&1
 
 ```
 
@@ -126,7 +230,10 @@ As mentioned before, the syntax for cron entries is a little difficult to unders
 
 ```text
 
-# Redirect everything to /dev/null with: # 1>/dev/null 2>&1 # # MIN HOUR DAY MONTH WEEKDAY COMMAND
+#Redirect everything to /dev/null with: 
+#1>/dev/null 2>&1 
+# 
+#MIN HOUR DAY MONTH WEEKDAY COMMAND
 
 ```
 

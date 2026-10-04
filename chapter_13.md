@@ -14,6 +14,9 @@ Unlike `vi` , `Emacs` operates more like a traditional editor by default. This m
 
 `Emacs` can be started simply by running the `emacs` command in your terminal. When you first start it in a console without arguments, you will see something that resembles this:
 
+![image](img/emacs.png)
+
+
 If you are in X windows, `Emacs` may start a GUI instead of running in your console. If this is the case and you don't want a GUI, you can invoke it with the flag `'-nw'` .
 
 While here, you can browse around using the keyboard arrow keys. Underlined elements are links, and you can activate them by moving over them and pressing 'enter'. The documentation mentioned is very good, and can help you get your bearings should you have any problems. Also note how they describe key sequences such as <kbd>C-h</kbd> , meaning press the <kbd>h</kbd> key while holding down the <kbd>CTRL</kbd> key. Same deal with <kbd>M-`</kbd> , meaning to hold the the <kbd>Meta</kbd> key (usually " <kbd>Alt</kbd> ") and press the backtick "`" key. When they say (e.g.) <kbd>C-x C-c</kbd> , this means to press the "x" key while holding down the <kbd>CTRL</kbd> key, then press the "x" key while also holding down the <kbd>CTRL</kbd> key. Conveniently, this is also one of the more important commands in `Emacs` : to close it.

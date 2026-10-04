@@ -12,7 +12,8 @@ Setting your own envirtonment variables is easy. `bash` includes two built-in fu
 
 ```text
 
-darkstar:~$ set FOO=bar darkstar:~$ echo $FOO bar
+darkstar:~$ set FOO=bar 
+darkstar:~$ echo $FOO bar
 
 ```
 
@@ -20,7 +21,8 @@ The primary difference between `set` and `export` is that `export` will (natural
 
 ```text
 
-darkstar:~$ set PS1='FOO ' darkstar:~$ export PS1='FOO ' FOO
+darkstar:~$ set PS1='FOO ' 
+darkstar:~$ export PS1='FOO ' FOO
 
 ```
 
@@ -28,7 +30,10 @@ There are many important environment variables that `bash` and other shells use,
 
 ```text
 
-darkstar:~$ ifconfig bash: ifconfig: command not found darkstar:~$ echo $PATH /usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin:/usr/games:/opt/www/htdig/bin:.
+darkstar:~$ ifconfig 
+bash: ifconfig: command not found 
+darkstar:~$ echo $PATH 
+/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin:/usr/games:/opt/www/htdig/bin:.
 
 ```
 
@@ -36,7 +41,10 @@ Above, you see a typical PATH for a mortal user. You can change it on your own t
 
 ```text
 
-darkstar:~$ su - Password: darkstar:~# echo $PATH /usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin:/usr/games:/opt/www/htdig/bin
+darkstar:~$ su - 
+Password: 
+darkstar:~# echo $PATH 
+/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin:/usr/games:/opt/www/htdig/bin
 
 ```
 
@@ -48,7 +56,11 @@ This first and most common of these is, of course, *. The asterisk matches any c
 
 ```text
 
-darkstar:~$ touch b ba bab darkstar:~$ ls * b ba bab darkstar:~$ ls b? ba
+darkstar:~$ touch b ba bab 
+darkstar:~$ ls * 
+b ba bab 
+darkstar:~$ ls b? 
+ba
 
 ```
 
@@ -56,7 +68,8 @@ No, the fun doesn't stop there! In addition to these two we also have the bracke
 
 ```text
 
-darkstar:~$ ls a[1-4,9] a1 a2 a3 a4 a9
+darkstar:~$ ls a[1-4,9] 
+a1 a2 a3 a4 a9
 
 ```
 
@@ -64,7 +77,10 @@ Since Linux is case-sensitive, capital and lower-case letters are treated differ
 
 ```text
 
-darkstar:~$ ls 1[W-b] 1W 1X 1Y 1Z 1a 1b darkstar:~$ ls 1[w-B] /bin/ls: cannot access 1[b-W]: No such file or directory
+darkstar:~$ ls 1[W-b] 
+1W 1X 1Y 1Z 1a 1b 
+darkstar:~$ ls 1[w-B] 
+/bin/ls: cannot access 1[b-W]: No such file or directory
 
 ```
 
@@ -82,7 +98,11 @@ To get started, we're going to show you how to redirect the output of a program 
 
 ```text
 
-darkstar:~$ echo foo foo darkstar:~$ echo foo > /tmp/bar darkstar:~$ cat /tmp/bar foo
+darkstar:~$ echo foo 
+foo 
+darkstar:~$ echo foo > /tmp/bar 
+darkstar:~$ cat /tmp/bar 
+foo
 
 ```
 
@@ -90,7 +110,15 @@ In this example, we show you what `echo` would do if its stdout was not redirect
 
 ```text
 
-darkstar:~$ echo foo foo darkstar:~$ echo foo > /tmp/bar darkstar:~$ cat /tmp/bar foo darkstar:~$ echo foo2 >> /tmp/bar darkstar:~$ cat /tmp/bar foo foo2
+darkstar:~$ echo foo 
+foo 
+darkstar:~$ echo foo > /tmp/bar 
+darkstar:~$ cat /tmp/bar 
+foo 
+darkstar:~$ echo foo2 >> /tmp/bar 
+darkstar:~$ cat /tmp/bar 
+foo 
+foo2
 
 ```
 
@@ -98,7 +126,11 @@ You can also re-direct the standard error (or stderr) to a file. This is slightl
 
 ```text
 
-darkstar:~$ rm bar rm: cannot remove `bar': No such file or directory darkstar:~$ rm bar 2> /tmp/foo darkstar:~$ cat /tmp/foo rm: cannot remove `bar': No such file or directory
+darkstar:~$ rm bar 
+rm: cannot remove `bar': No such file or directory 
+darkstar:~$ rm bar 2> /tmp/foo 
+darkstar:~$ cat /tmp/foo 
+rm: cannot remove `bar': No such file or directory
 
 ```
 
@@ -114,7 +146,12 @@ Finally, you can actually redirect the output of one program as input to another
 
 ```text
 
-darkstar:~$ ps auxw | grep getty root 2632 0.0 0.0 1656 532 tty2 Ss+ Feb21 0:00 /sbin/agetty 38400 tty2 linux root 3199 0.0 0.0 1656 528 tty3 Ss+ Feb15 0:00 /sbin/agetty 38400 tty3 linux root 3200 0.0 0.0 1656 532 tty4 Ss+ Feb15 0:00 /sbin/agetty 38400 tty4 linux root 3201 0.0 0.0 1656 532 tty5 Ss+ Feb15 0:00 /sbin/agetty 38400 tty5 linux root 3202 0.0 0.0 1660 536 tty6 Ss+ Feb15 0:00 /sbin/agetty 38400 tty6 linux
+darkstar:~$ ps auxw | grep getty
+root      2632  0.0  0.0   1656   532 tty2     Ss+  Feb21   0:00 /sbin/agetty 38400 tty2 linux
+root      3199  0.0  0.0   1656   528 tty3     Ss+  Feb15   0:00 /sbin/agetty 38400 tty3 linux
+root      3200  0.0  0.0   1656   532 tty4     Ss+  Feb15   0:00 /sbin/agetty 38400 tty4 linux
+root      3201  0.0  0.0   1656   532 tty5     Ss+  Feb15   0:00 /sbin/agetty 38400 tty5 linux
+root      3202  0.0  0.0   1660   536 tty6     Ss+  Feb15   0:00 /sbin/agetty 38400 tty6 linux
 
 ```
 
@@ -124,7 +161,9 @@ darkstar:~$ ps auxw | grep getty root 2632 0.0 0.0 1656 532 tty2 Ss+ Feb21 0:00 
 
 ```text
 
-darkstar:~$ jobs [1]- Stopped vi TODO [2]+ Stopped vi chapter_05.xml
+darkstar:~$ jobs 
+[1]- Stopped vi TODO 
+[2]+ Stopped vi chapter_05.xml
 
 ```
 
@@ -132,7 +171,8 @@ In order to return to a suspended task, run the `fg` built-in to bring the the m
 
 ```text
 
-darkstar:~$ fg # "vi TODO" darkstar:~$ fg 1 # "vi chapter_05.xml"
+darkstar:~$ fg # "vi TODO" 
+darkstar:~$ fg 1 # "vi chapter_05.xml"
 
 ```
 
@@ -168,7 +208,9 @@ The cause here is a special environment variable that controls the `bash` prompt
 
 ```text
 
-# ~/.bashrc . /etc/profile . ~/.bash_profile
+#~/.bashrc 
+. /etc/profile 
+. ~/.bash_profile
 
 ```
 
@@ -178,7 +220,8 @@ When using the above, all your login and interactive shells will have the same e
 
 ```text
 
-darkstar:~$ echo $PS1 \u@\h:\w\$
+darkstar:~$ echo $PS1 
+\u@\h:\w\$
 
 ```
 
@@ -188,7 +231,12 @@ Since we've gone through all this trouble to discuss the default prompt, I thoug
 
 ```text
 
-Wed Jan 14 12:08 AM alan@raven:~$ echo $PS1 \d \@\n\u@\h:\w$ HOST: raven - JOBS: 0 - TTY: 3 alan@~/Desktop/sb_3.0:$ echo $PS1 HOST: \H - JOBS: \j - TTY: \l\n\u@\w:\$
+Wed Jan 14 12:08 AM 
+alan@raven:~$ echo $PS1 
+\d \@\n\u@\h:\w$ 
+HOST: raven - JOBS: 0 - TTY: 3 
+alan@~/Desktop/sb_3.0:$ echo $PS1 
+HOST: \H - JOBS: \j - TTY: \l\n\u@\w:\$
 
 ```
 

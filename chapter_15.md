@@ -6,7 +6,25 @@ Wireless networking is somewhat more complicated than traditional wired networki
 
 ```text
 
-darkstar:~# iwconfig lo no wireless extensions. eth0 no wireless extensions. wmaster0 no wireless extensions. wlan0 IEEE 802.11abgn ESSID:"nest" Mode:Managed Frequency:2.432 GHz Access Point: 00:13:10:EA:4E:BD Bit Rate=54 Mb/s Tx-Power=17 dBm Retry min limit:7 RTS thr:off Fragment thr=2352 B Encryption key:off Power Management:off Link Quality=100/100 Signal level:-42 dBm Rx invalid nwid:0 Rx invalid crypt:0 Rx invalid frag:0 Tx excessive retries:0 Invalid misc:0 Missed beacon:0 tun0 no wireless extensions.
+darkstar:~# iwconfig
+lo        no wireless extensions.
+
+eth0      no wireless extensions.
+
+wmaster0  no wireless extensions.
+
+wlan0     IEEE 802.11abgn  ESSID:"nest"  
+          Mode:Managed  Frequency:2.432 GHz  Access Point:
+00:13:10:EA:4E:BD   
+          Bit Rate=54 Mb/s   Tx-Power=17 dBm   
+          Retry min limit:7   RTS thr:off   Fragment thr=2352 B   
+          Encryption key:off
+          Power Management:off
+          Link Quality=100/100  Signal level:-42 dBm  
+          Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0
+          Tx excessive retries:0  Invalid misc:0   Missed beacon:0
+
+tun0      no wireless extensions.
 
 ```
 
@@ -16,7 +34,8 @@ Typical wireless networks operate on 11 different frequencies. In order to conne
 
 ```text
 
-darkstar:~# iwconfig wlan0 essid nest \ freq 2.432G
+darkstar:~# iwconfig wlan0 essid nest \ 
+freq 2.432G
 
 ```
 
@@ -24,7 +43,8 @@ The `freq` and `channel` arguments control basically the same thing. You only ne
 
 ```text
 
-darkstar:~# iwconfig wlan0 essid nest \ channel auto
+darkstar:~# iwconfig wlan0 essid nest 
+\ channel auto
 
 ```
 
@@ -36,7 +56,10 @@ Wireless networking is by its very nature less secure than wired networking. Hav
 
 ```text
 
-darkstar:~# iwconfig wlan0 \ key cf80baf8bf01a160de540bfb1c darkstar:~# iwconfig wlan0 \ key s:thisisapassword
+darkstar:~# iwconfig wlan0 \ 
+    key cf80baf8bf01a160de540bfb1c 
+darkstar:~# iwconfig wlan0 \ 
+    key s:thisisapassword
 
 ```
 
@@ -48,7 +71,25 @@ Unfortunately, there's no easy way to manually configure a WPA2 protected networ
 
 ```text
 
-# /etc/wpa_supplicant.conf # ======================== # This line enables the use of wpa_cli which is used by rc.wireless # if possible (to check for successful association) ctrl_interface=/var/run/wpa_supplicant # By default, only root (group 0) may use wpa_cli ctrl_interface_group=0 eapol_version=1 ap_scan=1 fast_reauth=1 #country=US # WPA protected network, supply your own ESSID and WPAPSK here: network={ scan_ssid=1 ssid="nest" key_mgmt=WPA-PSK psk="secret passphrase" }
+#/etc/wpa_supplicant.conf
+#========================
+#This line enables the use of wpa_cli which is used by rc.wireless
+#if possible (to check for successful association)
+ctrl_interface=/var/run/wpa_supplicant
+#By default, only root (group 0) may use wpa_cli
+ctrl_interface_group=0
+eapol_version=1
+ap_scan=1
+fast_reauth=1
+#country=US
+
+#WPA protected network, supply your own ESSID and WPAPSK here:
+network={
+  scan_ssid=1
+  ssid="nest"
+  key_mgmt=WPA-PSK
+  psk="secret passphrase"
+}
 
 ```
 
@@ -58,17 +99,40 @@ The block of text we're interested in is the network block enclosed by curly bra
 
 Welcome back to `rc.inet1.conf` . You're recall that in we used this configuration file to automatically configure NICs whenever Slackware boots. Now, we will use it to configure wifi as well.
 
+**Note** 
 If you're using WPA2, you'll still need to setup `wpa_supplicant.conf` properly first, however.
 
 Recall that each NIC had a name or number that identified the variables that correspond with it? The same hold true for wifi NICs, only they have even more variables due to the added complexity of wireless networking.
 
 ```text
 
-# rc.inet1.conf (excert) # ====================== ## Example config information for wlan0. Uncomment the lines you need and fill ## in your info. (You may not need all of these for your wireless network) IFNAME[4]="wlan0" IPADDR[4]="" NETMASK[4]="" USE_DHCP[4]="yes" #DHCP_HOSTNAME[4]="icculus-wireless" #DHCP_KEEPRESOLV[4]="yes" #DHCP_KEEPNTP[4]="yes" #DHCP_KEEPGW[4]="yes" #DHCP_IPADDR[4]="" WLAN_ESSID[4]="nest" #WLAN_MODE[4]=Managed #WLAN_RATE[4]="54M auto" #WLAN_CHANNEL[4]="auto" #WLAN_KEY[4]="D5AD1F04ACF048EC2D0B1C80C7" #WLAN_IWPRIV[4]="set AuthMode=WPAPSK | \ # set EncrypType=TKIP | \ # set WPAPSK=96389dc66eaf7e6efd5b5523ae43c7925ff4df2f8b7099495192d44a774fda16" WLAN_WPA[4]="wpa_supplicant" #WLAN_WPADRIVER[4]="ndiswrapper"
+#rc.inet1.conf (excert)
+#======================
+##Example config information for wlan0.  Uncomment the lines you need and fill
+##in your info.  (You may not need all of these for your wireless network)
+IFNAME[4]="wlan0"
+IPADDR[4]=""
+NETMASK[4]=""
+USE_DHCP[4]="yes"
+#DHCP_HOSTNAME[4]="icculus-wireless"
+#DHCP_KEEPRESOLV[4]="yes"
+#DHCP_KEEPNTP[4]="yes"
+#DHCP_KEEPGW[4]="yes"
+#DHCP_IPADDR[4]=""
+WLAN_ESSID[4]="nest"
+#WLAN_MODE[4]=Managed
+#WLAN_RATE[4]="54M auto"
+#WLAN_CHANNEL[4]="auto"
+#WLAN_KEY[4]="D5AD1F04ACF048EC2D0B1C80C7"
+#WLAN_IWPRIV[4]="set AuthMode=WPAPSK | \
+#set EncrypType=TKIP | \
+#set WPAPSK=96389dc66eaf7e6efd5b5523ae43c7925ff4df2f8b7099495192d44a774fda16"
+WLAN_WPA[4]="wpa_supplicant"
+#WLAN_WPADRIVER[4]="ndiswrapper"
 
 ```
 
-When we discussed wired ethernet, each n in the variable corresponded with the n in `ethn` . Here however, that no longer holds true. Notice that the variable IFNAME[4] has a value of wlan0 . It is common for wireless cards to have an interface name other than ethn and that is reflected here. When `rc.inet1.conf` is read by the start-up scripts, Slackware knows to apply all these options to the wlan0 wifi NIC instead of the (probably non-existant) eth4 wired NIC. Many of the other options are the same. IP address information is added in exactly the same way we discussed for wired network cards in ; however, we have a lot of new variables that need some explanation.
+When we discussed wired ethernet, each n in the variable corresponded with the n in `ethn` . Here however, that no longer holds true. Notice that the variable IFNAME[4] has a value of wlan0 . It is common for wireless cards to have an interface name other than ethn and that is reflected here. When `rc.inet1.conf` is read by the start-up scripts, Slackware knows to apply all these options to the wlan0 wifi NIC instead of the (probably non-existant) eth4 wired NIC. Many of the other options are the same. IP address information is added in exactly the same way we discussed for wired network cards in Chapter, Networking; however, we have a lot of new variables that need some explanation.
 
 To begin, WLAN_ESSID[n] and WLAN_CHANNEL[n] should be self-explainatory by now; they refer the the essid and frequency to use. WLAN_MODE[n] is either `managed` or `ad-hoc` . Anyone connecting to an access point will want to use managed mode. WLAN_KEY[n] is the WEP key to use, if you're forced to use WEP. WLAN_IWPRIV[n] is a very complicated variable that sets other variables inside itself. WLAN_IWPRIV[n] is used for WPA2 networks. Here you tell Slackware what authentication mode, encryption type, and key to use for WPA2 connections. Please note that WLAN_KEY[n] and WLAN_IWPRIV[n] are mutually exclusive; you can't use both on the same interface. If you successfully configure all this, then Slackware will attempt to connect to your wireless network as soon as the system boots.
 
@@ -80,7 +144,15 @@ Introducing `wicd` (8), the premier wired and wireless network connection manage
 
 ```text
 
-# rc.inet1.conf # ============= # Config information for eth0: IPADDR[0]="" NETMASK[0]="" USE_DHCP[0]="no" DHCP_HOSTNAME[0]="" # Default gateway IP address: GATEWAY=""
+#rc.inet1.conf
+#=============
+#Config information for eth0:
+IPADDR[0]=""
+NETMASK[0]=""
+USE_DHCP[0]="no"
+DHCP_HOSTNAME[0]=""
+#Default gateway IP address:
+GATEWAY=""
 
 ```
 
@@ -88,7 +160,9 @@ Now we can install `wicd` , setup the daemon to run on system boot-up, and begin
 
 ```text
 
-darkstar:~# installpkg /path/to/extra/wicd/wicd-1.6.2.1-1.txz darkstar:~# chmod +x /etc/rc.d/rc.wicd darkstar:~# /etc/rc.d/rc.wicd start
+darkstar:~# installpkg /path/to/extra/wicd/wicd-1.6.2.1-1.txz
+darkstar:~# chmod +x /etc/rc.d/rc.wicd
+darkstar:~# /etc/rc.d/rc.wicd start
 
 ```
 

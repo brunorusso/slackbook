@@ -14,7 +14,15 @@ So what modules are currently loaded on your computer and how do we load and unl
 
 ```text
 
-darkstar:~# lsmod Module Size Used by nls_utf8 1952 1 cifs 240600 2 i915 168584 2 drm 168128 3 i915 i2c_algo_bit 6468 1 i915 tun 12740 1 ... many more lines ommitted ...
+darkstar:~# lsmod 
+Module          Size        Used by 
+nls_utf8        1952        1 
+cifs            240600      2 
+i915            168584      2 
+drm             168128      3 i915 
+i2c_algo_bit    6468        1 i915 
+tun             12740       1 
+... many more lines ommitted ...
 
 ```
 
@@ -24,7 +32,15 @@ There are two applications for loading modules: `insmod` (8) and `modprobe` (8).
 
 ```text
 
-darkstar:~# insmod ext3 darkstar:~# modprobe ext4 darkstar:~# lsmod | grep ext ext4 239928 1 jbd2 59088 1 ext4 crc16 1984 1 ext4 ext3 139408 0 jbd 48520 1 ext3 mbcache 8068 2 ext4,ext3
+darkstar:~# insmod ext3 
+darkstar:~# modprobe ext4 
+darkstar:~# lsmod | grep ext
+ext4        239928 1 
+jbd2         59088 1 ext4 
+crc16         1984 1 ext4 
+ext3        139408 0 
+jbd          48520 1 ext3 
+mbcache       8068 2 ext4,ext3
 
 ```
 
@@ -32,7 +48,9 @@ Removing modules can be a tricky process, and once again we have two programs fo
 
 ```text
 
-darkstar:~# rmmod ext3 darkstar:~# modprobe -r ext4 darkstar:~# lsmod | grep ext
+darkstar:~# rmmod ext3 
+darkstar:~# modprobe -r ext4 
+darkstar:~# lsmod | grep ext
 
 ```
 
@@ -48,7 +66,9 @@ The first step is ensuring you have the kernel source code installed on your sys
 
 ```text
 
-darkstar:~# ls -l /usr/src lrwxrwxrwx 1 root root 14 2009-07-22 19:59 linux -> linux-2.6.29.6/ drwxr-xr-x 23 root root 4096 2010-03-17 19:00 linux-2.6.29.6/
+darkstar:~# ls -l /usr/src 
+lrwxrwxrwx 1 root root 14 2009-07-22 19:59 linux -> linux-2.6.29.6/ 
+drwxr-xr-x 23 root root 4096 2010-03-17 19:00 linux-2.6.29.6/
 
 ```
 
@@ -58,7 +78,11 @@ Unless you are very familiar with configuring kernels, you should always start w
 
 ```text
 
-darkstar:~# mount /mnt/cdrom darkstar:~# cd /mnt/cdrom/kernels darkstar:/mnt/cdrom/kernels# ls VERSIONS.TXT huge.s/ generic.s/ speakup.s/ darkstar:/mnt/cdrom/kernels# ls genric.s System.map.gz bzImage config
+darkstar:~# mount /mnt/cdrom 
+darkstar:~# cd /mnt/cdrom/kernels 
+darkstar:/mnt/cdrom/kernels# ls 
+VERSIONS.TXT huge.s/ generic.s/ speakup.s/ 
+darkstar:/mnt/cdrom/kernels# ls genric.s System.map.gz bzImage config
 
 ```
 
@@ -69,6 +93,7 @@ You can replace the default `.config` file easily by copying or downloading the 
 darkstar:/mnt/cdrom/kernels# cp generic.s/config /usr/src/linux/.config
 
 ```
+**Important**
 
 The Slackware kernel file lacks the "dot" while the kernel file includes it. If you forget, or simply copy the `config` to `/usr/src` whatever `.config` file was already present will be used instead.
 
@@ -86,7 +111,22 @@ If you are upgrading to a newer kernel release, you will definitely want to use 
 
 ```text
 
-darkstar:/usr/src/linux# make oldconfig scripts/kconfig/conf -o arch/x86/Kconfig * * Restart config... * * * File systems * Second extended fs support (EXT2_FS) [M/n/y/?] m Ext2 extended attributes (EXT2_FS_XATTR) [N/y/?] n Ext2 execute in place support (EXT2_FS_XIP) [N/y/?] n Ext3 journalling file system support (EXT3_FS) [M/n/y/?] m Ext3 extended attributes (EXT3_FS_XATTR) [Y/n/?] y Ext3 POSIX Access Control Lists (EXT3_FS_POSIX_ACL) [Y/n/?] y Ext3 Security Labels (EXT3_FS_SECURITY) [Y/n/?] y The Extended 4 (ext4) filesystem (EXT4_FS) [N/m/y/?] (NEW) m
+darkstar:/usr/src/linux# make oldconfig 
+scripts/kconfig/conf -o arch/x86/Kconfig 
+* 
+* Restart config... 
+* 
+* 
+* File systems 
+* 
+Second extended fs support (EXT2_FS) [M/n/y/?] m 
+    Ext2 extended attributes (EXT2_FS_XATTR) [N/y/?] n 
+    Ext2 execute in place support (EXT2_FS_XIP) [N/y/?] n 
+Ext3 journalling file system support (EXT3_FS) [M/n/y/?] m 
+    Ext3 extended attributes (EXT3_FS_XATTR) [Y/n/?] y 
+        Ext3 POSIX Access Control Lists (EXT3_FS_POSIX_ACL) [Y/n/?] y 
+        Ext3 Security Labels (EXT3_FS_SECURITY) [Y/n/?] y 
+The Extended 4 (ext4) filesystem (EXT4_FS) [N/m/y/?] (NEW) m
 
 ```
 
@@ -96,7 +136,18 @@ For more serious configuration tasks, there are a multitude of options. The linu
 
 ```text
 
-darkstar:/usr/src/linux# make config scripts/kconfig/conf arch/x86/Kconfig * * Linux Kernel Configuration * * * General setup * Prompt for development and/or incomplete code/drivers (EXPERIMENTAL) [Y/n/?] Y Local version - append to kernel release (LOCALVERSION) [] -test Automatically append version information to the version string (LOCALVERSION_AUTO) [N/y/?] n Support for paging of anonymous memory (swap) (SWAP) [Y/n/?]
+darkstar:/usr/src/linux# make config 
+scripts/kconfig/conf arch/x86/Kconfig 
+* 
+* Linux Kernel Configuration 
+* 
+* 
+* General setup 
+* 
+Prompt for development and/or incomplete code/drivers (EXPERIMENTAL) [Y/n/?] Y 
+Local version - append to kernel release (LOCALVERSION) [] -test 
+Automatically append version information to the version string (LOCALVERSION_AUTO) [N/y/?] n 
+Support for paging of anonymous memory (swap) (SWAP) [Y/n/?]
 
 ```
 
@@ -106,13 +157,25 @@ Running `make menuconfig` from a terminal will present you with the friendly cur
 
 ![image](img/make-menuconfig-w.png)
 
+**Warning**
+
 If you are compiling a kernel that is the same release as the stock Slackware kernel, you must set the "Local version" option. This is found on the "General setup" submenu. Failure to set this will result in your kernel compile over-writing all the modules used by the stock kernels. This can quickly render your system unbootable.
 
 Once you've finished configuring the kernel, it's time to begin compiling it. There are many different methods for this, but the most reliable is to use `bzImage` . When you pass this argument to `make` , the kernel compilation will begin and you will see lots of data scroll through the terminal until either the compile process is complete or a fatal error is encountered.
 
 ```text
 
-darkstar:/usr/src/linux# make bzImage scripts/kconfig/conf -s arch/x86/Kconfig CHK include/linux/version.h CHK include/linux/utsrelease.h SYMLINK include/asm -> include/asm-x86 CALL scripts/checksyscalls.sh CC scripts/mod/empty.o HOSTCC scripts/mod/mk_elfconfig MKELF scripts/mod/elfconfig.h HOSTCC scripts/mod/file2alias.o ... many hundreds of lines ommitted ...
+darkstar:/usr/src/linux# make bzImage 
+scripts/kconfig/conf -s arch/x86/Kconfig 
+    CHK include/linux/version.h 
+    CHK include/linux/utsrelease.h 
+    SYMLINK include/asm -> include/asm-x86 
+    CALL scripts/checksyscalls.sh 
+    CC scripts/mod/empty.o 
+    HOSTCC scripts/mod/mk_elfconfig 
+    MKELF scripts/mod/elfconfig.h 
+    HOSTCC scripts/mod/file2alias.o 
+... many hundreds of lines ommitted ...
 
 ```
 
@@ -120,7 +183,13 @@ If the process ends in an error, you should check your kernel configuration firs
 
 ```text
 
-darkstar:/usr/src/linux# make modules CHK include/linux/version.h CHK include/linux/utsrelease.h SYMLINK include/asm -> include/asm-x86 CALL scripts/checksyscalls.sh HOSTCC scripts/mod/file2alias.o ... many thousands of lines omitted ...
+darkstar:/usr/src/linux# make modules 
+    CHK include/linux/version.h 
+    CHK include/linux/utsrelease.h 
+    SYMLINK include/asm -> include/asm-x86 
+    CALL scripts/checksyscalls.sh 
+    HOSTCC scripts/mod/file2alias.o 
+... many thousands of lines omitted ...
 
 ```
 
@@ -128,7 +197,8 @@ If both the kernel and the modules compiles finished sucessfully, we're ready to
 
 ```text
 
-darkstar:/usr/src/linux# cat arch/x86/boot/bzImage > /boot/vmlinuz-release_number-local_version darkstar:/usr/src/linux# make modules_install
+darkstar:/usr/src/linux# cat arch/x86/boot/bzImage > /boot/vmlinuz-release_number-local_version 
+darkstar:/usr/src/linux# make modules_install
 
 ```
 

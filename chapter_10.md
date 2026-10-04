@@ -6,7 +6,8 @@ As we've discussed, Slackware Linux is a multi-user operating system. Because of
 
 ```text
 
-darkstar:~$ ls -l /bin/ls -rwxr-xr-x 1 root root 81820 2007-06-08 21:12 /bin/ls
+darkstar:~$ ls -l /bin/ls 
+-rwxr-xr-x 1 root root 81820 2007-06-08 21:12 /bin/ls
 
 ```
 
@@ -24,7 +25,8 @@ Let's look at the permissions on a directory now.
 
 ```text
 
-darkstar:~$ ls -ld /home/alan drwxr-x--- 60 alan users 3040 2008-06-06 17:14 /home/alan/
+darkstar:~$ ls -ld /home/alan 
+drwxr-x--- 60 alan users 3040 2008-06-06 17:14 /home/alan/
 
 ```
 
@@ -38,7 +40,15 @@ The first tool we'll discuss is the useful `chown` (1) command. Using `chown` , 
 
 ```text
 
-darkstar:~# ls -l /tmp/foo total 0 -rw-r--r-- 1 alan users 0 2008-06-06 22:29 a -rw-r--r-- 1 alan users 0 2008-06-06 22:29 b darkstar:~# chown root /tmp/foo/a darkstar:~# ls -l /tmp/foo total 0 -rw-r--r-- 1 root users 0 2008-06-06 22:29 a -rw-r--r-- 1 alan users 0 2008-06-06 22:29 b
+darkstar:~# ls -l /tmp/foo
+total 0
+-rw-r--r-- 1 alan users 0 2008-06-06 22:29 a
+-rw-r--r-- 1 alan users 0 2008-06-06 22:29 b
+darkstar:~# chown root /tmp/foo/a
+darkstar:~# ls -l /tmp/foo
+total 0
+-rw-r--r-- 1 root users 0 2008-06-06 22:29 a
+-rw-r--r-- 1 alan users 0 2008-06-06 22:29 b
 
 ```
 
@@ -46,7 +56,11 @@ By using a colon after the user account, you may also specify a new group accoun
 
 ```text
 
-darkstar:~# chown root:root /tmp/foo/b darkstar:~# ls -l /tmp/foo total 0 -rw-r--r-- 1 root users 0 2008-06-06 22:29 a -rw-r--r-- 1 root root 0 2008-06-06 22:29 b
+darkstar:~# chown root:root /tmp/foo/b
+darkstar:~#  ls -l /tmp/foo
+total 0
+-rw-r--r-- 1 root users 0 2008-06-06 22:29 a
+-rw-r--r-- 1 root root  0 2008-06-06 22:29 b
 
 ```
 
@@ -62,7 +76,12 @@ Specifying a colon and a group name without a user name will simply change the g
 
 ```text
 
-darkstar:~# chown :wheel /tmp/foo/a darkstar:~# ls -l /tmp/foo ls -l /tmp/foo total 0 -rw-r--r-- 1 root wheel 0 2008-06-06 22:29 a -rw-r--r-- 1 root root 0 2008-06-06 22:29 b
+darkstar:~# chown :wheel /tmp/foo/a 
+darkstar:~# ls -l /tmp/foo 
+ls -l /tmp/foo 
+total 0 
+-rw-r--r-- 1 root wheel 0 2008-06-06 22:29 a 
+-rw-r--r-- 1 root root 0 2008-06-06 22:29 b
 
 ```
 
@@ -82,7 +101,11 @@ By adding these values together, we can reach any number between 0 and 7 and spe
 
 ```text
 
-darkstar:~# ls -l /tmp/foo/a -rw-r--r-- 1 root root 0 2008-06-06 22:29 a darkstar:~# chmod 750 /tmp/foo/a darkstar:~# ls -l /tmp/foo/a -rwxr-x--- 1 root root 0 2008-06-06 22:29 a
+darkstar:~# ls -l /tmp/foo/a
+-rw-r--r-- 1 root root  0 2008-06-06 22:29 a
+darkstar:~# chmod 750 /tmp/foo/a
+darkstar:~# ls -l /tmp/foo/a
+-rwxr-x--- 1 root root  0 2008-06-06 22:29 a
 
 ```
 
@@ -104,7 +127,21 @@ To use the letter values with `chmod` , you must specify which set to use them w
 
 ```text
 
-darkstar:/tmp/foo# ls -l total 0 -rw-r--r-- 1 alan users 0 2008-06-06 23:37 a -rw-r--r-- 1 alan users 0 2008-06-06 23:37 b -rw-r--r-- 1 alan users 0 2008-06-06 23:37 c -rw-r--r-- 1 alan users 0 2008-06-06 23:37 d darkstar:/tmp/foo# chmod u+x a darkstar:/tmp/foo# chmod g+w b darkstar:/tmp/foo# chmod u+x,g+x,o-r c darkstar:/tmp/foo# chmod u+rx-w,g+r,o-r d darkstar:/tmp/foo# ls -l -rwxr--r-- 1 alan users 0 2008-06-06 23:37 a* -rw-rw-r-- 1 alan users 0 2008-06-06 23:37 b -rwxr-x--- 1 alan users 0 2008-06-06 23:37 c* -r-xr----- 1 alan users 0 2008-06-06 23:37 d*
+darkstar:/tmp/foo# ls -l
+total 0
+-rw-r--r-- 1 alan users 0 2008-06-06 23:37 a
+-rw-r--r-- 1 alan users 0 2008-06-06 23:37 b
+-rw-r--r-- 1 alan users 0 2008-06-06 23:37 c
+-rw-r--r-- 1 alan users 0 2008-06-06 23:37 d
+darkstar:/tmp/foo# chmod u+x a
+darkstar:/tmp/foo# chmod g+w b
+darkstar:/tmp/foo# chmod u+x,g+x,o-r c
+darkstar:/tmp/foo# chmod u+rx-w,g+r,o-r d
+darkstar:/tmp/foo# ls -l
+-rwxr--r-- 1 alan users 0 2008-06-06 23:37 a*
+-rw-rw-r-- 1 alan users 0 2008-06-06 23:37 b
+-rwxr-x--- 1 alan users 0 2008-06-06 23:37 c*
+-r-xr----- 1 alan users 0 2008-06-06 23:37 d*
 
 ```
 
@@ -128,7 +165,8 @@ So what about the sticky bit? The sticky bit restricts the ability to move or de
 
 ```text
 
-darkstar:~# ls -ld /tmp drwxrwxrwt 1 root root 34844 2008-03-24 16:11 /tmp
+darkstar:~# ls -ld /tmp 
+drwxrwxrwt 1 root root 34844 2008-03-24 16:11 /tmp
 
 ```
 
@@ -144,7 +182,8 @@ When using octal permissions, you must specify an additional leading octal value
 
 ```text
 
-darkstar:~# chmod 1777 /tmp darkstar:~# chmod 4711 /usr/bin/passwd
+darkstar:~# chmod 1777 /tmp 
+darkstar:~# chmod 4711 /usr/bin/passwd
 
 ```
 
@@ -152,6 +191,7 @@ Using the alphabetic permission values is slightly different. Assuming the two f
 
 ```text
 
-darkstar:~# chmod ug+rwx,o+rwt /tmp darkstar:~# chmod u+rws,go+x /usr/bin/passwd
+darkstar:~# chmod ug+rwx,o+rwt /tmp 
+darkstar:~# chmod u+rws,go+x /usr/bin/passwd
 
 ```

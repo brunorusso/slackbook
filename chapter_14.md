@@ -14,7 +14,31 @@ Ok, so you've installed Slackware, you've setup a desktop, but you can't get it 
 
 ```text
 
-darkstar:~# ifconfig lo Link encap:Local Loopback inet addr:127.0.0.1 Mask:255.0.0.0 inet6 addr: ::1/128 Scope:Host UP LOOPBACK RUNNING MTU:16436 Metric:1 RX packets:699 errors:0 dropped:0 overruns:0 frame:0 TX packets:699 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:0 RX bytes:39518 (38.5 KiB) TX bytes:39518 (38.5 KiB) wlan0 Link encap:Ethernet HWaddr 00:1c:b3:ba:ad:4c inet addr:192.168.1.198 Bcast:192.168.1.255 Mask:255.255.255.0 inet6 addr: fe80::21c:b3ff:feba:ad4c/64 Scope:Link UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1 RX packets:1630677 errors:0 dropped:0 overruns:0 frame:0 TX packets:1183224 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:1000 RX bytes:1627370207 (1.5 GiB) TX bytes:163308463 (155.7 MiB) wmaster0 Link encap:UNSPEC HWaddr 00-1C-B3-BA-AD-4C-00-00-00-00-00-00-00-00-00-00 UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1 RX packets:0 errors:0 dropped:0 overruns:0 frame:0 TX packets:0 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:1000 RX bytes:0 (0.0 B) TX bytes:0 (0.0 B)
+darkstar:~# ifconfig
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:699 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:699 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:39518 (38.5 KiB)  TX bytes:39518 (38.5 KiB)
+
+wlan0     Link encap:Ethernet  HWaddr 00:1c:b3:ba:ad:4c  
+          inet addr:192.168.1.198  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::21c:b3ff:feba:ad4c/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1630677 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1183224 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:1627370207 (1.5 GiB)  TX bytes:163308463 (155.7 MiB)
+
+wmaster0  Link encap:UNSPEC  HWaddr 00-1C-B3-BA-AD-4C-00-00-00-00-00-00-00-00-00-00  
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
 
 ```
 
@@ -22,7 +46,39 @@ As you can clearly see here, when run without any arguments, `ifconfig` will dis
 
 ```text
 
-darkstar:~# ifconfig -a eth0 Link encap:Ethernet HWaddr 00:19:e3:45:90:44 UP BROADCAST MULTICAST MTU:1500 Metric:1 RX packets:122780 errors:0 dropped:0 overruns:0 frame:0 TX packets:124347 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:1000 RX bytes:60495452 (57.6 MiB) TX bytes:17185220 (16.3 MiB) Interrupt:16 lo Link encap:Local Loopback inet addr:127.0.0.1 Mask:255.0.0.0 inet6 addr: ::1/128 Scope:Host UP LOOPBACK RUNNING MTU:16436 Metric:1 RX packets:699 errors:0 dropped:0 overruns:0 frame:0 TX packets:699 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:0 RX bytes:39518 (38.5 KiB) TX bytes:39518 (38.5 KiB) wlan0 Link encap:Ethernet HWaddr 00:1c:b3:ba:ad:4c inet addr:192.168.1.198 Bcast:192.168.1.255 Mask:255.255.255.0 inet6 addr: fe80::21c:b3ff:feba:ad4c/4 Scope:Link UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1 RX packets:1630677 errors:0 dropped:0 overruns:0 frame:0 TX packets:1183224 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:1000 RX bytes:1627370207 (1.5 GiB) TX bytes:163308463 (155.7 MiB) wmaster0 Link encap:UNSPEC HWaddr 00-1C-B3-BA-AD-4C-00-00-00-00-00-00-00-00-00-00 UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1 RX packets:0 errors:0 dropped:0 overruns:0 frame:0 TX packets:0 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:1000 RX bytes:0 (0.0 B) TX bytes:0 (0.0 B)
+darkstar:~# ifconfig -a
+eth0      Link encap:Ethernet  HWaddr 00:19:e3:45:90:44  
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:122780 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:124347 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:60495452 (57.6 MiB)  TX bytes:17185220 (16.3 MiB)
+          Interrupt:16 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:699 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:699 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:39518 (38.5 KiB)  TX bytes:39518 (38.5 KiB)
+
+wlan0     Link encap:Ethernet  HWaddr 00:1c:b3:ba:ad:4c  
+          inet addr:192.168.1.198  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::21c:b3ff:feba:ad4c/4 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1630677 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1183224 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:1627370207 (1.5 GiB)  TX bytes:163308463 (155.7 MiB)
+
+wmaster0  Link encap:UNSPEC  HWaddr 00-1C-B3-BA-AD-4C-00-00-00-00-00-00-00-00-00-00  
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
 
 ```
 
@@ -30,7 +86,16 @@ Notice that the eth0 interface is now listed among the returns. `ifconfig` can a
 
 ```text
 
-darkstar:~# ifconfig eth0 192.168.1.1 netmask 255.255.255.0 darkstar:~# ifconfig eth0 eth0 Link encap:Ethernet HWaddr 00:19:e3:45:90:44 inet addr:192.168.1.1 Bcast:192.168.1.255 Mask:255.255.255.0 UP BROADCAST MULTICAST MTU:1500 Metric:1 RX packets:122780 errors:0 dropped:0 overruns:0 frame:0 TX packets:124347 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:1000 RX bytes:60495452 (57.6 MiB) TX bytes:17185220 (16.3 MiB) Interrupt:16
+darkstar:~# ifconfig eth0 192.168.1.1 netmask 255.255.255.0
+darkstar:~# ifconfig eth0
+eth0      Link encap:Ethernet  HWaddr 00:19:e3:45:90:44  
+          inet addr:192.168.1.1  Bcast:192.168.1.255  Mask:255.255.255.0
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:122780 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:124347 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:60495452 (57.6 MiB)  TX bytes:17185220 (16.3 MiB)
+          Interrupt:16 
 
 ```
 
@@ -40,7 +105,11 @@ Next on our stop through networking land is the equally powerful `route` (8). Th
 
 ```text
 
-darkstar:~# route Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 192.168.1.0 * 255.255.255.0 U 0 0 0 eth0 loopback * 255.0.0.0 U 0 0 0 lo
+darkstar:~# route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.1.0     *               255.255.255.0   U     0      0        0 eth0
+loopback        *               255.0.0.0       U     0      0        0 lo
 
 ```
 
@@ -48,7 +117,13 @@ I won't explain everything here, but the general information should be easy to p
 
 ```text
 
-darkstar:~# route add default gw 192.168.1.254 darkstar:~# route Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 192.168.1.0 * 255.255.255.0 U 0 0 0 eth0 loopback * 255.0.0.0 U 0 0 0 lo default 192.168.1.254 0.0.0.0 UG 0 0 0 eth0
+darkstar:~# route add default gw 192.168.1.254
+darkstar:~# route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.1.0     *               255.255.255.0   U     0      0        0 eth0
+loopback        *               255.0.0.0       U     0      0        0 lo
+default         192.168.1.254   0.0.0.0         UG    0      0        0 eth0
 
 ```
 
@@ -58,8 +133,9 @@ Fortunately, setting up your computer to use an external (or even an internal) D
 
 ```text
 
-# /etc/resolv.conf search lizella.net nameserver 192.168.1.254
-
+#/etc/resolv.conf
+search lizella.net
+nameserver 192.168.1.254
 ```
 
 Many users won't need the `search` line. This is used to map hostnames to domain names. Basically, if I attempt to connect to "barnowl", the computer knows to look for "barnowl.lizella.net" thanks to this search line. We're mainly interested in the `nameserver` line. This tells Slackware what domain name servers (DNS) to connect to. Generally speaking, these should always be specified by IP address. If you know what DNS servers you should use, you can just add them one at a time to individual nameserver lines. In fact, I don't know of any practical limit to the number of nameservers that can be specified in `resolv.conf` , so add as many as you like. Once this is done, you should be able to communicate with other hosts via their fully qualified domain name.
@@ -78,7 +154,13 @@ If everything went according to plan, your NIC should be properly configured, an
 
 ```text
 
-darkstar:~/ dhclient eth0 Listening on LPF/eth0/00:1c:b3:ba:ad:4c Sending on LPF/eth0/00:1c:b3:ba:ad:4c Sending on Socket/fallback DHCPREQUEST on eth0 to 255.255.255.255 port 67 DHCPACK from 192.168.1.254 bound to 192.168.1.198 -- renewal in 8547 seconds.
+darkstar:~/ dhclient eth0
+Listening on LPF/eth0/00:1c:b3:ba:ad:4c
+Sending on   LPF/eth0/00:1c:b3:ba:ad:4c
+Sending on   Socket/fallback
+DHCPREQUEST on eth0 to 255.255.255.255 port 67
+DHCPACK from 192.168.1.254
+bound to 192.168.1.198 -- renewal in 8547 seconds.
 
 ```
 
@@ -92,7 +174,13 @@ Manually configuring interfaces is an important skill to have, but it can become
 
 ```text
 
-# Config information for eth0: IPADDR[0]="192.168.1.250" NETMASK[=]"255.255.255.0" USE_DHCP[0]="" DHCP_HOSTNAME[0]="" # Some lines ommitted. GATEWAY="192.168.1.254"
+#Config information for eth0:
+IPADDR[0]="192.168.1.250"
+NETMASK[=]"255.255.255.0"
+USE_DHCP[0]=""
+DHCP_HOSTNAME[0]=""
+#Some lines ommitted.
+GATEWAY="192.168.1.254"
 
 ```
 
@@ -106,7 +194,11 @@ If you need to use static IP addressing, you will have to obtain a unique static
 
 ```text
 
-# Config information for eth1: IPADDR[1]="" NETMASK[1]="" USE_DHCP[1]="yes" DHCP_HOSTNAME[1]=""
+#Config information for eth1:
+IPADDR[1]=""
+NETMASK[1]=""
+USE_DHCP[1]="yes"
+DHCP_HOSTNAME[1]=""
 
 ```
 
