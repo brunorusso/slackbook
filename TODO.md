@@ -1,11 +1,11 @@
 # General
  - [X] Create a README file
- - [ ] Check if all content was migrated do markdown
- - [ ] Improve script to build
+ - [X] Check if all content was migrated do markdown
+ - [X] Improve script to build
  - [ ] Improve script to build pdf output
  - [X] Check licence
  - [ ] Check old authors
- - [ ] Clean eps files and migrate png files to img directory 
+ - [X] Clean eps files and migrate png files to img directory 
 
 ------------------------------------------------------------
 # This sesion is old ToDo
