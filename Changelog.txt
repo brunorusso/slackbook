@@ -1,5 +1,9 @@
 2026-10-03
 - All chapter was migrated to markdown files
+- Organized the structure of directory
+  /src-book - all md files with chapters and imagens of the book
+  /the-book - the final version of the book
+  /tools - script used to generate the book
 2026-10-01
 - Created repository and cloned upstream from git://slackware.nl/slackbook.git 
   to https://forge.slackware.nl/brunorusso/slackbook.
