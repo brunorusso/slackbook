@@ -1,3 +1,7 @@
+2026-10-04
+- I think we have a version ready to be shared. All chapters have been converted 
+  to Markdown. Now what needs to be done is to evolve the book, 
+  updating chapters such as installation and including new chapters.
 2026-10-03
 - All chapter was migrated to markdown files
 - Organized the structure of directory
