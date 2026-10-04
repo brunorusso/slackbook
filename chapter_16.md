@@ -12,7 +12,14 @@ Slackware Linux includes a great many networking tools for troubleshooting and d
 
 ```text
 
-darkstar:~# ping -c 3 www.slackware.com 64 bytes from slackware.com (64.57.102.34): icmp_seq=1 ttl=47 time=87.1 ms 64 bytes from slackware.com (64.57.102.34): icmp_seq=2 ttl=47 time=86.2 ms 64 bytes from slackware.com (64.57.102.34): icmp_seq=3 ttl=47 time=86.7 ms --- slackware.com ping statistics --- 3 packets transmitted, 3 received, 0% packet loss, time 2004ms rtt min/avg/max/mdev = 86.282/86.718/87.127/0.345 ms
+darkstar:~# ping -c 3 www.slackware.com 
+64 bytes from slackware.com (64.57.102.34): icmp_seq=1 ttl=47 time=87.1 ms 
+64 bytes from slackware.com (64.57.102.34): icmp_seq=2 ttl=47 time=86.2 ms 
+64 bytes from slackware.com (64.57.102.34): icmp_seq=3 ttl=47 time=86.7 ms 
+
+--- slackware.com ping statistics --- 
+3 packets transmitted, 3 received, 0% packet loss, time 2004ms 
+rtt min/avg/max/mdev = 86.282/86.718/87.127/0.345 ms
 
 ```
 
@@ -22,7 +29,27 @@ darkstar:~# ping -c 3 www.slackware.com 64 bytes from slackware.com (64.57.102.3
 
 ```text
 
-darkstar:~# traceroute www.slackware.com traceroute to slackware.com (64.57.102.34), 30 hops max, 46 byte packets 1 gw.ctsmacon.com (192.168.1.254) 1.468 ms 2.045 ms 1.387 ms 2 10.0.0.1 (10.0.0.1) 7.642 ms 8.019 ms 6.006 ms 3 68.1.8.49 (68.1.8.49) 10.446 ms 9.739 ms 7.003 ms 4 68.1.8.69 (68.1.8.69) 11.564 ms 6.235 ms 7.971 ms 5 dalsbbrj01-ae0.r2.dl.cox.net (68.1.0.142) 43.859 ms 43.287 ms 44.125 ms 6 dpr1-ge-2-0-0.dallasequinix.savvis.net (204.70.204.146) 41.927 ms 58.247 ms 44.989 ms 7 cr2-tengige0-7-5-0.dallas.savvis.net (204.70.196.29) 42.577 ms 46.110 ms 43.977 ms 8 cr1-pos-0-3-3-0.losangeles.savvis.net (204.70.194.53) 78.070 ms 76.735 ms 76.145 ms 9 bpr1-ge-3-0-0.LosAngeles.savvis.net (204.70.192.222) 77.533 ms 108.328 ms 120.096 ms 10 wiltel-communications-group-inc.LosAngeles.savvis.net (208.173.55.186) 79.607 ms 76.847 ms 75.998 ms 11 tg9-4.cr01.lsancarc.integra.net (209.63.113.57) 84.789 ms 85.436 ms 85.575 ms 12 tg13-1.cr01.sntdcabl.integra.net (209.63.113.106) 87.608 ms 84.278 ms 86.922 ms 13 tg13-4.cr02.sntdcabl.integra.net (209.63.113.134) 87.284 ms 85.924 ms 86.102 ms 14 tg13-1.cr02.rcrdcauu.integra.net (209.63.114.169) 85.578 ms 85.285 ms 84.148 ms 15 209.63.99.166 (209.63.99.166) 84.515 ms 85.424 ms 85.956 ms 16 208.186.199.158 (208.186.199.158) 86.557 ms 85.822 ms 86.072 ms 17 sac-main.cwo.com (209.210.78.20) 88.105 ms 87.467 ms 87.526 ms 18 slackware.com (64.57.102.34) 85.682 ms 86.322 ms 85.594 ms
+darkstar:~# traceroute www.slackware.com
+traceroute to slackware.com (64.57.102.34), 30 hops max, 46 byte
+packets
+ 1  gw.ctsmacon.com (192.168.1.254)  1.468 ms  2.045 ms  1.387 ms
+ 2  10.0.0.1 (10.0.0.1)  7.642 ms  8.019 ms  6.006 ms
+ 3  68.1.8.49 (68.1.8.49)  10.446 ms  9.739 ms  7.003 ms
+ 4  68.1.8.69 (68.1.8.69)  11.564 ms  6.235 ms  7.971 ms
+ 5  dalsbbrj01-ae0.r2.dl.cox.net (68.1.0.142)  43.859 ms  43.287 ms 44.125 ms
+ 6  dpr1-ge-2-0-0.dallasequinix.savvis.net (204.70.204.146)  41.927 ms 58.247 ms  44.989 ms
+ 7  cr2-tengige0-7-5-0.dallas.savvis.net (204.70.196.29)  42.577 ms 46.110 ms  43.977 ms
+ 8  cr1-pos-0-3-3-0.losangeles.savvis.net (204.70.194.53)  78.070 ms 76.735 ms  76.145 ms
+ 9  bpr1-ge-3-0-0.LosAngeles.savvis.net (204.70.192.222)  77.533 ms 108.328 ms  120.096 ms
+10  wiltel-communications-group-inc.LosAngeles.savvis.net (208.173.55.186)  79.607 ms  76.847 ms  75.998 ms
+11  tg9-4.cr01.lsancarc.integra.net (209.63.113.57)  84.789 ms  85.436 ms  85.575 ms
+12  tg13-1.cr01.sntdcabl.integra.net (209.63.113.106)  87.608 ms 84.278 ms  86.922 ms
+13  tg13-4.cr02.sntdcabl.integra.net (209.63.113.134)  87.284 ms 85.924 ms  86.102 ms
+14  tg13-1.cr02.rcrdcauu.integra.net (209.63.114.169)  85.578 ms 85.285 ms  84.148 ms
+15  209.63.99.166 (209.63.99.166)  84.515 ms  85.424 ms  85.956 ms
+16  208.186.199.158 (208.186.199.158)  86.557 ms  85.822 ms  86.072 ms
+17  sac-main.cwo.com (209.210.78.20)  88.105 ms  87.467 ms  87.526 ms
+18  slackware.com (64.57.102.34)  85.682 ms  86.322 ms  85.594 ms
 
 ```
 
@@ -34,7 +61,21 @@ Today, `telnet` is put to better use as a network diagnostic tool. Because it pa
 
 ```text
 
-darkstar:~$ telnet www.slackware.com 80 Trying 64.57.102.34... Connected to www.slackware.com. Escape character is '^]'. HEAD / HTTP/1.1 Host: www.slackware.com HTTP/1.1 200 OK Date: Thu, 04 Feb 2010 18:01:35 GMT Server: Apache/1.3.27 (Unix) PHP/4.3.1 Last-Modified: Fri, 28 Aug 2009 01:30:27 GMT ETag: "61dc2-5374-4a973333" Accept-Ranges: bytes Content-Length: 21364 Content-Type: text/html
+darkstar:~$ telnet www.slackware.com 80 
+Trying 64.57.102.34... 
+Connected to www.slackware.com. 
+Escape character is '^]'. 
+HEAD / HTTP/1.1 
+Host: www.slackware.com 
+
+HTTP/1.1 200 OK 
+Date: Thu, 04 Feb 2010 18:01:35 GMT 
+Server: Apache/1.3.27 (Unix) PHP/4.3.1 
+Last-Modified: Fri, 28 Aug 2009 01:30:27 GMT 
+ETag: "61dc2-5374-4a973333" 
+Accept-Ranges: bytes 
+Content-Length: 21364 
+Content-Type: text/html
 
 ```
 
@@ -44,7 +85,9 @@ As we mentioned, `telnet` may be useful as a diagnostic tool, but its unencrypte
 
 ```text
 
-darkstar:~# ssh alan@slackware.com alan@slackware.com's password: secret alan@slackware.com:~$
+darkstar:~# ssh alan@slackware.com 
+alan@slackware.com's password: secret 
+alan@slackware.com:~$
 
 ```
 
@@ -56,7 +99,21 @@ So far all the tools we've looked at have focused on making connections to other
 
 ```text
 
-darkstar:~# tcpdump -i wlan0 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode listening on wlan0, link-type EN10MB (Ethernet), capture size 96 bytes 13:22:28.221985 IP gw.ctsmacon.com.microsoft-ds > 192.168.1.198.59387: Flags [P.], ack 838190560, win 3079, options [nop,nop,TS val 1382697489 ecr 339048583], length 164WARNING: Short packet. Try increasing the snap length by 140 SMB PACKET: SMBtrans2 (REPLY) 13:22:28.222392 IP 192.168.1.198.59387 > gw.ctsmacon.com.microsoft-ds: Flags [P.], ack 164, win 775, options [nop,nop,TS val 339048667 ecr 1382697489], length 134WARNING: Short packet. Try increasing the snap length by 110 SMB PACKET: SMBtrans2 (REQUEST)
+darkstar:~# tcpdump -i wlan0
+tcpdump: verbose output suppressed, use -v or -vv for full protocol
+decode
+listening on wlan0, link-type EN10MB (Ethernet), capture size 96 bytes
+13:22:28.221985 IP gw.ctsmacon.com.microsoft-ds > 192.168.1.198.59387:
+Flags [P.], ack 838190560, win 3079, options [nop,nop,TS val 1382697489
+ecr 339048583], length 164WARNING: Short packet. Try increasing the
+snap length by 140
+SMB PACKET: SMBtrans2 (REPLY)
+
+13:22:28.222392 IP 192.168.1.198.59387 > gw.ctsmacon.com.microsoft-ds:
+Flags [P.], ack 164, win 775, options [nop,nop,TS val 339048667 ecr
+1382697489], length 134WARNING: Short packet. Try increasing the snap
+length by 110
+SMB PACKET: SMBtrans2 (REQUEST)
 
 ```
 
@@ -78,10 +135,13 @@ Should you need to perform a port scan, `nmap` has many options for doing just t
 
 ```text
 
-darkstar:~# nmap www.example.com darkstar:~# nmap -sS www.example.com darkstar:~# nmap -sX www.example.com
+darkstar:~# nmap www.example.com 
+darkstar:~# nmap -sS www.example.com 
+darkstar:~# nmap -sX www.example.com
 
 ```
 
+**Warning**
 Be warned! Some Internet Service Providers frown heavily on port scanning and may take measures to prevent you from doing it. `nmap` and applications like it are best used on your own systems for maintenance and security purposes, not as general purpose Internet scanners.
 
 ### 16.1.7 host
@@ -90,7 +150,10 @@ Often network problems stem from a failure of DNS (Domain Name Service) which ma
 
 ```text
 
-darkstar:~# host www.slackware.com www.slackware.com is an alias for slackware.com. slackware.com has address 64.57.102.34 slackware.com mail is handled by 1 mail-mx.cwo.com.
+darkstar:~# host www.slackware.com 
+www.slackware.com is an alias for slackware.com. 
+slackware.com has address 64.57.102.34 
+slackware.com mail is handled by 1 mail-mx.cwo.com.
 
 ```
 
@@ -100,7 +163,30 @@ More complex DNS lookups can be manually performed with the `dig` (1) tool. `dig
 
 ```text
 
-darkstar:~# dig @207.69.188.185 www.slackware.com a ; <<>> DiG 9.4.3-P4 <<>> @207.69.188.185 www.slackware.com a ; (1 server found) ;; global options: printcmd ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 57965 ;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 2, ADDITIONAL: 0 ;; QUESTION SECTION: ;www.slackware.com. IN A ;; ANSWER SECTION: www.slackware.com. 86400 IN CNAME slackware.com. slackware.com. 86400 IN A 64.57.102.34 ;; AUTHORITY SECTION: slackware.com. 86400 IN NS ns2.cwo.com. slackware.com. 86400 IN NS ns1.cwo.com. ;; Query time: 348 msec ;; SERVER: 207.69.188.185#53(207.69.188.185) ;; WHEN: Sat Jul 3 16:25:10 2010 ;; MSG SIZE rcvd: 105
+darkstar:~# dig @207.69.188.185 www.slackware.com a
+
+; <<>> DiG 9.4.3-P4 <<>> @207.69.188.185 www.slackware.com a
+; (1 server found)
+;; global options:  printcmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 57965
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 2, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;www.slackware.com.		IN	A
+
+;; ANSWER SECTION:
+www.slackware.com.	86400	IN	CNAME	slackware.com.
+slackware.com.		86400	IN	A	64.57.102.34
+
+;; AUTHORITY SECTION:
+slackware.com.		86400	IN	NS	ns2.cwo.com.
+slackware.com.		86400	IN	NS	ns1.cwo.com.
+
+;; Query time: 348 msec
+;; SERVER: 207.69.188.185#53(207.69.188.185)
+;; WHEN: Sat Jul  3 16:25:10 2010
+;; MSG SIZE  rcvd: 105
 
 ```
 
@@ -112,7 +198,20 @@ Let's take a took at the command-line options used above. The `@207.69.188.185` 
 
 ```text
 
-darkstar:~# finger alan@cardinal.lizella.net [cardinal.lizella.net] Login: alan Name: Alan Hicks Directory: /home/alan Shell: /bin/bash Office: 478 808 9919, 478 935 8133 On since Wed Apr 13 17:43 (UTC) on pts/9 from 75-150-12-113-atlanta.hfc.comcastbusiness.net 32 minutes 24 seconds idle (messages off) On since Wed Apr 13 17:45 (UTC) on pts/10 from :pts/9:S.0 48 minutes 56 seconds idle Mail forwarded to alan@lizella.net No mail. No Plan.
+darkstar:~# finger alan@cardinal.lizella.net
+[cardinal.lizella.net]
+Login: alan           			Name: Alan Hicks
+Directory: /home/alan               	Shell: /bin/bash
+Office: 478 808 9919, 478 935 8133
+On since Wed Apr 13 17:43 (UTC) on pts/9 from
+75-150-12-113-atlanta.hfc.comcastbusiness.net
+    32 minutes 24 seconds idle
+     (messages off)
+On since Wed Apr 13 17:45 (UTC) on pts/10 from :pts/9:S.0
+   48 minutes 56 seconds idle
+Mail forwarded to alan@lizella.net
+No mail.
+No Plan.
 
 ```
 
@@ -138,7 +237,23 @@ Unlike the other browsers we've looked at, `wget` (1) is non-interactive. Rather
 
 ```text
 
-darkstar:~# wget ftp://ftp.osuosl.org/pub/slackware/slackware-current/ChangeLog.txt --2010-05-01 13:51:19-- ftp://ftp.osuosl.org/pub/slackware/slackware-current/ChangeLog.txt => `ChangeLog.txt' Resolving ftp.osuosl.org... 64.50.236.52 Connecting to ftp.osuosl.org|64.50.236.52|:21... connected. Logging in as anonymous ... Logged in! ==> SYST ... done. ==> PWD ... done. ==> TYPE I ... done. ==> CWD /pub/slackware/slackware-current ... done. ==> SIZE ChangeLog.txt ... 75306 ==> PASV ... done. ==> RETR ChangeLog.txt ... done. Length: 75306 (74K) 100%[======================================>] 75,306 110K/s in 0.7s 2010-05-01 13:51:22 (110 KB/s) - `ChangeLog.txt' saved [75306]
+darkstar:~# wget ftp://ftp.osuosl.org/pub/slackware/slackware-current/ChangeLog.txt
+--2010-05-01 13:51:19--
+ftp://ftp.osuosl.org/pub/slackware/slackware-current/ChangeLog.txt
+           => `ChangeLog.txt'
+Resolving ftp.osuosl.org... 64.50.236.52
+Connecting to ftp.osuosl.org|64.50.236.52|:21... connected.
+Logging in as anonymous ... Logged in!
+==> SYST ... done.    ==> PWD ... done.
+==> TYPE I ... done.  ==> CWD /pub/slackware/slackware-current ...  done.
+==> SIZE ChangeLog.txt ... 75306
+==> PASV ... done.    ==> RETR ChangeLog.txt ... done.
+Length: 75306 (74K)
+
+100%[======================================>] 75,306       110K/s   in 0.7s    
+
+2010-05-01 13:51:22 (110 KB/s) - `ChangeLog.txt' saved [75306]
+
 
 ```
 
@@ -178,7 +293,12 @@ So those are great and everything, but what if you just want a mail client that 
 
 ```text
 
-darkstar:~# mailx Heirloom mailx version 12.4 7/29/08. Type ? for help. "/var/spool/mail/root": 2 messages 2 new >N 1 To root Thu Mar 10 23:33 52/1902 Register with the Linux counter project N 2 To root Thu Mar 10 23:35 321/15417 Welcome to Linux (Slackware 14.0)! ?;
+darkstar:~# mailx 
+Heirloom mailx version 12.4 7/29/08. Type ? for help. 
+"/var/spool/mail/root": 2 messages 2 new 
+>N 1 To root Thu Mar 10 23:33 52/1902 Register with the Linux counter project 
+>N 2 To root Thu Mar 10 23:35 321/15417 Welcome to Linux (Slackware 14.0)! 
+?;
 
 ```
 
@@ -210,7 +330,9 @@ Within one's own computer (localhost) or one's own network, sending email in thi
 
 ```text
 
-darkstar:~$ env MAILRC=/dev/null from="bob@example.com (Bob Dobbs)" smtp=relay.example.com mail -n -s "Test message" connie@example.com < ~/message.txt
+darkstar:~$ env MAILRC=/dev/null 
+from="bob@example.com (Bob Dobbs)" 
+smtp=relay.example.com mail -n -s "Test message" connie@example.com < ~/message.txt
 
 ```
 
@@ -230,7 +352,24 @@ Once an FTP session has been initialized, you'll be placed at a prompt somewhat 
 
 ```text
 
-darkstar:~$ ftp ftp.osuosl.org Name (ftp.osuosl.org:alan): anonymous 331 Please specify the password. Password: secret 230 Login successful. Remote system type is UNIX. Using binary mode to transfer files. ftp> cd pub/slackware/slackware-current/ 250 Directory successfully changed. ftp> get ChangeLog.txt local: ChangeLog.txt remote: ChangeLog.txt 200 PORT command successful. Consider using PASV. 150 Opening BINARY mode data connection for ChangeLog.txt (33967 bytes). 226 File send OK. 33967 bytes received in 0.351 secs (94 Kbytes/sec) ftp> bye 221 Goodbye.
+darkstar:~$ ftp ftp.osuosl.org
+Name (ftp.osuosl.org:alan): anonymous
+331 Please specify the password.
+Password: secret
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> cd pub/slackware/slackware-current/
+250 Directory successfully changed.
+ftp> get ChangeLog.txt
+local: ChangeLog.txt remote: ChangeLog.txt
+200 PORT command successful. Consider using PASV.
+150 Opening BINARY mode data connection for ChangeLog.txt (33967
+bytes).
+226 File send OK.
+33967 bytes received in 0.351 secs (94 Kbytes/sec)
+ftp> bye
+221 Goodbye.
 
 ```
 
@@ -240,7 +379,22 @@ darkstar:~$ ftp ftp.osuosl.org Name (ftp.osuosl.org:alan): anonymous 331 Please 
 
 ```text
 
-darkstar:~# ncftp ftp.osuosl.org Logging in... Login successful. Logged in to ftp.osuosl.org. ncftp / > cd pub/slackware/slackware-current Directory successfully changed. ncftp ...ware/slackware-current > mget -R isolinux isolinux/README.TXT: 4.63 kB 16.77 kB/s isolinux/README_SPLIT.TXT: 788.00 B 5.43 kB/s isolinux/f2.txt: 793.00 B 5.68 kB/s isolinux/initrd.img: 13.75 MB 837.91 kB/s isolinux/iso.sort: 50.00 B 354.50 B/s isolinux/isolinux.bin: 14.00 kB 33.99 kB/s isolinux/isolinux.cfg: 487.00 B 3.30 kB/s isolinux/message.txt: 760.00 B 5.32 kB/s isolinux/setpkg: 2.76 kB 19.11 kB/s ncftp ...ware/slackware-current > bye
+darkstar:~# ncftp ftp.osuosl.org
+Logging in...                                                                   
+Login successful.
+Logged in to ftp.osuosl.org.                                                    
+ncftp / > cd pub/slackware/slackware-current
+Directory successfully changed.
+ncftp ...ware/slackware-current > mget -R isolinux
+isolinux/README.TXT:                                     4.63 kB 16.77 kB/s  
+isolinux/README_SPLIT.TXT:                             788.00 B    5.43 kB/s  
+isolinux/f2.txt:                                       793.00 B    5.68 kB/s  
+isolinux/initrd.img:                                    13.75 MB 837.91 kB/s  
+isolinux/iso.sort:                                      50.00 B  354.50 B/s   
+isolinux/isolinux.bin:                                  14.00 kB 33.99 kB/s  
+isolinux/isolinux.cfg:                                 487.00 B    3.30 kB/s  
+isolinux/message.txt:                                  760.00 B    5.32 kB/s  
+isolinux/setpkg:                        
 
 ```
 
@@ -250,7 +404,14 @@ The last client we're going to look at is `lftp` (1). Like `ncftp` , it supports
 
 ```text
 
-darkstar:~# lftp ftp.osuosl.org lftp ftp.osuosl.org:~> cd /pub/slackware/slackware-current cd ok, cwd=/pub/slackware/slackware-current lftp ftp.osuosl.org:/pub/slackware/slackware-current> mirror isolinux Total: 2 directories, 16 files, 1 symlink New: 16 files, 1 symlink 14636789 bytes transferred in 20 seconds (703.7K/s) lftp ftp.osuosl.org:/pub/slackware/slackware-current> bye
+darkstar:~# lftp ftp.osuosl.org
+lftp ftp.osuosl.org:~> cd /pub/slackware/slackware-current
+cd ok, cwd=/pub/slackware/slackware-current            
+lftp ftp.osuosl.org:/pub/slackware/slackware-current> mirror isolinux
+Total: 2 directories, 16 files, 1 symlink                                      
+New: 16 files, 1 symlink
+14636789 bytes transferred in 20 seconds (703.7K/s)
+lftp ftp.osuosl.org:/pub/slackware/slackware-current> bye
 
 ```
 
@@ -277,6 +438,8 @@ Due to the power and versatility of `rsync` , it can be invoked in a number of w
 
 ```text
 
-darkstar:~# rsync -avz rsync://ftp.osuosl.org/pub/slackware/slackware-current/ \ /src/slackware-current/ darkstar:~# rsync -e ssh ftp.slackware.com:/home/alan/foo /tmp/foo
+darkstar:~# rsync -avz rsync://ftp.osuosl.org/pub/slackware/slackware-current/ \ 
+/src/slackware-current/ 
+darkstar:~# rsync -e ssh ftp.slackware.com:/home/alan/foo /tmp/foo
 
 ```

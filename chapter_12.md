@@ -16,7 +16,18 @@ New users are often frustrated when using `vi` for the first time. When invoked 
 
 ```text
 
-~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ Command
+~ 
+~ 
+~ 
+~ 
+~ 
+~ 
+~ 
+~ 
+~ 
+~ 
+~ 
+                           Command
 
 ```
 

@@ -12,7 +12,10 @@ The man-pages are organized into groups or sections by their content type. For e
 
 ```text
 
-darkstar:~$ man -k printf printf (1) - format and print data printf (3) - formatted output conversion darkstar:~$ man 3 printf
+darkstar:~$ man -k printf 
+printf (1) - format and print data 
+printf (3) - formatted output conversion 
+darkstar:~$ man 3 printf
 
 ```
 
@@ -37,7 +40,9 @@ darkstar:~$ man -k printf printf (1) - format and print data printf (3) - format
 
 ```text
 
-darkstar:~$ ls / bin/ dev/ home/ lost+found/ mnt/ proc/ sbin/ sys/ usr/ boot/ etc/ lib/ media/ opt/ root/ srv/ tmp/ var/
+darkstar:~$ ls / 
+bin/ dev/ home/ lost+found/ mnt/ proc/ sbin/ sys/ usr/ 
+boot/ etc/ lib/ media/ opt/ root/ srv/ tmp/ var/
 
 ```
 
@@ -45,7 +50,12 @@ Notice that each of the listings is a directory. These are easily distinguished 
 
 ```text
 
-darkstar:~$ ls -l /home/alan/Desktop -rw-r--r-- 1 alan users 15624161 2007-09-21 13:02 9780596510480.pdf -rw-r--r-- 1 alan users 3829534 2007-09-14 12:56 imgscan.zip drwxr-xr-x 3 alan root 168 2007-09-17 21:01 ipod_hack/ drwxr-xr-x 2 alan users 200 2007-12-03 22:11 libgpod/ drwxr-xr-x 2 alan users 136 2007-09-30 03:16 playground/
+darkstar:~$ ls -l /home/alan/Desktop 
+-rw-r--r-- 1 alan users 15624161 2007-09-21 13:02 9780596510480.pdf
+-rw-r--r-- 1 alan users  3829534 2007-09-14 12:56 imgscan.zip
+drwxr-xr-x 3 alan root       168 2007-09-17 21:01 ipod_hack/
+drwxr-xr-x 2 alan users      200 2007-12-03 22:11 libgpod/
+drwxr-xr-x 2 alan users      136 2007-09-30 03:16 playground/
 
 ```
 
@@ -55,7 +65,9 @@ Lastly, we'll show you how to list dot-files, or hidden files. Unlike other oper
 
 ```text
 
-darkstar:~$ ls -a .xine/ .xinitrc-backup .xscreensaver .xsession-errors SBo/ .xinitrc .xinitrc-xfce .xsession .xwmconfig/ Shared/
+darkstar:~$ ls -a 
+.xine/ .xinitrc-backup .xscreensaver .xsession-errors SBo/ 
+.xinitrc .xinitrc-xfce .xsession .xwmconfig/ Shared/
 
 ```
 
@@ -67,7 +79,12 @@ You also likely noticed that your files and directories appear in different colo
 
 ```text
 
-darkstar:~$ cd / darkstar:/$ls bin/ dev/ home/ lost+found/ mnt/ proc/ sbin/ sys/ usr/ boot/ etc/ lib/ media/ opt/ root/ srv/ tmp/ var/ darkstar:/$cd /usr/local darkstar:/usr/local$
+darkstar:~$ cd / 
+darkstar:/$ls 
+bin/ dev/ home/ lost+found/ mnt/ proc/ sbin/ sys/ usr/ 
+boot/ etc/ lib/ media/ opt/ root/ srv/ tmp/ var/ 
+darkstar:/$cd /usr/local 
+darkstar:/usr/local$
 
 ```
 
@@ -75,7 +92,8 @@ Notice how the prompt changed when we changed directories? The default Slackware
 
 ```text
 
-darkstar:~$ pwd /usr/local
+darkstar:~$ pwd 
+/usr/local
 
 ```
 
@@ -87,7 +105,14 @@ While most applications can and will create their own files and directories, you
 
 ```text
 
-darkstar:~/foo$ ls -l -rw-r--r-- 1 alan users 0 2012-01-18 15:01 bar1 darkstar:~/foo$ touch bar2 -rw-r--r-- 1 alan users 0 2012-01-18 15:01 bar1 -rw-r--r-- 1 alan users 0 2012-01-18 15:05 bar2 darkstar:~/foo$ touch bar1 -rw-r--r-- 1 alan users 0 2012-01-18 15:05 bar1 -rw-r--r-- 1 alan users 0 2012-01-18 15:05 bar2
+darkstar:~/foo$ ls -l
+-rw-r--r-- 1 alan users 0 2012-01-18 15:01 bar1
+darkstar:~/foo$ touch bar2
+-rw-r--r-- 1 alan users 0 2012-01-18 15:01 bar1
+-rw-r--r-- 1 alan users 0 2012-01-18 15:05 bar2
+darkstar:~/foo$ touch bar1
+-rw-r--r-- 1 alan users 0 2012-01-18 15:05 bar1
+-rw-r--r-- 1 alan users 0 2012-01-18 15:05 bar2
 
 ```
 
@@ -97,7 +122,10 @@ Note how `bar2` was created in our second command, and the third command simpl u
 
 ```text
 
-darkstar:~$ mkdir foo darkstar:~$ mkdir /slack/foo/bar/ mkdir: cannot create directory `/slack/foo/bar/': No such file or directory darkstar:~$ mkdir -p /slack/foo/bar/
+darkstar:~$ mkdir foo 
+darkstar:~$ mkdir /slack/foo/bar/ 
+mkdir: cannot create directory `/slack/foo/bar/': No such file or directory 
+darkstar:~$ mkdir -p /slack/foo/bar/
 
 ```
 
@@ -109,8 +137,18 @@ There is another tool to remove directories, the humble `rmdir` (1). `rmdir` wil
 
 ```text
 
-darkstar:~$ ls foo_1/ foo_2/ darkstar:~$ ls foo_1 bar_1 darkstar:~$ rmdir foo_1 rmdir: foo/: Directory not empty darkstar:~$ rm foo_1/bar darkstar:~$ rmdir foo_1 darkstar:~$ ls foo_2 bar_2/ darkstar:~$ rm -fr foo_2 darkstar:~$ ls
-
+darkstar:~$ ls
+foo_1/ foo_2/
+darkstar:~$ ls foo_1
+bar_1
+darkstar:~$ rmdir foo_1
+rmdir: foo/: Directory not empty
+darkstar:~$ rm foo_1/bar
+darkstar:~$ rmdir foo_1
+darkstar:~$ ls foo_2
+bar_2/
+darkstar:~$ rm -fr foo_2
+darkstar:~$ ls
 ```
 
 ## 4.3 Archive and Compression
@@ -125,7 +163,8 @@ In order to create a zip file, you'll (naturally) use the `zip` (1) command. You
 
 ```text
 
-darkstar:~$ zip -r /tmp/home.zip /home darkstar:~$ zip /tmp/large_file.zip /tmp/large_file
+darkstar:~$ zip -r /tmp/home.zip /home 
+darkstar:~$ zip /tmp/large_file.zip /tmp/large_file
 
 ```
 
@@ -153,7 +192,9 @@ Decompressing is just as straight-forward with `gunzip` which will create a new 
 
 ```text
 
-darkstar:~$ gunzip /tmp/large_file.gz darkstar:~$ ls /tmp/large_file* /tmp/large_file
+darkstar:~$ gunzip /tmp/large_file.gz 
+darkstar:~$ ls /tmp/large_file* 
+/tmp/large_file
 
 ```
 
@@ -200,7 +241,8 @@ Invoking `tar` can be as easy or as complicated as you like. Typically, creating
 
 ```text
 
-darkstar:~$ tar -xvzf /tmp/tarball.tar.gz darkstar:~$ tar -xvfz /tmp/tarball.tar.gz
+darkstar:~$ tar -xvzf /tmp/tarball.tar.gz 
+darkstar:~$ tar -xvfz /tmp/tarball.tar.gz
 
 ```
 
@@ -222,7 +264,8 @@ In the early days, if you just wanted to see the contents of a file (any file, w
 
 ```text
 
-darkstar:~$ cat /etc/slackware-version Slackware 14.0
+darkstar:~$ cat /etc/slackware-version 
+Slackware 14.0
 
 ```
 
@@ -233,6 +276,8 @@ Given the limitations of `cat` some very intelligent people sat down and began t
 `more` will display the first few lines of a text file until your screen is full, then pause. Once you've read through that screen, you can proceed down one line by pressing ENTER, or an entire screen by pressing <kbd>SPACE</kbd> , or by a specified number of lines by typing a number and then the <kbd>SPACE</kbd> bar. `more` is also capable of searching through a text file for keywords; once you've displayed a file in `more` , press the / key and enter a keyword. Upon pressing <kbd>ENTER</kbd> , the text will scroll until it finds the next match.
 
 This is clearly a big improvement over `cat` , but still suffers from some annoying flaws; `more` is not able to scroll back up through a piped file to allow you to read something you might have missed, the search function does not highlight its results, there is no horizontal scrolling, and so on. Clearly a better solution is possible.
+
+**Note**
 
 In fact, modern versions of `more` , such as the one shipped with Slackware, do feature a *back* function via the <kbd>b</kbd> key. However, the function is only available when opening files directly in `more` ; not when a file is piped to `more` .
 
@@ -250,7 +295,11 @@ Also as with `more` , files may be opened directly in `less` or piped to it:
 
 ```text
 
-darkstar:~$ less /usr/doc/less-*/README darkstar:~$ cat /usr/doc/less*/README /usr/doc/util-linux*/README | less
+darkstar:~$ less 
+/usr/doc/less-*/README 
+darkstar:~$ cat 
+/usr/doc/less*/README 
+/usr/doc/util-linux*/README | less
 
 ```
 
@@ -262,7 +311,12 @@ Links are a method of referring to one file by more than one name. By using the 
 
 ```text
 
-darkstar:~$ ln /etc/slackware-version foo darkstar:~$ cat foo Slackware 14.0 darkstar:~$ ls -l /etc/slackware-version foo -rw-r--r-- 1 root root 17 2007-06-10 02:23 /etc/slackware-version -rw-r--r-- 1 root root 17 2007-06-10 02:23 foo
+darkstar:~$ ln /etc/slackware-version foo 
+darkstar:~$ cat foo 
+Slackware 14.0 
+darkstar:~$ ls -l /etc/slackware-version foo 
+-rw-r--r-- 1 root root 17 2007-06-10 02:23 /etc/slackware-version 
+-rw-r--r-- 1 root root 17 2007-06-10 02:23 foo
 
 ```
 
@@ -270,7 +324,12 @@ Another type of link exists, the symlink. Symlinks, rather than being another re
 
 ```text
 
-darkstar:~$ ln -s /etc/slackware-version foo darkstar:~$ cat foo Slackware 140 darkstar:~$ ls -l /etc/slackware-version foo -rw-r--r-- 1 root root 17 2007-06-10 02:23 /etc/slackware-version lrwxrwxrwx 1 root root 22 2008-01-25 04:16 foo -> /etc/slackware-version
+darkstar:~$ ln -s /etc/slackware-version foo 
+darkstar:~$ cat foo 
+Slackware 14.0 
+darkstar:~$ ls -l /etc/slackware-version foo 
+-rw-r--r-- 1 root root 17 2007-06-10 02:23 /etc/slackware-version 
+lrwxrwxrwx 1 root root 22 2008-01-25 04:16 foo -> /etc/slackware-version
 
 ```
 

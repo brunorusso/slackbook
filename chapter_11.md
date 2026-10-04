@@ -95,7 +95,14 @@ But Alan, that's appalling! I don't want to have to tell mount what filesystem o
 
 ```text
 
-darkstar:~# cat /etc/fstab /dev/hda1 / reiserfs defaults 1 1 /dev/hda2 /home reiserfs defaults 1 2 /dev/hda3 swap swap defaults 0 0 /dev/cdrom /mnt/cdrom auto noauto,owner,ro,users 0 0 /dev/fd0 /mnt/floppy auto noauto,owner 0 0 devpts /dev/pts devpts gid=5,mode=620 0 0 proc /proc proc defaults 0 0
+darkstar:~# cat /etc/fstab
+/dev/hda1        /                reiserfs    defaults               1   1
+/dev/hda2        /home            reiserfs    defaults               1   2
+/dev/hda3        swap             swap        defaults               0   0
+/dev/cdrom       /mnt/cdrom       auto        noauto,owner,ro,users  0   0
+/dev/fd0         /mnt/floppy      auto        noauto,owner           0   0
+devpts           /dev/pts         devpts      gid=5,mode=620         0   0
+proc             /proc            proc        defaults               0   0
 
 ```
 
@@ -103,7 +110,8 @@ If you have an entry in `fstab` for your filesystem, you need only tell mount th
 
 ```text
 
-darkstar:~# mount /dev/cdrom darkstar:~# mount /home
+darkstar:~# mount /dev/cdrom 
+darkstar:~# mount /home
 
 ```
 
@@ -119,7 +127,8 @@ NFS is the Network File System for Linux as well as several other common operati
 
 ```text
 
-darkstar:~# chmod +x /etc/rc.d/rc.rpc darkstar:~# /etc/rc.d/rc.rpc start
+darkstar:~# chmod +x /etc/rc.d/rc.rpc 
+darkstar:~# /etc/rc.d/rc.rpc start
 
 ```
 
@@ -135,7 +144,11 @@ Running an NFS server is a little bit different. First, you must configure each 
 
 ```text
 
-# See exports(5) for a description. # This file contains a list of all directories exported to other computers. # It is used by rpc.nfsd and rpc.mountd. /home/backup 192.168.1.0/24(sync,rw,no_root_squash)
+# See exports(5) for a description. 
+# This file contains a list of all directories exported to other computers. 
+# It is used by rpc.nfsd and rpc.mountd. 
+
+/home/backup 192.168.1.0/24(sync,rw,no_root_squash)
 
 ```
 
@@ -161,6 +174,8 @@ All SMB shares require the `username` and `password` arguments. This can create 
 
 ```text
 
-darkstar:~# echo "username=alan" > /etc/creds-home darkstar:~# echo "password=secret" >> /etc/creds-home darkstar:~# mount -t cifs //darkstar/home -o credentials=/etc/creds-home
+darkstar:~# echo "username=alan" > /etc/creds-home 
+darkstar:~# echo "password=secret" >> /etc/creds-home 
+darkstar:~# mount -t cifs //darkstar/home -o credentials=/etc/creds-home
 
 ```
