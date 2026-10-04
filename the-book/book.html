@@ -1,28 +1,113 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Slack Book</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SlackBook</title>
   <style>
-    body { font-family: sans-serif; max-width: 1100px; margin: 2rem auto; padding: 0 1rem 3rem; line-height: 1.7; }
-    h1, h2, h3 { color: #222; }
-    nav { background: #f7f7f7; border: 1px solid #ddd; padding: 1rem 1.25rem; margin-bottom: 2rem; }
-    nav ul { padding-left: 1.25rem; }
-    section { margin-top: 2rem; }
-    img { max-width: 100%; height: auto; display: block; margin: 1rem 0; }
-    pre { background: #f5f5f5; padding: 1rem; overflow-x: auto; }
-    code { font-family: monospace; }
-    table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
-    th, td { border: 1px solid #d0d0d0; padding: 0.5rem 0.75rem; text-align: left; }
+    @page {
+      size: A4;
+      margin: 1.5cm;
+    }
+    :root {
+      --page-bg: #faf8f4;
+      --panel-bg: #ffffff;
+      --border: #d8d3c6;
+      --text: #1f2933;
+      --muted: #52606d;
+      --accent: #005a9c;
+      --code-bg: #f3f4f6;
+    }
+    body {
+      margin: 0;
+      background: var(--page-bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+    .book-toc {
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .book-toc ul {
+      margin: 0.5rem 0 0 1.25rem;
+      padding-left: 1rem;
+    }
+    .book-toc li {
+      margin: 0.2rem 0;
+    }
+    .book-toc a, a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .book-toc a:hover, a:hover {
+      text-decoration: underline;
+    }
+    .book-section {
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem 1.5rem 2rem;
+      margin-bottom: 2rem;
+    }
+    .book-section h1, .book-section h2, .book-section h3 {
+      color: #111827;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .book-section img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1rem auto;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    .book-section pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem;
+      overflow-x: auto;
+    }
+    .book-section code {
+      background: var(--code-bg);
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+    }
+    .book-section blockquote {
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+      color: var(--muted);
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1rem 0;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.55rem 0.75rem;
+      text-align: left;
+      vertical-align: top;
+    }
   </style>
 </head>
 <body>
-  <section id="cover"><h1 id="slackware-linux-essentials">Slackware Linux Essentials</h1>
-<p><img alt="image" src="img/slackware_logo.png" /></p>
-<p><strong>Alan Hicks</strong><br />
-<strong>Chris Lumens</strong><br />
-<strong>David Cantrell</strong><br />
+  <main>
+    <section id="cover" class="book-section"><h1 id="slackware-linux-essentials-version-beta">Slackware Linux Essentials - Version Beta</h1>
+<p><img alt="image" src="img/slackware_logo.png"></p>
+<p><strong>Alan Hicks</strong>
+<strong>Chris Lumens</strong>
+<strong>David Cantrell</strong>
 <strong>Logan Johnson</strong></p>
 <pre><code>Copyright © 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005 Slackware Linux, Inc.
 
@@ -30,41 +115,53 @@ Slackware Linux is a registered trademark of Patrick Volkerding and Slackware Li
 
 Linux is a registered trademark of Linus Torvalds.
 
-America Online and AOL are registered trademarks of America Online, Inc. in the United States and/or other countries.
+America Online and AOL are registered trademarks of America Online, Inc. in the United 
+States and/or other countries.
 
-Apple, FireWire, Mac, Macintosh, Mac OS, Quicktime, and TrueType are trademarks of Apple Computer, Inc., registered in the United States and other countries.
+Apple, FireWire, Mac, Macintosh, Mac OS, Quicktime, and TrueType are trademarks of 
+Apple Computer, Inc., registered in the United States and other countries.
 
-IBM, AIX, EtherJet, Netfinity, OS/2, PowerPC, PS/2, S/390, and ThinkPad are trademarks of International Business Machines Corporation in the United States, other countries, or both.
+IBM, AIX, EtherJet, Netfinity, OS/2, PowerPC, PS/2, S/390, and ThinkPad are trademarks 
+of International Business Machines Corporation in the United States, other countries, 
+or both.
 
-IEEE, POSIX, and 802 are registered trademarks of Institute of Electrical and Electronics Engineers, Inc. in the United States.
+IEEE, POSIX, and 802 are registered trademarks of Institute of Electrical and 
+Electronics Engineers, Inc. in the United States.
 
-Intel, Celeron, EtherExpress, i386, i486, Itanium, Pentium, and Xeon are trademarks or registered trademarks of Intel Corporation or its subsidiaries in the United States and other countries.
+Intel, Celeron, EtherExpress, i386, i486, Itanium, Pentium, and Xeon are trademarks or 
+registered trademarks of Intel Corporation or its subsidiaries in the United States and 
+other countries.
 
-Microsoft, IntelliMouse, MS-DOS, Outlook, Windows, Windows Media and Windows NT are either registered trademarks or trademarks of Microsoft Corporation in the United States and/or other countries.
+Microsoft, IntelliMouse, MS-DOS, Outlook, Windows, Windows Media and Windows NT are 
+either registered trademarks or trademarks of Microsoft Corporation in the United States 
+and/or other countries.
 
-Netscape and the Netscape Navigator are registered trademarks of Netscape Communications Corporation in the U.S. and other countries.
+Netscape and the Netscape Navigator are registered trademarks of Netscape Communications 
+Corporation in the U.S. and other countries.
 
-Red Hat, RPM, are trademarks or registered trademarks of Red Hat, Inc. in the United States and other countries.
+Red Hat, RPM, are trademarks or registered trademarks of Red Hat, Inc. in the United 
+States and other countries.
 
 XFree86 is a trademark of The XFree86 Project, Inc.
 
-Many of the designations used by manufacturers and sellers to distinguish their products are claimed as trademarks. Where those designations appear in this document, and Slackware Linux, Inc. was aware of the trademark claim, the designations have been followed by the “™” or the “®” symbol.
+Many of the designations used by manufacturers and sellers to distinguish their 
+products are claimed as trademarks. Where those designations appear in this document, 
+and Slackware Linux, Inc. was aware of the trademark claim, the designations have been 
+followed by the “™” or the “®” symbol.
 </code></pre>
 <p>1-57176-338-4</p></section>
-<nav>
-  <h2>Table of Contents</h2>
-  <ul>
-    <li><a href="#foreward">Foreward</a><ul><li><a href="#intended-audience">Intended Audience</a></li><li><a href="#why-a-new-slackware-book">Why A New Slackware Book?</a></li><li><a href="#conventions-used-in-this-book">Conventions Used in this Book</a></li><li><a href="#acknowledgements">Acknowledgements</a></li></ul></li> <li><a href="#1-introduction-to-slackware">1. Introduction to Slackware</a><ul><li><a href="#11-why-use-slackware">1.1 Why Use Slackware?</a></li><li><a href="#12-differences-compared-to-other-linux-distributions">1.2 Differences Compared to Other Linux Distributions</a></li><li><a href="#13-licensing">1.3 Licensing</a></li></ul></li> <li><a href="#2-installation">2. Installation</a><ul><li><a href="#21-booting-the-installer">2.1 Booting the Installer</a></li><li><a href="#22-partitioning">2.2 Partitioning</a></li><li><a href="#23-the-setup-program">2.3 The setup Program</a><ul><li><a href="#231-help">2.3.1 Help</a></li><li><a href="#232-keymap">2.3.2 Keymap</a></li><li><a href="#233-addswap">2.3.3 Addswap</a></li><li><a href="#234-target">2.3.4 Target</a></li><li><a href="#235-source">2.3.5 Source</a></li><li><a href="#236-select">2.3.6 Select</a></li><li><a href="#237-install">2.3.7 Install</a></li><li><a href="#238-configure">2.3.8 Configure</a></li></ul></li></ul></li> <li><a href="#3-booting">3. Booting</a><ul><li><a href="#31-mkinitrd">3.1 mkinitrd</a></li><li><a href="#32-lilo">3.2 LILO</a></li><li><a href="#33-dual-booting">3.3 Dual Booting</a><ul><li><a href="#331-dual-booting-with-partitions">3.3.1 Dual Booting with Partitions</a></li><li><a href="#332-dual-booting-from-hard-drives">3.3.2 Dual Booting from Hard Drives</a></li></ul></li></ul></li> <li><a href="#4-basic-shell-commands">4. Basic Shell Commands</a><ul><li><a href="#41-system-documentation">4.1 System Documentation</a></li><li><a href="#42-dealing-with-files-and-directories">4.2 Dealing with Files and Directories</a><ul><li><a href="#421-listing-files-and-directory-contents">4.2.1 Listing Files and Directory Contents</a></li><li><a href="#422-moving-around-the-filesystem">4.2.2 Moving Around the Filesystem</a></li><li><a href="#423-file-and-directory-creation-and-deletion">4.2.3 File and Directory Creation and Deletion</a></li></ul></li><li><a href="#43-archive-and-compression">4.3 Archive and Compression</a><ul><li><a href="#431-zip-and-unzip">4.3.1 zip and unzip</a></li><li><a href="#432-gzip">4.3.2 gzip</a></li><li><a href="#433-bzip2">4.3.3 bzip2</a></li><li><a href="#434-xz-lzma">4.3.4 XZ / LZMA</a></li><li><a href="#435-tar">4.3.5 tar</a></li></ul></li><li><a href="#44-reading-documents">4.4 Reading Documents</a><ul><li><a href="#441-more">4.4.1 more</a></li><li><a href="#442-less">4.4.2 less</a></li></ul></li><li><a href="#45-linking">4.5 Linking</a></li></ul></li> <li><a href="#5-the-bourne-again-shell">5. The Bourne Again Shell</a><ul><li><a href="#51-what-is-a-shell">5.1 What Is A Shell?</a></li><li><a href="#52-environment-variables">5.2 Environment Variables</a></li><li><a href="#53-wildcards">5.3 Wildcards</a></li><li><a href="#54-tab-completion">5.4 Tab Completion</a></li><li><a href="#55-input-and-output-redirection">5.5 Input and Output Redirection</a></li><li><a href="#56-task-management">5.6 Task Management</a></li><li><a href="#57-terminals">5.7 Terminals</a></li><li><a href="#58-customization">5.8 Customization</a></li></ul></li> <li><a href="#6-process-control">6. Process Control</a><ul><li><a href="#61-ps">6.1 ps</a></li><li><a href="#62-kill-and-killall">6.2 kill and killall</a></li><li><a href="#63-top">6.3 top</a></li><li><a href="#64-cron">6.4 cron</a></li></ul></li> <li><a href="#7-the-x-window-system">7. The X Window System</a><ul><li><a href="#71-what-is-and-isnt-x">7.1 What Is (And Isn't) X</a></li><li><a href="#72-configuring-the-x-server">7.2 Configuring the X Server</a></li><li><a href="#73-choosing-a-window-manager">7.3 Choosing a Window Manager</a></li><li><a href="#74-setting-up-a-graphical-login">7.4 Setting Up A Graphical Login</a></li></ul></li> <li><a href="#8-printing">8. Printing</a><ul><li><a href="#81-choosing-a-printer">8.1 Choosing A Printer</a></li><li><a href="#82-getting-the-driver">8.2 Getting the driver</a></li><li><a href="#83-setting-up-a-printer-in-cups">8.3 Setting Up a Printer in CUPS</a></li><li><a href="#84-printing-from-the-command-line">8.4 Printing from the Command Line</a><ul><li><a href="#841-formatting-for-print">8.4.1 Formatting for Print</a></li></ul></li></ul></li> <li><a href="#9-users-and-groups">9. Users and Groups</a><ul><li><a href="#91-what-are-users-and-groups">9.1 What Are Users and Groups?</a></li><li><a href="#92-managing-users-and-groups">9.2 Managing Users and Groups</a></li><li><a href="#93-other-user-and-group-tools">9.3 Other User and Group Tools</a></li><li><a href="#94-managing-users-and-groups-manually">9.4 Managing Users and Groups Manually</a></li></ul></li> <li><a href="#10-filesystem-permissions">10. Filesystem Permissions</a><ul><li><a href="#101-permissions-overview">10.1 Permissions Overview</a></li><li><a href="#102-chmod-chown-and-chgrp">10.2 chmod, chown, and chgrp</a></li><li><a href="#103-suid-sgid-and-the-sticky-bit">10.3 SUID, SGID, and the "Sticky" Bit</a></li></ul></li> <li><a href="#11-working-with-filesystems">11. Working with Filesystems</a><ul><li><a href="#111-the-filesystem-hierarchy">11.1 The Filesystem Hierarchy</a></li><li><a href="#112-local-filesystem-types">11.2 Local Filesystem Types</a><ul><li><a href="#1121-ext2">11.2.1 ext2</a></li><li><a href="#1122-ext3">11.2.2 ext3</a></li><li><a href="#1123-ext4">11.2.3 ext4</a></li><li><a href="#1124-reiserfs">11.2.4 reiserfs</a></li><li><a href="#1125-xfs">11.2.5 XFS</a></li><li><a href="#1126-jfs">11.2.6 JFS</a></li><li><a href="#1127-iso9660">11.2.7 iso9660</a></li><li><a href="#1128-vfat">11.2.8 vfat</a></li><li><a href="#1129-swap">11.2.9 swap</a></li></ul></li><li><a href="#113-using-mount">11.3 Using mount</a></li><li><a href="#114-network-filesystems">11.4 Network Filesystems</a><ul><li><a href="#1141-nfs">11.4.1 NFS</a></li><li><a href="#1142-smb">11.4.2 SMB</a></li></ul></li></ul></li> <li><a href="#12-vi">12. vi</a><ul><li><a href="#121-what-is-vi">12.1 What is vi?</a></li><li><a href="#122-the-different-modes-of-vi">12.2 The Different Modes of vi</a></li><li><a href="#123-opening-saving-and-quitting">12.3 Opening, Saving, and Quitting</a></li><li><a href="#124-moving-around">12.4 Moving Around</a></li><li><a href="#125-editing-a-document">12.5 Editing A Document</a></li><li><a href="#126-vi-cheat-sheet">12.6 vi Cheat Sheet</a></li></ul></li> <li><a href="#13-emacs">13. Emacs</a><ul><li><a href="#131-what-is-emacs">13.1 What is Emacs?</a></li><li><a href="#132-starting-out">13.2 Starting Out</a></li><li><a href="#133-how-to-move-around">13.3 How to Move Around</a></li><li><a href="#134-getting-help">13.4 Getting Help</a></li><li><a href="#135-calling-functions">13.5 Calling Functions</a></li><li><a href="#136-emacs-cheat-sheet">13.6 Emacs Cheat Sheet</a></li></ul></li> <li><a href="#14-networking">14. Networking</a><ul><li><a href="#141-netconfig">14.1 netconfig</a></li><li><a href="#142-manual-configuration">14.2 Manual Configuration</a></li><li><a href="#143-automatic-configuration-with-rcinet1conf">14.3 Automatic Configuration with rc.inet1.conf</a></li></ul></li> <li><a href="#15-wireless-networking">15. Wireless Networking</a><ul><li><a href="#151-iwconfig">15.1 iwconfig</a></li><li><a href="#152-wired-equivilant-protection-or-lack-thereof">15.2 Wired Equivilant Protection (or Lack Thereof)</a></li><li><a href="#153-wifi-protected-access">15.3 Wifi Protected Access</a><ul><li><a href="#1531-rcinet1conf-revisited">15.3.1 rc.inet1.conf revisited</a></li></ul></li><li><a href="#154-wicd">15.4 wicd</a></li></ul></li> <li><a href="#16-basic-networking-utilities">16. Basic Networking Utilities</a><ul><li><a href="#161-network-diagnostic-tools">16.1 Network Diagnostic Tools</a><ul><li><a href="#1611-ping">16.1.1 ping</a></li><li><a href="#1612-traceroute">16.1.2 traceroute</a></li><li><a href="#1613-telnet">16.1.3 telnet</a></li><li><a href="#1614-ssh">16.1.4 ssh</a></li><li><a href="#1615-tcpdump">16.1.5 tcpdump</a></li><li><a href="#1616-nmap">16.1.6 nmap</a></li><li><a href="#1617-host">16.1.7 host</a></li><li><a href="#1618-dig">16.1.8 dig</a></li><li><a href="#1619-finger">16.1.9 finger</a></li></ul></li><li><a href="#162-web-browsers">16.2 Web Browsers</a><ul><li><a href="#1621-lynx">16.2.1 lynx</a></li><li><a href="#1622-links">16.2.2 links</a></li><li><a href="#1623-wget">16.2.3 wget</a></li></ul></li><li><a href="#163-mail-clients">16.3 Mail Clients</a><ul><li><a href="#1631-pine">16.3.1 pine</a></li><li><a href="#1632-mutt">16.3.2 mutt</a></li><li><a href="#1633-mailx">16.3.3 mailx</a></li></ul></li><li><a href="#164-ftp-clients">16.4 FTP Clients</a><ul><li><a href="#1641-ftp">16.4.1 ftp</a></li><li><a href="#1642-ncftp">16.4.2 ncftp</a></li><li><a href="#1643-lftp">16.4.3 lftp</a></li></ul></li><li><a href="#165-rsync">16.5 rsync</a></li></ul></li> <li><a href="#17-package-management">17. Package Management</a><ul><li><a href="#171-pkgtool">17.1 pkgtool</a></li><li><a href="#172-installing-removing-and-upgrading-packages">17.2 Installing, Removing, and Upgrading Packages</a></li><li><a href="#173-package-compression-formats">17.3 Package Compression Formats</a><ul><li><a href="#1731-slackpkg">17.3.1 slackpkg</a></li><li><a href="#1732-rpm2tgz">17.3.2 rpm2tgz</a></li></ul></li></ul></li> <li><a href="#18-keeping-track-of-updates">18. Keeping Track of Updates</a><ul><li><a href="#181-the-stable-branch">18.1 The -stable Branch</a></li><li><a href="#182-security-update-mailing-list">18.2 Security Update Mailing List</a></li><li><a href="#183-upgrading-slackware-versions">18.3 Upgrading Slackware Versions</a></li></ul></li> <li><a href="#19-the-linux-kernel">19. The Linux Kernel</a><ul><li><a href="#191-what-does-the-kernel-do">19.1 What Does the Kernel Do?</a></li><li><a href="#192-working-with-modules">19.2 Working with Modules</a></li><li><a href="#193-compiling-a-kernel-and-why-to-do-so">19.3 Compiling A Kernel and Why to do So</a></li></ul></li> <li><a href="#slackbook-in-markdown-format">SlackBook in Markdown Format</a><ul><li><a href="#to-do-list">To-Do List</a></li><li><a href="#changelog">ChangeLog</a></li></ul></li> <li><a href="#general">General</a><ul><li><a href="#this-sesion-is-old-todo">This sesion is old ToDo</a></li></ul></li>
-  </ul>
+    <nav class="book-toc">
+<h2>Índice</h2>
+<ul><li><a href="#slackware-linux-essentials-version-beta">Slackware Linux Essentials - Version Beta</a></li><li><a href="#foreward">Foreward</a><ul><li><a href="#intended-audience">Intended Audience</a></li><li><a href="#why-a-new-slackware-book">Why A New Slackware Book?</a></li><li><a href="#conventions-used-in-this-book">Conventions Used in this Book</a></li><li><a href="#acknowledgements">Acknowledgements</a></li></ul></li><li><a href="#1-introduction-to-slackware">1. Introduction to Slackware</a><ul><li><a href="#11-why-use-slackware">1.1 Why Use Slackware?</a></li><li><a href="#12-differences-compared-to-other-linux-distributions">1.2 Differences Compared to Other Linux Distributions</a></li><li><a href="#13-licensing">1.3 Licensing</a></li></ul></li><li><a href="#2-installation">2. Installation</a><ul><li><a href="#21-booting-the-installer">2.1 Booting the Installer</a></li><li><a href="#22-partitioning">2.2 Partitioning</a></li><li><a href="#23-the-setup-program">2.3 The setup Program</a><ul><li><a href="#231-help">2.3.1 Help</a></li><li><a href="#232-keymap">2.3.2 Keymap</a></li><li><a href="#233-addswap">2.3.3 Addswap</a></li><li><a href="#234-target">2.3.4 Target</a></li><li><a href="#235-source">2.3.5 Source</a></li><li><a href="#236-select">2.3.6 Select</a></li><li><a href="#237-install">2.3.7 Install</a></li><li><a href="#238-configure">2.3.8 Configure</a></li></ul></li></ul></li><li><a href="#3-booting">3. Booting</a><ul><li><a href="#31-mkinitrd">3.1 mkinitrd</a></li><li><a href="#32-lilo">3.2 LILO</a></li><li><a href="#33-dual-booting">3.3 Dual Booting</a><ul><li><a href="#331-dual-booting-with-partitions">3.3.1 Dual Booting with Partitions</a></li><li><a href="#332-dual-booting-from-hard-drives">3.3.2 Dual Booting from Hard Drives</a></li></ul></li></ul></li><li><a href="#4-basic-shell-commands">4. Basic Shell Commands</a><ul><li><a href="#41-system-documentation">4.1 System Documentation</a></li><li><a href="#42-dealing-with-files-and-directories">4.2 Dealing with Files and Directories</a><ul><li><a href="#421-listing-files-and-directory-contents">4.2.1 Listing Files and Directory Contents</a></li><li><a href="#422-moving-around-the-filesystem">4.2.2 Moving Around the Filesystem</a></li><li><a href="#423-file-and-directory-creation-and-deletion">4.2.3 File and Directory Creation and Deletion</a></li></ul></li><li><a href="#43-archive-and-compression">4.3 Archive and Compression</a><ul><li><a href="#431-zip-and-unzip">4.3.1 zip and unzip</a></li><li><a href="#432-gzip">4.3.2 gzip</a></li><li><a href="#433-bzip2">4.3.3 bzip2</a></li><li><a href="#434-xz-lzma">4.3.4 XZ / LZMA</a></li><li><a href="#435-tar">4.3.5 tar</a></li></ul></li><li><a href="#44-reading-documents">4.4 Reading Documents</a><ul><li><a href="#441-more">4.4.1 more</a></li><li><a href="#442-less">4.4.2 less</a></li></ul></li><li><a href="#45-linking">4.5 Linking</a></li></ul></li><li><a href="#5-the-bourne-again-shell">5. The Bourne Again Shell</a><ul><li><a href="#51-what-is-a-shell">5.1 What Is A Shell?</a></li><li><a href="#52-environment-variables">5.2 Environment Variables</a></li><li><a href="#53-wildcards">5.3 Wildcards</a></li><li><a href="#54-tab-completion">5.4 Tab Completion</a></li><li><a href="#55-input-and-output-redirection">5.5 Input and Output Redirection</a></li><li><a href="#56-task-management">5.6 Task Management</a></li><li><a href="#57-terminals">5.7 Terminals</a></li><li><a href="#58-customization">5.8 Customization</a></li></ul></li><li><a href="#6-process-control">6. Process Control</a><ul><li><a href="#61-ps">6.1 ps</a></li><li><a href="#62-kill-and-killall">6.2 kill and killall</a></li><li><a href="#63-top">6.3 top</a></li><li><a href="#64-cron">6.4 cron</a></li></ul></li><li><a href="#7-the-x-window-system">7. The X Window System</a><ul><li><a href="#71-what-is-and-isnt-x">7.1 What Is (And Isn't) X</a></li><li><a href="#72-configuring-the-x-server">7.2 Configuring the X Server</a></li><li><a href="#73-choosing-a-window-manager">7.3 Choosing a Window Manager</a></li><li><a href="#74-setting-up-a-graphical-login">7.4 Setting Up A Graphical Login</a></li></ul></li><li><a href="#8-printing">8. Printing</a><ul><li><a href="#81-choosing-a-printer">8.1 Choosing A Printer</a></li><li><a href="#82-getting-the-driver">8.2 Getting the driver</a></li><li><a href="#83-setting-up-a-printer-in-cups">8.3 Setting Up a Printer in CUPS</a></li><li><a href="#84-printing-from-the-command-line">8.4 Printing from the Command Line</a><ul><li><a href="#841-formatting-for-print">8.4.1 Formatting for Print</a></li></ul></li></ul></li><li><a href="#9-users-and-groups">9. Users and Groups</a><ul><li><a href="#91-what-are-users-and-groups">9.1 What Are Users and Groups?</a></li><li><a href="#92-managing-users-and-groups">9.2 Managing Users and Groups</a></li><li><a href="#93-other-user-and-group-tools">9.3 Other User and Group Tools</a></li><li><a href="#94-managing-users-and-groups-manually">9.4 Managing Users and Groups Manually</a></li></ul></li><li><a href="#10-filesystem-permissions">10. Filesystem Permissions</a><ul><li><a href="#101-permissions-overview">10.1 Permissions Overview</a></li><li><a href="#102-chmod-chown-and-chgrp">10.2 chmod, chown, and chgrp</a></li><li><a href="#103-suid-sgid-and-the-sticky-bit">10.3 SUID, SGID, and the "Sticky" Bit</a></li></ul></li><li><a href="#11-working-with-filesystems">11. Working with Filesystems</a><ul><li><a href="#111-the-filesystem-hierarchy">11.1 The Filesystem Hierarchy</a></li><li><a href="#112-local-filesystem-types">11.2 Local Filesystem Types</a><ul><li><a href="#1121-ext2">11.2.1 ext2</a></li><li><a href="#1122-ext3">11.2.2 ext3</a></li><li><a href="#1123-ext4">11.2.3 ext4</a></li><li><a href="#1124-reiserfs">11.2.4 reiserfs</a></li><li><a href="#1125-xfs">11.2.5 XFS</a></li><li><a href="#1126-jfs">11.2.6 JFS</a></li><li><a href="#1127-iso9660">11.2.7 iso9660</a></li><li><a href="#1128-vfat">11.2.8 vfat</a></li><li><a href="#1129-swap">11.2.9 swap</a></li></ul></li><li><a href="#113-using-mount">11.3 Using mount</a></li><li><a href="#114-network-filesystems">11.4 Network Filesystems</a><ul><li><a href="#1141-nfs">11.4.1 NFS</a></li><li><a href="#1142-smb">11.4.2 SMB</a></li></ul></li></ul></li><li><a href="#12-vi">12. vi</a><ul><li><a href="#121-what-is-vi">12.1 What is vi?</a></li><li><a href="#122-the-different-modes-of-vi">12.2 The Different Modes of vi</a></li><li><a href="#123-opening-saving-and-quitting">12.3 Opening, Saving, and Quitting</a></li><li><a href="#124-moving-around">12.4 Moving Around</a></li><li><a href="#125-editing-a-document">12.5 Editing A Document</a></li><li><a href="#126-vi-cheat-sheet">12.6 vi Cheat Sheet</a></li></ul></li><li><a href="#13-emacs">13. Emacs</a><ul><li><a href="#131-what-is-emacs">13.1 What is Emacs?</a></li><li><a href="#132-starting-out">13.2 Starting Out</a></li><li><a href="#133-how-to-move-around">13.3 How to Move Around</a></li><li><a href="#134-getting-help">13.4 Getting Help</a></li><li><a href="#135-calling-functions">13.5 Calling Functions</a></li><li><a href="#136-emacs-cheat-sheet">13.6 Emacs Cheat Sheet</a></li></ul></li><li><a href="#14-networking">14. Networking</a><ul><li><a href="#141-netconfig">14.1 netconfig</a></li><li><a href="#142-manual-configuration">14.2 Manual Configuration</a></li><li><a href="#143-automatic-configuration-with-rcinet1conf">14.3 Automatic Configuration with rc.inet1.conf</a></li></ul></li><li><a href="#15-wireless-networking">15. Wireless Networking</a><ul><li><a href="#151-iwconfig">15.1 iwconfig</a></li><li><a href="#152-wired-equivilant-protection-or-lack-thereof">15.2 Wired Equivilant Protection (or Lack Thereof)</a></li><li><a href="#153-wifi-protected-access">15.3 Wifi Protected Access</a><ul><li><a href="#1531-rcinet1conf-revisited">15.3.1 rc.inet1.conf revisited</a></li></ul></li><li><a href="#154-wicd">15.4 wicd</a></li></ul></li><li><a href="#16-basic-networking-utilities">16. Basic Networking Utilities</a><ul><li><a href="#161-network-diagnostic-tools">16.1 Network Diagnostic Tools</a><ul><li><a href="#1611-ping">16.1.1 ping</a></li><li><a href="#1612-traceroute">16.1.2 traceroute</a></li><li><a href="#1613-telnet">16.1.3 telnet</a></li><li><a href="#1614-ssh">16.1.4 ssh</a></li><li><a href="#1615-tcpdump">16.1.5 tcpdump</a></li><li><a href="#1616-nmap">16.1.6 nmap</a></li><li><a href="#1617-host">16.1.7 host</a></li><li><a href="#1618-dig">16.1.8 dig</a></li><li><a href="#1619-finger">16.1.9 finger</a></li></ul></li><li><a href="#162-web-browsers">16.2 Web Browsers</a><ul><li><a href="#1621-lynx">16.2.1 lynx</a></li><li><a href="#1622-links">16.2.2 links</a></li><li><a href="#1623-wget">16.2.3 wget</a></li></ul></li><li><a href="#163-mail-clients">16.3 Mail Clients</a><ul><li><a href="#1631-pine">16.3.1 pine</a></li><li><a href="#1632-mutt">16.3.2 mutt</a></li><li><a href="#1633-mailx">16.3.3 mailx</a></li></ul></li><li><a href="#164-ftp-clients">16.4 FTP Clients</a><ul><li><a href="#1641-ftp">16.4.1 ftp</a></li><li><a href="#1642-ncftp">16.4.2 ncftp</a></li><li><a href="#1643-lftp">16.4.3 lftp</a></li></ul></li><li><a href="#165-rsync">16.5 rsync</a></li></ul></li><li><a href="#17-package-management">17. Package Management</a><ul><li><a href="#171-pkgtool">17.1 pkgtool</a></li><li><a href="#172-installing-removing-and-upgrading-packages">17.2 Installing, Removing, and Upgrading Packages</a></li><li><a href="#173-package-compression-formats">17.3 Package Compression Formats</a><ul><li><a href="#1731-slackpkg">17.3.1 slackpkg</a></li><li><a href="#1732-rpm2tgz">17.3.2 rpm2tgz</a></li></ul></li></ul></li><li><a href="#18-keeping-track-of-updates">18. Keeping Track of Updates</a><ul><li><a href="#181-the-stable-branch">18.1 The -stable Branch</a></li><li><a href="#182-security-update-mailing-list">18.2 Security Update Mailing List</a></li><li><a href="#183-upgrading-slackware-versions">18.3 Upgrading Slackware Versions</a></li></ul></li><li><a href="#19-the-linux-kernel">19. The Linux Kernel</a><ul><li><a href="#191-what-does-the-kernel-do">19.1 What Does the Kernel Do?</a></li><li><a href="#192-working-with-modules">19.2 Working with Modules</a></li><li><a href="#193-compiling-a-kernel-and-why-to-do-so">19.3 Compiling A Kernel and Why to do So</a></li></ul></li></ul>
 </nav>
-<section id="preface"><h1 id="foreward">Foreward</h1>
+    <section id="preface" class="book-section"><h1 id="foreward">Foreward</h1>
 <h2 id="intended-audience">Intended Audience</h2>
 <h2 id="why-a-new-slackware-book">Why A New Slackware Book?</h2>
 <p>Slackware Linux may be one of the oldest surviving Linux distributions but it's still regularly updated and includes the latest releases of many of the most popular free software programs. While Slackware does aim to maintain its traditional UNIX roots and values, there is no escaping "progress". Subsystems change, window managers come and go and new ways are devised to manage the complexities of a modern operating system. While we do resist change for change's sake, it's inevitable that as things evolve documentation becomes stale — books are no exception.</p>
 <h2 id="conventions-used-in-this-book">Conventions Used in this Book</h2>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 <h2 id="acknowledgements">Acknowledgements</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p></section><section id="chapter_01"><h1 id="1-introduction-to-slackware">1. Introduction to Slackware</h1>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p></section><section id="chapter_01" class="book-section"><h1 id="1-introduction-to-slackware">1. Introduction to Slackware</h1>
 <h2 id="11-why-use-slackware">1.1 Why Use Slackware?</h2>
 <p>Slackware has a long tradition of excellence. Started in 1992 and first released in 1993, Slackware is the oldest surviving commercial Linux distribution. Slackware's focus on making a clean, simple Linux distribution that is as UNIX-like as possible makes it a natural choice for those people who really want to learn about Linux and other UNIX-like operating systems. In a 2012 interview, Slackware founder and benevolent dictator for life, Patrick Volkerding, put it thusly.</p>
 <p>"I try not to let things get juggled around simply for the sake of making them different. People who come back to Slackware after a time tend to be pleasantly surprised that they don't need to relearn how to do everything. This has given us quite a loyal following, for which I am grateful."</p>
@@ -75,7 +172,7 @@ Many of the designations used by manufacturers and sellers to distinguish their 
 <h2 id="13-licensing">1.3 Licensing</h2>
 <p>Each piece of Slackware (this is true of all Linux distributions) is developed by different people (or teams of people), and each group has their own ideas about what it means to be "free". Because of this, there are literally dozens and dozens of different licenses granting you different permissions regarding their use or distribution. Fortunately dealing with free software licenses isn't as difficult as it may first appear. Most things are licensed with either the Gnu General Public License or the BSD license. Sometimes you'll encounter a piece of software with a different license, but in almost all cases they are remarkably similar to either the GPL or the BSD license.</p>
 <p>Probably the most popular license in use within the Free Software community is the GNU General Public License. The GPL was created by the Free Software Foundation , which actively works to create and distribute software that guarantees the freedoms which they believe are basic rights. In fact, this is the very group that coined the term "Free Software." The GPL imposes no restrictions on the use of software. In fact, you don't even have to accept the terms of the license in order to use the software, but you are not allowed to redistribute the software or any changes to it without abiding by the terms of the license agreement. A large number of software projects shipped with Slackware, from the Linux kernel itself to the Samba project, are released under the terms of the GPL.</p>
-<p>Another very common license is the BSD license, which is arguably "more free" than the GPL because it imposes virtually no restrictions on derivative works. The BSD license simply requires that the copyright remain intact along with a simple disclaimer. Many of the utilities specific to Slackware are licensed with a BSD-style license, and this is the preferred license for many smaller projects and tools.</p></section><section id="chapter_02"><h1 id="2-installation">2. Installation</h1>
+<p>Another very common license is the BSD license, which is arguably "more free" than the GPL because it imposes virtually no restrictions on derivative works. The BSD license simply requires that the copyright remain intact along with a simple disclaimer. Many of the utilities specific to Slackware are licensed with a BSD-style license, and this is the preferred license for many smaller projects and tools.</p></section><section id="chapter_02" class="book-section"><h1 id="2-installation">2. Installation</h1>
 <p>Slackware's installation is a bit more simplistic than that of most other Linux distributions and is very reminiscent of installing one of the varieties of BSD operating systems. If you're familiar with those, you should feel right at home. If you've never installed Slackware or have only used distributions that make use of graphical installers, you may feel a bit overwhelmed at first. Don't panic! The installation is very easy once you understand it, and it works on just about any x86 or x86_64 platform.</p>
 <p>The latest versions of Slackware Linux are distributed on DVD or CD media, but Slackware can be installed in a variety of other ways. We're only going to focus on the most common method - booting from a DVD - in this book. If you don't have a CD or DVD drive, you might wish to take a look at the various README files inside the <code>usb-and-pxe-installers</code> directory at your favorite Slackware mirror. This directory includes the necessary files and instructions for booting the Slackware installer from a USB flash drive or from a network card that support PXE. The files there are the best source of information available for such boot methods.</p>
 <h2 id="21-booting-the-installer">2.1 Booting the Installer</h2>
@@ -263,40 +360,40 @@ root@slackware:/#
 <p>At this point, we are done partitioning our disks and are ready to begin the <code>setup</code> program. However, if you have created any extended partitions, you may wish to reboot once to ensure that they are properly read by the kernel.</p>
 <h2 id="23-the-setup-program">2.3 The setup Program</h2>
 <p>Now that you've created your partitions it's time to run the <code>setup</code> program to install Slackware. <code>setup</code> will handle formatting partitions, installing packages, and running basic configuration scripts step-by-step. In order to do so, just type <code>setup</code> at your shell prompt.</p>
-<p><img alt="image" src="ps-imgs/setup-program.png" /></p>
+<p><img alt="image" src="ps-imgs/setup-program.png"></p>
 <h3 id="231-help">2.3.1 Help</h3>
 <p>If you've never installed Slackware before, you can get a very basic over-view of the Slackware installer by reading the Help menu. Most of the information here is on navigating through the installer which should be fairly intuitive, but if you've never used a curses-based program before you may find this useful.</p>
-<p><img alt="image" src="ps-imgs/setup-help.png" /></p>
+<p><img alt="image" src="ps-imgs/setup-help.png"></p>
 <h3 id="232-keymap">2.3.2 Keymap</h3>
 <p>Before we go any further, Slackware gives you the opportunity to select a different mapping for your keyboard. If you're using a standard US keyboard you can safely skip this step, but if you're using an international keyboard you will want to select the correct mapping now. This ensures that the keys you press on your keyboard will do exactly what you expect them to do.</p>
-<p><img alt="image" src="ps-imgs/setup-keymap.png" /></p>
+<p><img alt="image" src="ps-imgs/setup-keymap.png"></p>
 <h3 id="233-addswap">2.3.3 Addswap</h3>
 <p>If you created a swap partition, this step will allow you to enable it before running any memory-intensive activities like installing packages. swap space is essentially virtual memory. It's a hard drive partition (or a file, though Slackware's installer does not support swap files) where regions of active system memory get copied when your computer is out of useable RAM. This lets the computer "swap" programs in and out of active RAM, allowing you to use more memory than your computer actually has. This step will also add your swap partition to <code>/etc/fstab</code> so it will be available to your OS.</p>
-<p><img alt="image" src="ps-imgs/setup-swap.png" /></p>
+<p><img alt="image" src="ps-imgs/setup-swap.png"></p>
 <h3 id="234-target">2.3.4 Target</h3>
 <p>Our next step is selecting our root partition and any other partitions we'd like Slackware to utilize. You'll be given a choice of filesystems to use and whether or not to format the partition. If you're installing to a new partition you must format it. If you have a partition with data on it you'd like to save, don't. For example, many users have a seperate <code>/home</code> partition used for user data and elect not to format it on install. This lets them install newer versions of Slackware without having to backup and restore this data.</p>
-<p><img alt="image" src="ps-imgs/setup-target.png" /></p>
+<p><img alt="image" src="ps-imgs/setup-target.png"></p>
 <h3 id="235-source">2.3.5 Source</h3>
 <p>Here you'll tell the installer where to find the Slackware packages. The most common method is to use the Slackware install DVD or CDs, but various other options are available. If you have your packages installed to a partition that you setup in the previous step, you can install from that partition or a pre-mounted directory. (You may need to mount that partition with <code>mount</code> (8) first. See chapter 11 for more details.) Additionally, Slackware offers a variety of networked options such as NFS shares, FTP, HTTP, and Samba. If you select a network installation, Slackware will prompt you for TCP/IP information first. We're only going to discuss installation from the DVD, but other methods are similar and straightforward.</p>
-<p><img alt="image" src="ps-imgs/setup-source.png" /></p>
+<p><img alt="image" src="ps-imgs/setup-source.png"></p>
 <h3 id="236-select">2.3.6 Select</h3>
 <p>One unique feature of Slackware is its manner of dividing packages into disksets. At the beginning of time, network access to FTP servers was available only through incredibly slow 300 baud modems, so Slackware was split into disk sets that would fit onto floppy disks so users could download and install only those packages they were interested in. Today that practice continues and the installer allows you to chose which sets to install. This allows you to easily skip packages you may not want, such as X and KDE on headless servers or Emacs on everything. Please note that the "A" series is always required.</p>
-<p><img alt="image" src="ps-imgs/setup-select.png" /></p>
+<p><img alt="image" src="ps-imgs/setup-select.png"></p>
 <h3 id="237-install">2.3.7 Install</h3>
 <p>Finally we get to the meat of the installer. At this stage, Slackware will ask you what method to use to chose packages. If this is your first time installing Slackware, the "full" method is highly recommended. Even if this isn't your first time, you'll probably want to use it anyway.</p>
 <p>The "menu" and "expert" options allow you to choose individual packages to install and are of use to skilled users familiar with the OS. These methods allow such users to quickly prune packages from the installer to build a very minimal system. If you don't know what you're doing (sometimes even if you do) you're likely to leave out crucial pieces of software and end up with a broken system.</p>
 <p>The "newbie" method can be very helpful to a new user, but takes a very long time to install. This method will install all the required packages, then prompt you individually for every other package. The big advantage here is that is pauses and gives you a brief overview of the package contents. For a new user, this introduction into what is included with Slackware can be informative. For most other users it is a long and tedious process.</p>
 <p>The "custom" and "tagpath" options should only be used by people with the greatest skill and expertise with Slackware. These methods allow the user to install packages from custom tagfiles. Tagfiles are only rarely used. We won't discuss them in this book.</p>
-<p><img alt="image" src="ps-imgs/setup-install.png" /></p>
+<p><img alt="image" src="ps-imgs/setup-install.png"></p>
 <h3 id="238-configure">2.3.8 Configure</h3>
 <p>Once all the packages are installed you're nearly finished. At this stage, Slackware will prompt you with a variety of configuration tasks for your new operating system. Many of these are optional, but most users will need to set something up here. Depending on the packages you've installed, you may be offered different configuration options than the ones shown here, but we've included all the really important ones.</p>
 <p>The first thing you'll likely be prompted to do is setup a boot disk. In the past this was typically a 1.44MB floppy disk, but today's Linux kernel is far too large to fit on a single floppy, so Slackware offers to create a bootable USB flash memory stick. Of course, your computer must support booting from USB in order to use a USB boot stick (most modern computers do). If you do not intend to use LILO or another traditional boot loader, you should consider making a USB boot stick. Please note that doing so will erase the contents of whatever memory stick you're using, so be careful.</p>
-<p><img alt="image" src="ps-imgs/usb-boot-stick.png" /></p>
+<p><img alt="image" src="ps-imgs/usb-boot-stick.png"></p>
 <p>Nearly everyone will need to setup the LInux LOader, LILO. LILO is in charge of booting the Linux kernel and connecting to an initrd or the root filesystem. Without it (or some other boot loader), your new Slackware operating system will not boot. Slackware offers a few options here. The "simple" method attempts to automatically configure LILO for your computer, and works well with very simple systems. If Slackware is the only operating system on your computer, it should configure and install LILO for you without any hassels. If you don't trust the simpler method to work, or if you want to take an in-depth look at how to configure LILO, the "expert" method is really not all that complicated. This method will take you through each step and offer to setup dual-boot for Windows and other Linux operating systems. It also allows you to append kernel command parameters (most users will not need to specify any though).</p>
 <p>LILO is a very important part of your Slackware system, so an entire section of the next chapter is devoted to it. If you're having difficulty configuring LILO at this stage, you may want to skip ahead and read Chapter 3 first, then return here.</p>
-<p><img alt="image" src="ps-imgs/setup-lilo.png" /></p>
+<p><img alt="image" src="ps-imgs/setup-lilo.png"></p>
 <p>This simple step allows you to configure and activate a console mouse for use outside of the graphical desktops. By activating a console mouse, you'll be able to easily copy and paste from within the Slackware terminal. Most users will need to choose one of the first three options, but many are offered, and yes those ancient two-button serial mice do work.</p>
-<p><img alt="image" src="ps-imgs/setup-mouse.png" /></p>
+<p><img alt="image" src="ps-imgs/setup-mouse.png"></p>
 <p>The next stage in configuring your install is the network configuration. If you don't wish to configure your network at this stage, you may decline, but otherwise you'll be prompted to provide a hostname for your computer. If you're unsure what to do here, you might want to read through first.</p>
 <p>The following screens will prompt you first for a hostname, then for a domainname, such as example.org. The combination of the hostname and the domainname can be used to navigate between computers in your network if you use an internal DNS service or maintain your <code>/etc/hosts</code> file. If you skip setting up your network, Slackware will name your computer "darkstar" after a song by the Grateful Dead.</p>
 <p>You have three options when setting your IP address; you may assign it a static IP, use DHCP, or configure a loopback connection. The simplest option, and probably the most common for laptops or computers on a basic network, is to let a DHCP server assign IP addresses dynamically. Unless you are installing Slackware for use as a network server, you probably do not need to setup a static IP address. If you're not sure which of these options to choose, pick DHCP.</p>
@@ -305,13 +402,13 @@ root@slackware:/#
 <p>The final screen during static IP address configuration is a confirmation screen, where you're permitted to accept your choices, edit them, or even restart the IP address configuration in case you decide to use DHCP instead.</p>
 <p>Once your network configuration is completed Slackware will prompt you to configure the startup services that you wish to run automatically upon boot. Helpful descriptions of each service appear both to the right of the service name as well as at the bottom of the screen. If you're not sure what to turn on, you can safely leave the defaults in place. What services are started at boot time can be easily modified later with <code>pkgtool</code> .</p>
 <p>Every computer needs to keep track of the current time, and with so many timezones around the world you have to tell Slackware which one to use. If your computer's hardware clock is set to UTC (Coordinated Universal Time), you'll need to select that; most hardware clocks are not set to UTC from the factory (though you could set it that way on your own; Slackware doesn't care). Then simply select your timezone from the list provided and off you go.</p>
-<p><img alt="image" src="ps-imgs/setup-timezone.png" /></p>
+<p><img alt="image" src="ps-imgs/setup-timezone.png"></p>
 <p>If you installed the X disk set, you'll be prompted to select a default window manager or desktop environment. What you select here will apply to every user on your computer, unless that user decides to run <code>xwmconfig</code> (1) and choose a different one. Don't be alarmed if the options you see below do not match the ones Slackware offers you. <code>xwmconfig</code> only offers choices that you installed. So for example, if you elected to skip the "KDE" disk set, KDE will not be offered.</p>
-<p><img alt="image" src="ps-imgs/setup-xwmconfig.png" /></p>
+<p><img alt="image" src="ps-imgs/setup-xwmconfig.png"></p>
 <p>The last configuration step is setting a root password. The root user is the "super user" on Slackware and all other UNIX-like operating systems. Think of root as the Administrator user. root knows all, sees all, and can do all, so setting a strong root password is just common sense.</p>
 <p>With this last step complete, you can now exit the Slackware installer and reboot with a good old <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>DELETE</kbd> . Remove the Slackware installation disk, and if you performed all the steps correctly, your computer will boot into your new Slackware linux system. If something went wrong, you probably skipped the LILO configuration step or made an error there somehow. Thankfully, the next chapter should help you sort that out.</p>
 <p>When you have rebooted into your new Slackware installation, the very first step you should take is to create a user. By default, the only user that exists after the install is the root user, and it's dangerous to use your computer as root, given that there are no restrictions as to what that user can do.</p>
-<p>The quickest and easiest way to create a normal user for yourself is to log in as root with the root password that you created at the end of the intallation process, and then issue the <code>adduser</code> command. This will interactively assist you in creating a user; see  the section called “Managing Users and Groups” for more information.</p></section><section id="chapter_03"><h1 id="3-booting">3. Booting</h1>
+<p>The quickest and easiest way to create a normal user for yourself is to log in as root with the root password that you created at the end of the intallation process, and then issue the <code>adduser</code> command. This will interactively assist you in creating a user; see  the section called “Managing Users and Groups” for more information.</p></section><section id="chapter_03" class="book-section"><h1 id="3-booting">3. Booting</h1>
 <p>Ok, now that you've gotten Slackware installed on your system, you should learn exactly what controls the boot sequence of your machine, and how to fix it should you manage to break it somehow. If you use Linux long enough, sooner or later you will make a mistake that breaks your bootloader. Fortunately, this doesn't require a reinstall to fix. Unlike many other operating systems that hide the underlying details of how they work, Linux (and in particular, Slackware) gives you full control over the boot process. Simply by editing a configuration file or two and re-running the bootloader installer, you can quickly and easily change (or break) your system. Slackware even makes it easy to dual-boot multiple operating systems, such as other Linux distributions or Microsoft Windows.</p>
 <h2 id="31-mkinitrd">3.1 mkinitrd</h2>
 <p>Before we go any further, a quick discussion on the Linux kernel is warranted. Slackware Linux includes at least two, but sometimes more, different kernels. While they are all compiled from the same source code, and hence are the "same", they are not identical. Depending on your architecture and Slackware version, the installer may have loaded your system with several kernels. There are kernels for single-processor systems and kernels for multi-processor systems (on 32bit Slackware). In the old days, there were lots of kernels for installing on many different kinds of hard drive controllers. More importantly for our discussion, there are "huge" kernels and "generic" kernels.</p>
@@ -383,7 +480,7 @@ darkstar:~# /usr/share/mkinitrd/mkinitrd_command_generator.sh mkinitrd -c -k 2.6
 <h2 id="32-lilo">3.2 LILO</h2>
 <p>LILO is the Linux Loader and is currently the default boot loader installed with Slackware Linux. If you've used other Linux distributions before, you may be more familiar with GRUB. If you prefer to use GRUB instead, you can easily find it in the <code>extra/</code> directory on one of your Slackware CDs. However, since LILO is the default Slackware bootloader, we'll focus exclusively on it.</p>
 <p>Configuring LILO can be a little daunting for new users, so Slackware comes with a special setup tool called <code>liloconfig</code> . Normally, <code>liloconfig</code> is first run by the installer, but you can run it at any time from a terminal.</p>
-<p><img alt="image" src="ps-imgs/setup-lilo.png" /></p>
+<p><img alt="image" src="ps-imgs/setup-lilo.png"></p>
 <p><code>liloconfig</code> has two modes of operation: simple and expert. The "simple" mode tries to automatically configure lilo for you. If Slackware is the only operating system installed on your computer, the "simple" mode will almost always do the right thing quickly and easily. It is also very good at detecting Windows installations and adding them to <code>/etc/lilo.conf</code> so that you can choose which operating system to boot when you turn your computer on.</p>
 <p>In order to use "expert" mode, you'll need to know Slackware's root partition. You can also setup other linux operating systems if you know their root partitions, but this may not work as well as you expect. <code>liloconfig</code> will try to boot each linux operating system with Slackware's kernel, and this is probably not what you want. Fortunately, setting up Windows partitions in expert mode is trivial. One hint when using expert mode: you should almost always install LILO to the Master Boot Record (MBR). Once upon a time, it was recommended to install the boot loader onto the root partition and set that partition as bootable. Today, LILO has matured greatly and is safe to install on the MBR. In fact, you will encounter fewer problems if you do so.</p>
 <p><code>liloconfig</code> is a great way to quickly setup your boot loader, but if you really need to know what's going on, you'll need to look at LILO's configuration file: <code>lilo.conf</code> (5) under the <code>/etc</code> directory. <code>/etc/lilo.conf</code> is separated into several sections. At the top, you'll find a "global" section where you specify things like where to install LILO (generally the MBR), any special images or screens to show on boot, and the timeout after which LILO will boot the default operating system. Here's what the global section of my lilo.conf file looks like in part.</p>
@@ -445,8 +542,8 @@ Added Backup
 <h3 id="331-dual-booting-with-partitions">3.3.1 Dual Booting with Partitions</h3>
 <p>In order to set up a dual-boot system with each operating system on its own partition, you must first create partitions. This is easiest if done prior to installing the first operating system, in which case it's a simple case of pre-planning and carving up your hard drive as you feel necessary. See the section called “Partitioning” for information on using the <code>fdisk</code> or <code>cfdisk</code> partitioning applications.</p>
 <blockquote>
-<p><strong>Important</strong><br />
-If you're dual booting two Linux distributions, it is inadvisable to attempt to share a /home directory between the systems. While it is technically possible, doing so will increase the chance of your personal configurations from becoming mauled by competing desktop environments or versions.<br />
+<p><strong>Important</strong>
+If you're dual booting two Linux distributions, it is inadvisable to attempt to share a /home directory between the systems. While it is technically possible, doing so will increase the chance of your personal configurations from becoming mauled by competing desktop environments or versions.
 It is, however, safe to use a common swap partition.</p>
 </blockquote>
 <p>You should partition your drive into at least three parts:</p>
@@ -479,7 +576,7 @@ It is, however, safe to use a common swap partition.</p>
 <p>Dual booting between different physical hard drives is often easier than with partitions since the computer's BIOS or EFI almost invariably has a boot device chooser that allows you to interrupt the boot process immediately after POST and choose what drive should get priority.</p>
 <p>The snag key to enter the boot picker is different for each brand of motherboard; consult the motherboard's manual or read the splash screen to find out what your computer requires. Typical keys are <kbd>F1</kbd> , <kbd>F12</kbd> , <kbd>DEL</kbd> . For Apple computers, it is always the <kbd>Option</kbd> (Alt) key.</p>
 <p>If you manage the boot priority via BIOS or EFI, then each boot loader on each hard drive is only aware of its own drive and will never interfere with one another. This is rather contrary to what a boot loader is designed to do but can be a useful workaround when dealing with proprietary operating systems which insist upon being the only OS on the system, to the detriment of the user's preference.</p>
-<p>If you don't have the luxury of having multiple internal hard drives and don't feel comfortable juggling another partition and OS on your computer, you might also consider using a bootable USB thumbdrive or even a virtual machine to give you access to another OS. Both of these options is outside the scope of this book, but they've commonplace and might be the right choice for you, depending on your needs.</p></section><section id="chapter_04"><h1 id="4-basic-shell-commands">4. Basic Shell Commands</h1>
+<p>If you don't have the luxury of having multiple internal hard drives and don't feel comfortable juggling another partition and OS on your computer, you might also consider using a bootable USB thumbdrive or even a virtual machine to give you access to another OS. Both of these options is outside the scope of this book, but they've commonplace and might be the right choice for you, depending on your needs.</p></section><section id="chapter_04" class="book-section"><h1 id="4-basic-shell-commands">4. Basic Shell Commands</h1>
 <p>So you've installed Slackware and you're staring at a terminal prompt, what now? Now would be a good time to learn about the basic command line tools. And since you're staring at a blinking curser, you probably need a little assistance in knowing how to get around, and that is what this chapter is all about.</p>
 <h2 id="41-system-documentation">4.1 System Documentation</h2>
 <p>Your Slackware Linux system comes with lots of built-in documentation for nearly every installed application. Perhaps the most common method of reading system documentation is <code>man</code> (1). <code>man</code> (short for <em>manual</em> ) will bring up the included man-page for any application, system call, configuration file, or library you tell it too. For example, <code>man man</code> will bring up the man-page for <code>man</code> itself.</p>
@@ -776,7 +873,7 @@ darkstar:~$ ls -l /etc/slackware-version foo
 lrwxrwxrwx 1 root root 22 2008-01-25 04:16 foo -&gt; /etc/slackware-version
 
 </code></pre>
-<p>When using symlinks, remember that if the original file is deleted, your symlink is useless; it simply points at a file that doesn't exist anymore.</p></section><section id="chapter_05"><h1 id="5-the-bourne-again-shell">5. The Bourne Again Shell</h1>
+<p>When using symlinks, remember that if the original file is deleted, your symlink is useless; it simply points at a file that doesn't exist anymore.</p></section><section id="chapter_05" class="book-section"><h1 id="5-the-bourne-again-shell">5. The Bourne Again Shell</h1>
 <h2 id="51-what-is-a-shell">5.1 What Is A Shell?</h2>
 <p>Yeah, what exactly is a shell? Well, a shell is basically a command-line user environment. In essence, it is an application that runs when the user logs in and allows him to run additional applications. In some ways it is very similar to a graphical user interface, in that it provides a framework for executing commands and launching programs. There are many shells included with a full install of Slackware, but in this book we're only going to discuss <code>bash</code> (1), the Bourne Again Shell. Advanced users might want to consider using the powerful <code>zsh</code> (1), and users familiar with older UNIX systems might appreciate <code>ksh</code> . The truly masochistic might choose the <code>csh</code> , but new users should stick to <code>bash</code> .</p>
 <h2 id="52-environment-variables">5.2 Environment Variables</h2>
@@ -940,7 +1037,7 @@ alan@~/Desktop/sb_3.0:$ echo $PS1
 HOST: \H - JOBS: \j - TTY: \l\n\u@\w:\$
 
 </code></pre>
-<p>For even more information on configuring your bash prompt, including information on setting up colored prompts, refer to <code>/usr/doc/Linux-HOWTOs/Bash-Prompt-HOWTO</code> . After reading that for a short while, you'll get an idea of just how powerful your <code>bash</code> prompts can be. I once even had a prompt that gave me up to date weather information such as temperature and barometric pressure!</p></section><section id="chapter_06"><h1 id="6-process-control">6. Process Control</h1>
+<p>For even more information on configuring your bash prompt, including information on setting up colored prompts, refer to <code>/usr/doc/Linux-HOWTOs/Bash-Prompt-HOWTO</code> . After reading that for a short while, you'll get an idea of just how powerful your <code>bash</code> prompts can be. I once even had a prompt that gave me up to date weather information such as temperature and barometric pressure!</p></section><section id="chapter_06" class="book-section"><h1 id="6-process-control">6. Process Control</h1>
 <p>Slackware systems often run hundreds or thousands of programs, each of which is referred to as a process. Managing these processes is an important part of system administration. So how exactly do we handle all of these seperate processes?</p>
 <h2 id="61-ps">6.1 ps</h2>
 <p>The first step in managing processes is figuring out what processes are currently running. The most popular and powerful tool for this is <code>ps</code> (1). Without any arguments, <code>ps</code> won't tell you much information. By default, it only tells you what processes are running in your currently active shell. If we want more information, we'll need to look deeper.</p>
@@ -1124,7 +1221,7 @@ darkstar:~$ crontab -e
 #MIN HOUR DAY MONTH WEEKDAY COMMAND
 
 </code></pre>
-<p>By default, Slackware includes a number of entries and comments in root's crontab. These entries make it easier to setup periodic system tasks by creating a number of directories in <code>/etc</code> corresponding to how often the tasks should run. Any script placed within these directories will be run hourly, daily, weekly, or monthly. The names should be self-explanatory: <code>/etc/cron.hourly</code> , <code>/etc/cron.daily</code> , <code>/etc/cron.weekly</code> , and <code>/etc/cron.monthly</code> .</p></section><section id="chapter_07"><h1 id="7-the-x-window-system">7. The X Window System</h1>
+<p>By default, Slackware includes a number of entries and comments in root's crontab. These entries make it easier to setup periodic system tasks by creating a number of directories in <code>/etc</code> corresponding to how often the tasks should run. Any script placed within these directories will be run hourly, daily, weekly, or monthly. The names should be self-explanatory: <code>/etc/cron.hourly</code> , <code>/etc/cron.daily</code> , <code>/etc/cron.weekly</code> , and <code>/etc/cron.monthly</code> .</p></section><section id="chapter_07" class="book-section"><h1 id="7-the-x-window-system">7. The X Window System</h1>
 <h2 id="71-what-is-and-isnt-x">7.1 What Is (And Isn't) X</h2>
 <p>Eons ago computer terminals came with a screen and a keyboard and not much else. Mice hadn't come into common use and everything was menu driven. Then came the Graphical User Interface (GUI) and the world was changed. Today users are accustomed to moving a mouse around a screen, clicking on icons and running tasks with fancy images and animation, but UNIX systems predated this and so GUIs were added almost as an afterthought. For many years, Linux and its UNIX brethren were primarily used without graphics of any sort, but today it is perhaps more common than not for users to prefer their Linux computers come with shiney, flashy, clickable GUIs, and all these GUIs run on <code>X</code> (7).</p>
 <p>So what is X? Is it the desktop with the icons? Is it the menus? Is it the window manager? Does it mark the spot? The answer to all these is a resounding "no". There are many parts to a GUI, but X is the most fundamental. X is that application that receives input from the mouse, keyboard, and possibly other devices. X is that application that tells the graphics card what to do. In short, X is the application that talks to your computer's hardware for graphical purposes; all other graphical applications simply talk to X.</p>
@@ -1167,7 +1264,7 @@ EndSection
 <h2 id="73-choosing-a-window-manager">7.3 Choosing a Window Manager</h2>
 <p>Slackware Linux includes many different window managers and desktop environments. Window managers are the applications responsible for painting application windows on the screen, resizing these windows, and similar tasks. Desktop environments include a window manager, but also add task bars, menus, icons, and more. Slackware includes both the KDE and XFCE desktop environments and several additional window managers. Which you use is entirely your own decision, but in general, window managers tend to be faster than desktop environments and more suitable to older systems with less memory and slower processors. Desktop environments will be more comfortable for users accustomed to Microsoft Windows.</p>
 <p>The easiest way to choose a window manager is <code>xwmconfig</code> (1), included with Slackware Linux. This application allows a user to choose what window manager to run with <code>startx</code> .</p>
-<p><img alt="image" src="img/xwmconfig.png" /></p>
+<p><img alt="image" src="img/xwmconfig.png"></p>
 <h2 id="74-setting-up-a-graphical-login">7.4 Setting Up A Graphical Login</h2>
 <p>By default, when you boot your Slackware Linux system you are presented with a login prompt on a virtual terminal. This is more than adequate for most people's needs. If you need to run commandline applications, you may login and do so right away. If you want to run X, simply executing <code>startx</code> will do that for you nicely. But suppose you almost exclusively use your system for graphical duties like many laptop owners? Wouldn't it be nice for Slackware to take you straight into a GUI? Fortunately, there's an easy way to do just that.</p>
 <p>Slackware uses the System V init system which allows the administrator to boot into or change to different runlevels, which are really just different "states" the computer can be in. In fact, shutting down the computer is really only a case of changing to a runlevel which accomplishes just that. Runlevels can be rather complicated, so we won't delve into them any further than necessary.</p>
@@ -1200,11 +1297,11 @@ id:3:initdefault:
 #Default runlevel. (Do not set to 0 or 6) 
 id:4:initdefault:
 
-</code></pre></section><section id="chapter_08"><h1 id="8-printing">8. Printing</h1>
+</code></pre></section><section id="chapter_08" class="book-section"><h1 id="8-printing">8. Printing</h1>
 <h2 id="81-choosing-a-printer">8.1 Choosing A Printer</h2>
 <p>Linux hasn't always had a great history with printers. For many years, printing was a black art to many Linux users, and very few printers worked reliably. Today, most printers will work well with Linux, but some still do not. If you're purchasing a new printer, be aware that many of the cheap inkjet models aren't as well supported in Linux as more expensive laser printers. If you're unsure about a printer, you can check online to see if others have had success with it.</p>
 <p>All these warnings are perhaps a bit overkill though, as the large majority of printers work with Linux after only a brief and simple setup. The progress in this direction is largely due to the efforts of the Common UNIX Printing System, (CUPS). CUPS is a printing system used by Slackware and most other Linux distributions today. It primarily uses a graphical setup procedure accessed via a web browser. In order to setup a printer with CUPS, you'll need to open a web browser such as firefox, konqueror, or links and go to http://localhost:631 .</p>
-<p><img alt="image" src="img/cups-01.png" /></p>
+<p><img alt="image" src="img/cups-01.png"></p>
 <p>You might find that a quick click-through of CUPS configures your printer nearly automatically. Or, you may find that further configuration is required. To learn more about how printing works or how to get a stubborn printer configured, read on.</p>
 <h2 id="82-getting-the-driver">8.2 Getting the driver</h2>
 <p>There are, essentially, three types of printer drivers:</p>
@@ -1285,7 +1382,7 @@ gutenprint.5.2://ricoh-afc_1060/expert Ricoh Aficio 1060 - CUPS+Gutenprint v5.2.
 #lpadmin -d r1060
 
 </code></pre>
-<p><strong>Note</strong><br />
+<p><strong>Note</strong>
 In this example, <code>r1060</code> is the human readable name given to the printer in either <code>/etc/cups/printers.conf</code> or in the <code>CUPS</code> configuration.</p>
 <p>If you do not have root privileges on the workstation you are using, you can also set the <code>PRINTER</code> environment variable:</p>
 <pre><code class="language-text">
@@ -1306,7 +1403,7 @@ darkstar:~$ pr foo.txt | lpr
 
 </code></pre>
 <p>This will format <code>foo.txt</code> and send the formatted output to the default printer.</p>
-<p>As usual, see the <code>pr</code> man page for a list of the customizations you can make to the default formatting.</p></section><section id="chapter_09"><h1 id="9-users-and-groups">9. Users and Groups</h1>
+<p>As usual, see the <code>pr</code> man page for a list of the customizations you can make to the default formatting.</p></section><section id="chapter_09" class="book-section"><h1 id="9-users-and-groups">9. Users and Groups</h1>
 <h2 id="91-what-are-users-and-groups">9.1 What Are Users and Groups?</h2>
 <p>Slackware Linux inherits a strong multi-user tradition from its UNIX inspiration. This means that multiple people may use the system at once, but it also means that each of these people may have different permissions. This allows users to prevent others from modifying their files, or lets system administrators explicitly define what users can and cannot do on the system. Moreover, users need not be actual people at all. In fact, Slackware includes several dozen pre-defined user and group accounts that are not typically used by regular users. Rather these accounts allow the system administrator to segment the system for security reasons. We'll see how that's done in the next chapter on filesystem permissions.</p>
 <h2 id="92-managing-users-and-groups">9.2 Managing Users and Groups</h2>
@@ -1415,7 +1512,7 @@ alan:$1$HlR?M3fkL@oeJmsdLfhsLFM*4dflPh8:14197:0:99999:7:::
 </code></pre>
 <p>The <code>shadow</code> file contains more than just the encrypted password as you'll notice. The fields here, again from left to right, are: username, encrypted password, last day the password was changed, days before the password may be changed again, how many days before the password expires, days that the account will be disabled after expiring, when the account was disabled, and a reserved field. You may notice on some accounts that the various "days" fields often include very large numbers. The reason for this is that Slackware counts time from the "Epoch" which is January 1, 1970 for historical reasons.</p>
 <p>To create a new user account, you'll just need to open these files using <code>vipw</code> (8). This will open <code>/etc/passwd</code> in the editor defined by your VISUAL variable or your EDITOR variable if VISUAL isn't defined. If neither is present, it will fall back to <code>vi</code> by default. If you pass the <code>-s</code> argument, it will open <code>/etc/shadow</code> instead. It's important to use <code>vipw</code> instead of using any other editor, because <code>vipw</code> will lock the file and prevent other programs from editing it right underneath your feet.</p>
-<p>That isn't all you'll need to do however; you must also create the user's home directory and change the user's password using <code>passwd</code> .</p></section><section id="chapter_10"><h1 id="10-filesystem-permissions">10. Filesystem Permissions</h1>
+<p>That isn't all you'll need to do however; you must also create the user's home directory and change the user's password using <code>passwd</code> .</p></section><section id="chapter_10" class="book-section"><h1 id="10-filesystem-permissions">10. Filesystem Permissions</h1>
 <h2 id="101-permissions-overview">10.1 Permissions Overview</h2>
 <p>As we've discussed, Slackware Linux is a multi-user operating system. Because of this, its filesystems are mutli-user as well. This means that every file or directory has a set of permissions that can grant or deny privileges to different users. There are three basic permissions and three sets of permissions for each file. Let's take a look at an example file.</p>
 <pre><code class="language-text">
@@ -1648,7 +1745,7 @@ darkstar:~# chmod 4711 /usr/bin/passwd
 darkstar:~# chmod ug+rwx,o+rwt /tmp 
 darkstar:~# chmod u+rws,go+x /usr/bin/passwd
 
-</code></pre></section><section id="chapter_11"><h1 id="11-working-with-filesystems">11. Working with Filesystems</h1>
+</code></pre></section><section id="chapter_11" class="book-section"><h1 id="11-working-with-filesystems">11. Working with Filesystems</h1>
 <h2 id="111-the-filesystem-hierarchy">11.1 The Filesystem Hierarchy</h2>
 <p>Slackware Linux stores all of its files and directories under a single <code>/</code> directory, typically referred to as "root". This is in stark contract to what you may be familiar with in the form of Microsoft Windows. Different hard disk partitions, cdroms, usb flash drives, and even floppy disks can all be mounted in directories under <code>/</code> , but do not have anything like "drive letters". The contents of these devices can be found almost anywhere, but there are some sane defaults that Slackware sets up for you. For example, cd-rw drives are most often found at <code>/mnt/cd-rw</code> . Here are a few common directories present on nearly all Slackware Linux installations, and what you can expect to find there.</p>
 <table>
@@ -1845,7 +1942,7 @@ darkstar:~# echo &quot;username=alan&quot; &gt; /etc/creds-home
 darkstar:~# echo &quot;password=secret&quot; &gt;&gt; /etc/creds-home 
 darkstar:~# mount -t cifs //darkstar/home -o credentials=/etc/creds-home
 
-</code></pre></section><section id="chapter_12"><h1 id="12-vi">12. vi</h1>
+</code></pre></section><section id="chapter_12" class="book-section"><h1 id="12-vi">12. vi</h1>
 <h2 id="121-what-is-vi">12.1 What is vi?</h2>
 <p>Scattered all around your computer are thousands of text files. To a new user, this may seem inconsequential, but almost everything in Slackware Linux uses a plain-text file for configuration. This allows users to make changes to the system quickly, easily, and intuitively. In chapter 5, we looked at a few commands such as <code>cat</code> and <code>less</code> that can be used to read these files, but what if we want to make changes to them? For that, we need a text editor, and <code>vi</code> is up to the task.</p>
 <p>In short, <code>vi</code> is one of the oldest and most powerful text editors still used today. It's beloved by system administrators, programmers, hobbiests, and others the world over. In fact, nearly this entire book was written using <code>vi</code> ; only the next chapter on <code>emacs</code> was written with that editor.</p>
@@ -2030,7 +2127,7 @@ darkstar:~# mount -t cifs //darkstar/home -o credentials=/etc/creds-home
 <td>Save and quit</td>
 </tr>
 </tbody>
-</table></section><section id="chapter_13"><h1 id="13-emacs">13. Emacs</h1>
+</table></section><section id="chapter_13" class="book-section"><h1 id="13-emacs">13. Emacs</h1>
 <h2 id="131-what-is-emacs">13.1 What is Emacs?</h2>
 <p><code>vi</code> and its clones are very functional and powerful editors. However, they are often considered not particularly extensible. <code>vim</code> is a successful and powerful <code>vi</code> variant that shrugs this trend, being both extremely extensible and lightweight. However, many users prefer a more "heavy" and extensible editor. This is why many people (including the author of this chapter) prefer <code>Emacs</code> .</p>
 <p>Emacs takes extensibility up to eleven. Outside of a core of C, the rest of <code>Emacs</code> is written in a Lisp variant, nearly all of which is exposed to you, so that you may configure it or even extend it at will (many good Emacs Lisp tutorials can be found on the Internet). People have written all sorts of extensions in Emacs Lisp, from syntax highlighting for an obscure language, to a built-in terminal. In fact, there's even a <code>vi</code> emulation mode within <code>Emacs</code> (called viper), so you can still get the modal editing that comes with vi, while having access to the power of the <code>Emacs</code> core.</p>
@@ -2038,7 +2135,7 @@ darkstar:~# mount -t cifs //darkstar/home -o credentials=/etc/creds-home
 <p>Unlike <code>vi</code> , <code>Emacs</code> operates more like a traditional editor by default. This means that most keyboard shortcuts can be performed without repeatedly changing modes. You can open up a file and start typing away without having to learn what the modes do, or forgetting which one you are currently using.</p>
 <h2 id="132-starting-out">13.2 Starting Out</h2>
 <p><code>Emacs</code> can be started simply by running the <code>emacs</code> command in your terminal. When you first start it in a console without arguments, you will see something that resembles this:</p>
-<p><img alt="image" src="img/emacs.png" /></p>
+<p><img alt="image" src="img/emacs.png"></p>
 <p>If you are in X windows, <code>Emacs</code> may start a GUI instead of running in your console. If this is the case and you don't want a GUI, you can invoke it with the flag <code>'-nw'</code> .</p>
 <p>While here, you can browse around using the keyboard arrow keys. Underlined elements are links, and you can activate them by moving over them and pressing 'enter'. The documentation mentioned is very good, and can help you get your bearings should you have any problems. Also note how they describe key sequences such as <kbd>C-h</kbd> , meaning press the <kbd>h</kbd> key while holding down the <kbd>CTRL</kbd> key. Same deal with <kbd>M-<code>&lt;/kbd&gt; , meaning to hold the the &lt;kbd&gt;Meta&lt;/kbd&gt; key (usually " &lt;kbd&gt;Alt&lt;/kbd&gt; ") and press the backtick "</code>" key. When they say (e.g.) <kbd>C-x C-c</kbd> , this means to press the "x" key while holding down the <kbd>CTRL</kbd> key, then press the "x" key while also holding down the <kbd>CTRL</kbd> key. Conveniently, this is also one of the more important commands in <code>Emacs</code> : to close it.</p>
 <p>Alternatively, if you call <code>emacs</code> with a file name as an argument, it will open that file, just like <code>vi</code> . Upon doing this, you will be presented with the contents of the file in question. Here, you can navigate the document using traditional arrow keys and type in information at will without any issues.</p>
@@ -2237,7 +2334,7 @@ darkstar:~# mount -t cifs //darkstar/home -o credentials=/etc/creds-home
 <td>Save the current buffer to a file "new-file.txt"</td>
 </tr>
 </tbody>
-</table></section><section id="chapter_14"><h1 id="14-networking">14. Networking</h1>
+</table></section><section id="chapter_14" class="book-section"><h1 id="14-networking">14. Networking</h1>
 <h2 id="141-netconfig">14.1 netconfig</h2>
 <p>Computers aren't very interesting on their own. Sure, you can install games on them, but that just turns them into glorified entertainment consoles. Today, computers need to be able to talk to one another; they need to be networked. Whether you're installing a business network with hundreds or thousands of computers or just setting up a single PC for Internet access, Slackware is simple and easy. This chapter should teach you how to setup typical wired networks. Common wireless setup will be thoroughly discussed in the next section, but much of what you read here will be applicable there as well.</p>
 <p>There are many different ways to configure your computer to connect to a network or the Internet, but they fall into two main categories: static and dymanic. Static addresses are solid; they are set with the understanding that they will not be changed, at least not anytime soon. Dynamic addresses are fluid; the assumption is that the address will change at some time in the future. Typically any sort of network server requires a static address simply so other machines will know where to contact it when they need services. Dynamic addresses tend to be used for workstations, Internet clients, and any machine that doesn't require a static address for any reason. Dynamic addresses are more flexible, but present complications of their own.</p>
@@ -2395,7 +2492,7 @@ USE_DHCP[1]=&quot;yes&quot;
 DHCP_HOSTNAME[1]=&quot;&quot;
 
 </code></pre>
-<p>Here I am telling Slackware to configure eth1 using DHCP. I do not need to set the IPADDR[1] or NETMASK[1] variables when using DHCP (in fact, if they are set, they will be ignored). Slackware will happily contact a DHCP server as soon as the machine begins to boot.</p></section><section id="chapter_15"><h1 id="15-wireless-networking">15. Wireless Networking</h1>
+<p>Here I am telling Slackware to configure eth1 using DHCP. I do not need to set the IPADDR[1] or NETMASK[1] variables when using DHCP (in fact, if they are set, they will be ignored). Slackware will happily contact a DHCP server as soon as the machine begins to boot.</p></section><section id="chapter_15" class="book-section"><h1 id="15-wireless-networking">15. Wireless Networking</h1>
 <h2 id="151-iwconfig">15.1 iwconfig</h2>
 <p>Wireless networking is somewhat more complicated than traditional wired networking, and requires additional tools for setup. Slackware includes a diverse collection of wireless networking tools to allow you to configure your wireless network interface card (WNIC) at the most basic level. We won't cover everything here, but should give you a solid foundation to get up and running quickly. The first tool we are going to look at is <code>iwconfig</code> (8). When run without any argument, <code>iwconfig</code> displays the current wireless information on any and all NICs on your computer.</p>
 <pre><code class="language-text">
@@ -2471,7 +2568,7 @@ network={
 <p>The block of text we're interested in is the network block enclosed by curly braces. Here we have set the ssid for the network "nest" , and "secret passphrase" as the PSK to be used. At this point, WPA2 is properly configured. You can run <code>wpa_supplicant</code> and then obtain an IP address via DHCP or set a static address. Of course, this is a lot of work; there must be an easier way to do this.</p>
 <h3 id="1531-rcinet1conf-revisited">15.3.1 rc.inet1.conf revisited</h3>
 <p>Welcome back to <code>rc.inet1.conf</code> . You're recall that in we used this configuration file to automatically configure NICs whenever Slackware boots. Now, we will use it to configure wifi as well.</p>
-<p><strong>Note</strong> <br />
+<p><strong>Note</strong> 
 If you're using WPA2, you'll still need to setup <code>wpa_supplicant.conf</code> properly first, however.</p>
 <p>Recall that each NIC had a name or number that identified the variables that correspond with it? The same hold true for wifi NICs, only they have even more variables due to the added complexity of wireless networking.</p>
 <pre><code class="language-text">
@@ -2526,7 +2623,7 @@ darkstar:~# /etc/rc.d/rc.wicd start
 </code></pre>
 <p>If you're predominately using the console, simply run <code>wicd-curses</code> from your command line. If instead, you are using a graphical desktop provided by <code>X</code> , you can start the graphical front-end from either the KDE or XFCE menu.</p>
 <p>Optionally, you could manually run <code>wicd-client</code> (1) from a terminal or <code>run dialogue</code> .</p>
-<p>On the graphical front-end, options for different networks are available via the Preferences button adjacent to the ESSID listed. In the terminal client, the same options can be reached by highlighting the ESSID you wish to use and pressing the right arrow key, which opens a configuration page for that network.</p></section><section id="chapter_16"><h1 id="16-basic-networking-utilities">16. Basic Networking Utilities</h1>
+<p>On the graphical front-end, options for different networks are available via the Preferences button adjacent to the ESSID listed. In the terminal client, the same options can be reached by highlighting the ESSID you wish to use and pressing the right arrow key, which opens a configuration page for that network.</p></section><section id="chapter_16" class="book-section"><h1 id="16-basic-networking-utilities">16. Basic Networking Utilities</h1>
 <p>So you've finally managed to setup your network connection, now what? How do you know that it's working? How do you know that you set it up correctly? And just what do you do now that it's setup? Well this chapter is for you.</p>
 <h2 id="161-network-diagnostic-tools">16.1 Network Diagnostic Tools</h2>
 <p>Slackware Linux includes a great many networking tools for troubleshooting and diagnosing network connection troubles, or just for seeing what's out there on the network. Most of these tools are command-line tools, so you can run them from a virtual terminal or in a console window on your graphical desktop. A few of them even have graphical front-ends, but we're going to deal almost exclusively with command-line tools for now.</p>
@@ -2634,7 +2731,7 @@ darkstar:~# nmap -sS www.example.com
 darkstar:~# nmap -sX www.example.com
 
 </code></pre>
-<p><strong>Warning</strong><br />
+<p><strong>Warning</strong>
 Be warned! Some Internet Service Providers frown heavily on port scanning and may take measures to prevent you from doing it. <code>nmap</code> and applications like it are best used on your own systems for maintenance and security purposes, not as general purpose Internet scanners.</p>
 <h3 id="1617-host">16.1.7 host</h3>
 <p>Often network problems stem from a failure of DNS (Domain Name Service) which maps domain names to IP addresses. An easy way to perform quick DNS lookups is the <code>host</code> (1) command. When this is run, your computer will perform a few common DNS lookups and return the results.</p>
@@ -2698,10 +2795,10 @@ No Plan.
 <p>Slackware includes a variety of web browsers. If you're using a graphical desktop, you'll find <code>Firefox</code> , <code>Seamonkey</code> , and others you may already be familiar with, but what about console access? Fortunately, there are a number of capable web browsers here as well.</p>
 <h3 id="1621-lynx">16.2.1 lynx</h3>
 <p>The oldest console-based web browser included with Slackware is definitely <code>lynx</code> (1), a very capable if somewhat limited web browser. <code>lynx</code> does not support frames, javascript, or pictures; it is strictly a text web browser. Navigation is performed using your keyboard's arrow keys and optionally, a mouse. While it lacks many features that other browsers support, <code>lynx</code> is one of the fastest web browsers you'll ever use for gathering information. For example, the <code>-dump</code> argument sends the formatted web page directly to the console, which can then be piped to other programs.</p>
-<p><img alt="image" src="img/lynx.png" /></p>
+<p><img alt="image" src="img/lynx.png"></p>
 <h3 id="1622-links">16.2.2 links</h3>
 <p>A more feature-rich alternative is the popular <code>links</code> (1), a console-based web browser that supports frames and has better table rendering than <code>lynx</code> . Like its predecessor, <code>links</code> is navigable with the arrow keys, and the use of a mouse is supported. Unlike <code>lynx</code> , it also includes a handy menu (simply click on the top line with your mouse to activate) and generally formats web pages better.</p>
-<p><img alt="image" src="img/links.png" /></p>
+<p><img alt="image" src="img/links.png"></p>
 <h3 id="1623-wget">16.2.3 wget</h3>
 <p>Unlike the other browsers we've looked at, <code>wget</code> (1) is non-interactive. Rather than display HTTP content, <code>wget</code> downloads it. This takes the "browsing" out of the web browser. Unlike the dump modes of other browsers, <code>wget</code> does not format its downloads; rather it copies the content in its exact form on the web server with all tags and binary data in place. It also supports several recursive options that can effectively mirror online content to your local computer. <code>wget</code> need not operate exclusively on HTTP content; it also supports FTP and several other protocols.</p>
 <pre><code class="language-text">
@@ -2729,11 +2826,11 @@ Length: 75306 (74K)
 <h3 id="1631-pine">16.3.1 pine</h3>
 <p><code>pine</code> is one of the oldest command-line interface mail clients still in existance and remains one of the most user-friendly. <code>pine</code> was created by the University of Washington and carries with it both a trademark and a copyright license that are difficult to work with. Thankfully back in 2005, the university saw fit to re-write it without the trademark and with a more open license, so <code>alpine</code> (1), the pine-clone distributed with Slackware, was born.</p>
 <p>To start using <code>alpine</code> , simply type <code>pine</code> at the command line. Using it is very simple due to its menu-driven system as well as the command reference neatly located at the bottom of the screen. See for yourself:</p>
-<p><img alt="image" src="ps-imgs/pine.png" /></p>
+<p><img alt="image" src="ps-imgs/pine.png"></p>
 <p>Before configuring any mail client, you should check the documentation of your mail server to gather all of the pertinent information about what protocols and security measures your mail service uses. This will help you configure <code>pine</code> correctly. By default, <code>pine</code> will check for new e-mails delivered to a mail service running on your computer. Unless you're actually running such a mail service (many people do) this probably isn't what you want. Fortunately configuring <code>pine</code> is a straight forward process. Simply enter the [S]etup menu and chose the [C]onfig option. You'll be given an option to enter you name, mail path, SMTP server, and many other options.</p>
 <h3 id="1632-mutt">16.3.2 mutt</h3>
 <p>Some people don't like <code>pine</code> . Some people want more control. Some people want a fully-configurable mail client with plugin support and a no-nonsense attitude. Those people use <code>mutt</code> (1). <code>mutt</code> isn't as user friendly as <code>pine</code> , but makes up for it with power. You won't find the user-friendly command reference at the bottom of the screen, <code>mutt</code> uses every last inch of real-estate for mail processing duty. It's feature support is extensive - threaded displays are no problem for the mighty mixed-breed! You can configure <code>mutt</code> with a <code>.muttrc</code> file in your home directory. With all the many different possible configuration options, there's even a man page for that, muttrc(5). You might want to read up on it.</p>
-<p><img alt="image" src="ps-imgs/mutt.png" /></p>
+<p><img alt="image" src="ps-imgs/mutt.png"></p>
 <p>Using <code>mutt</code> is unique because it is by nature a Mail User Agent (MUA), meaning its true purpose is to read and sort email. This was its only job originally, although some additional features such as retrieving mail via POP3 and even very basic transfering messages via SMTP have snuck into the application.</p>
 <p>As is so often the case with robust console-based applications, the configuration options are myriad, and there is no "right" or "wrong" way of using <code>mutt</code> as long as it does what you want it to do. One thing to keep in mind if you are considering using <code>mutt</code> for mail handling is that its mail sending and receiving abilities are very limited. <code>mutt</code> focuses solely on sorting, reading, and composing mail messages in addition to other traditional Mail User Agent duties. This is keeping in focus with the UNIX philosophy of small tools that do one thing very well and which can be combined (or "chained") with other tools to complete whatever tasks are required. With this in mind, you'll likely need to setup some external tool to receiving mail at a minimum.</p>
 <p>The commands used to navigate around in <code>mutt</code> are highly customizable but the defaults can be listed by typing <kbd>?</kbd> .</p>
@@ -2885,11 +2982,11 @@ darkstar:~# rsync -avz rsync://ftp.osuosl.org/pub/slackware/slackware-current/ \
 /src/slackware-current/ 
 darkstar:~# rsync -e ssh ftp.slackware.com:/home/alan/foo /tmp/foo
 
-</code></pre></section><section id="chapter_17"><h1 id="17-package-management">17. Package Management</h1>
+</code></pre></section><section id="chapter_17" class="book-section"><h1 id="17-package-management">17. Package Management</h1>
 <p>Package management is an essential part of any Linux distribution. Every piece of software included by Slackware, along with many third-party tools are distributed as source code that can be compiled, but compiling all those thousands of different applications and libraries is tedious and time consuming. That's why many people prefer to install pre-compiled software packages. In fact, when you installed Slackware, the <code>setup</code> program primarily worked by running package management tools on a list of packages. Here we'll look at the various tools used for handling Slackware packages.</p>
 <h2 id="171-pkgtool">17.1 pkgtool</h2>
 <p>The simplest way to perform package maintenance tasks is to invoke <code>pkgtool</code> (8), a menu-driven interface to some of the other tools. <code>pkgtool</code> allows you to install or remove packages as well as view the contents of those packages and the list of currently installed packages in a user-friendly ncurses interface.</p>
-<p><img alt="image" src="ps-imgs/pkgtool.png" /></p>
+<p><img alt="image" src="ps-imgs/pkgtool.png"></p>
 <p><code>pkgtool</code> is a convenient and easy way to perform the most basic tasks, but for more advanced work more flexible tools are needed.</p>
 <h2 id="172-installing-removing-and-upgrading-packages">17.2 Installing, Removing, and Upgrading Packages</h2>
 <p>While <code>pkgtool</code> scores points for convenience, <code>installpkg</code> (8) is much more capable of handling odd tasks, such as quickly installing a single package, installing an entire disk set of packages, or scripting an install. <code>installpkg</code> takes a list of packages to install, and simply installs them without asking any questions. Like all Slackware package management tools, it assumes that you know what you're doing and doesn't pretend to be smarter than you. In its simplest form, <code>installpkg</code> simply takes a list of packages to install, and does exactly what you would expect.</p>
@@ -3008,7 +3105,7 @@ Package blackbox-0.65.0-x86_64-4 upgraded with new package
 rpm2tgz foo-x.x.xx.rpm
 
 </code></pre>
-<p>The result is a .tgz file, so after the conversion is finished, the original RPM can safely be discarded. Use <code>installpkg</code> to install the Slackware package you've just created, provided that you've installed all dependency code for the application to actually function.</p></section><section id="chapter_18"><h1 id="18-keeping-track-of-updates">18. Keeping Track of Updates</h1>
+<p>The result is a .tgz file, so after the conversion is finished, the original RPM can safely be discarded. Use <code>installpkg</code> to install the Slackware package you've just created, provided that you've installed all dependency code for the application to actually function.</p></section><section id="chapter_18" class="book-section"><h1 id="18-keeping-track-of-updates">18. Keeping Track of Updates</h1>
 <h2 id="181-the-stable-branch">18.1 The -stable Branch</h2>
 <p>After a new version of Slackware is released, the Slackware team will, as needed, release updated packages to fix serious security vulnerabilities and particularly nasty bugs. Therefore, it's important to keep up with all of the patches for your version of Slackware, which is referred to as the <em>-stable</em> branch. There is also a <em>-current</em> branch, which is where we do our development work toward the next stable release (and as such, there are often intrusive changes there), but unless you're willing to work with a possibly broken system and are able to fix things on your own, we strongly recommend that you stick with the -stable branch.</p>
 <p>Since -stable updates aren't distributed on the disks, you'll need to obtain them from the Internet. Many people and organizations offer mirrors from which you can download the entire Slackware tree (or only the <code>patches/</code> directory) in any number of ways. While some mirrors offer web access, the most common ways of obtaining updates are via ftp and/or rsync servers. The Slackware project maintains a small list (organized by country) of known mirrors. If you're unsure which mirror to use, simply consult http://www.slackware.com/getslack/ for suggestions. If you have a major university near you, there's a good chance that they offer a mirror of numerous open source projects, and Slackware may be among them. The only real requirement for a mirror is that it be complete; usually it's best to use a mirror near where you live in order to achieve the fastest transfer times and use the least amount of Internet resources.</p>
@@ -3036,7 +3133,7 @@ a/bash-4.2.037-x86_64-1.txz: Upgraded.
 <p>The very first thing you should do before attempting an upgrade is the one that many people neglect: decide if it's really necessary to upgrade. If the old system is stable and doing everything you want it to do, there may be no need to do an operating system upgrade at all.</p>
 <p>Assuming you decide to do the upgrade, then the second thing you should do is read the <code>CHANGES_AND_HINTS.TXT</code> file on your upgrade discs or a mirror. This file is updated during the development period before every release, and it lists a lot of helpful hints and tips to aid you in dealing with the changes.</p>
 <p>Finally, read the <code>UPGRADE.TXT</code> file before proceeding. After doing these things, you may decide that it's less trouble and potential for problems to backup your configuration files and data and do a fresh installation of the new Slackware release rather than attempt a possibly tricky upgrade. However, if you still wish to continue, make backups of your data and configuration files first. At a minimum, it's good practice to backup the <code>/etc</code> and <code>/home</code> directories. This will give you a chance to perform a reinstall if something goes wrong with the upgrade.</p>
-<p>Since every new version of Slackware has a few differences, giving complete instructions here is not only futile but potentially misleading. You should always consult the documentation included on your Slackware disks or your favorite mirror.</p></section><section id="chapter_19"><h1 id="19-the-linux-kernel">19. The Linux Kernel</h1>
+<p>Since every new version of Slackware has a few differences, giving complete instructions here is not only futile but potentially misleading. You should always consult the documentation included on your Slackware disks or your favorite mirror.</p></section><section id="chapter_19" class="book-section"><h1 id="19-the-linux-kernel">19. The Linux Kernel</h1>
 <h2 id="191-what-does-the-kernel-do">19.1 What Does the Kernel Do?</h2>
 <p>You've probably heard people talking about compiling the kernel or building a kernel, but what exactly is the kernel and what does it do? The kernel is the center of your computer. It is the foundation for the entire operating system. The kernel acts as a bridge between the hardware and the applications. This means that the kernel is (usually) the sole piece of software responsible for ordering around the hardware components of your computer. It is the kernel that instructs the hard drive to search for a certain data stream. It is the kernel that instructs your network card to transmit rapid changes in voltage. The kernel also listens to hardware as well. When the network card detects a remote computer sending information, it forwards that information to the kernel. This makes the kernel both the single most important piece of software on your computer and the most complex.</p>
 <h2 id="192-working-with-modules">19.2 Working with Modules</h2>
@@ -3149,7 +3246,7 @@ Support for paging of anonymous memory (swap) (SWAP) [Y/n/?]
 </code></pre>
 <p>Fortunately, there are two much easier ways to configure your kernel, <code>menuconfig</code> and <code>xconfig</code> . Both of these create a menu-driven program that lets you select and de-select options without having to step through each one. <code>menuconfig</code> is the most commonly used method, and the one I recommend. <code>xconfig</code> is only useful if you are attempting to compile the kernel from a graphical user interface within <code>X</code> . Both are so similar however, that we are only going to document <code>menuconfig</code> .</p>
 <p>Running <code>make menuconfig</code> from a terminal will present you with the friendly curses-driven interface you see below. Each kernel section is given its own submenu, and you can navigate with the arrow keys.</p>
-<p><img alt="image" src="img/make-menuconfig-w.png" /></p>
+<p><img alt="image" src="img/make-menuconfig-w.png"></p>
 <p><strong>Warning</strong></p>
 <p>If you are compiling a kernel that is the same release as the stock Slackware kernel, you must set the "Local version" option. This is found on the "General setup" submenu. Failure to set this will result in your kernel compile over-writing all the modules used by the stock kernels. This can quickly render your system unbootable.</p>
 <p>Once you've finished configuring the kernel, it's time to begin compiling it. There are many different methods for this, but the most reliable is to use <code>bzImage</code> . When you pass this argument to <code>make</code> , the kernel compilation will begin and you will see lots of data scroll through the terminal until either the compile process is complete or a fatal error is encountered.</p>
@@ -3184,89 +3281,7 @@ darkstar:/usr/src/linux# cat arch/x86/boot/bzImage &gt; /boot/vmlinuz-release_nu
 darkstar:/usr/src/linux# make modules_install
 
 </code></pre>
-<p>Once these steps have been completed, you will have a new kernel image located under <code>/boot</code> and a new kernel modules directory under <code>/lib/modules</code> . In order to use this new kernel, you will need to edit <code>lilo.conf</code> , create an initrd for it (only if you need to load one or more of this kernel's modules to boot), and run <code>lilo</code> to update the boot loader. When you reboot, if all went according to plan, you should have an option to boot with your newly compiled kernel. If something went wrong, you may be spending some time fixing the problem.</p></section><section id="LICENSE"><p>Creative Commons Attribution Share and Share-Alike license</p></section><section id="README"><h1 id="slackbook-in-markdown-format">SlackBook in Markdown Format</h1>
-<p>This project has two main goals:</p>
-<ol>
-<li>Convert the official Slackbook documentation from DocBook XML format to Markdown syntax.</li>
-<li>Update and modernize the content for current Slackware releases.</li>
-</ol>
-<p>The new version is available on <a href="book.html">book.html</a>.</p>
-<h2 id="to-do-list">To-Do List</h2>
-<p>To view the complete list of pending tasks and goals, please check the <a href="TODO.md">TODO.md</a> file.</p>
-<h2 id="changelog">ChangeLog</h2>
-<p>Detailed history of all changes and updates can be found in the <a href="Changelog.txt">Changelog.txt</a> file.</p></section><section id="TODO"><h1 id="general">General</h1>
-<ul>
-<li>[ ] Create a README file</li>
-<li>[ ] Check if all content was migrated do markdown</li>
-<li>[ ] Improve script to build</li>
-<li>[ ] Improve script to build pdf output</li>
-<li>[ ] Check licence</li>
-<li>[ ] Check old authors</li>
-<li>[ ] Clean eps files and migrate png files to img directory </li>
-</ul>
-<hr />
-<h1 id="this-sesion-is-old-todo">This sesion is old ToDo</h1>
-<ul>
-<li>Make damn certain our Docbook markup is both <em>CORRECT</em> and<br />
-<em>CONSISTANT</em>. There's many places where the <screen> sections<br />
-  are very different. They should all be of this form.</li>
-</ul>
-<p><screen><br />
-  <prompt>darkstar:~$ <prompt><userinput><em>EVERYTHING</em> the user types</userinput><br />
-  Anything the screen prints that the user doesn't type.<br />
-</screen></p>
-<p>I've found several cases where the <command> tag was used inside of a<br />
-  <screen> section. This is wrong and must be avoided. When the book<br />
-  goes to the publisher, all of those <command> tags will be formatted<br />
-  one way for printing and the <userinput> tags could be formatted<br />
-  another. Also, wrapping only applications in <command> tags could<br />
-  make the reader wonder just how much they are supposed to type.</p>
-<ul>
-<li>Aim to update references to kernel versions and Slackware versions to those <br />
-  used in the most recent release of Slackware. I've seen kernel 2.6.29.4 and <br />
-  Slackware 12.0.0 for instance.</li>
-<li>
-<p>2012-08-22 Most of the Slackware versions should be fixed now.  -Alan</p>
-</li>
-<li>
-<p>more extensive CLI apps like v2.0</p>
-</li>
-<li>
-<p>no idea where the hell udev is covered in here, but we need to do a bit of<br />
-  talk about it.  Nothing too advanced, and we definitely DO NOT want to <br />
-  imply that users should have to do much with udev.  All of the asshattery<br />
-  out there with trying to automount shit with udev is, well, asshattery.</p>
-</li>
-<li>need to mention that /etc/udev/rules.d/<somefile> overrides an identically<br />
-    named file in /lib/udev/rules.d/</li>
-<li>need to mention persistent rules that are system-generated, especially<br />
-    in reference to how the admin might be misled into thinking that they are<br />
-    causing breakage...</li>
-<li>
-<p>need to point out that the persistent rules themselves are (according<br />
-    to upstream) a bad idea - not sure I completely agree, but there is a <br />
-    lot of potential for breakage, it seems...</p>
-</li>
-<li>
-<p>Need to mention iptables somewhere - perhaps consolidate some bits from<br />
-  my iptables/netfilter presentations?  --rworkman</p>
-</li>
-</ul>
-<p>Chapter 2. Installation</p>
-<ul>
-<li>Should we include some partitioning examples using gdisk since this<br />
-  tool is increasingly required with today's modern systems? Perhaps add<br />
-  it as an appendix and mention it within the partitioning section?</li>
-</ul>
-<p>Chapter 14. Networking</p>
-<ul>
-<li>We should probably include a "screenshot" of netconfig somewhere.</li>
-</ul>
-<p>Chapter 18. Keeping Track of Updates</p>
-<ul>
-<li>Once 14.0 is released and there's a security update for it, we need<br />
-  to change the contents of the <screen> section to show what an actual<br />
-  -stable Changelog entry.</li>
-</ul></section>
+<p>Once these steps have been completed, you will have a new kernel image located under <code>/boot</code> and a new kernel modules directory under <code>/lib/modules</code> . In order to use this new kernel, you will need to edit <code>lilo.conf</code> , create an initrd for it (only if you need to load one or more of this kernel's modules to boot), and run <code>lilo</code> to update the boot loader. When you reboot, if all went according to plan, you should have an option to boot with your newly compiled kernel. If something went wrong, you may be spending some time fixing the problem.</p></section>
+  </main>
 </body>
 </html>
