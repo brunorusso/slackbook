@@ -1,9 +1,9 @@
 # General
- - [ ] Create a README file
+ - [X] Create a README file
  - [ ] Check if all content was migrated do markdown
  - [ ] Improve script to build
  - [ ] Improve script to build pdf output
- - [ ] Check licence
+ - [X] Check licence
  - [ ] Check old authors
  - [ ] Clean eps files and migrate png files to img directory 
 

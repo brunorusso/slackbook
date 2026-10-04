@@ -3,7 +3,7 @@ title: "The Slack Book"
 ---
 
 # The Slack Book
-
+- [Cover](cover.md)
 - [Preface](preface.md)
 - [Chapter 1](chapter_01.md)
 - [Chapter 2](chapter_02.md)
