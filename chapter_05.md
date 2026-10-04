@@ -208,7 +208,7 @@ The cause here is a special environment variable that controls the `bash` prompt
 
 ```text
 
-# ~/.bashrc 
+#~/.bashrc 
 . /etc/profile 
 . ~/.bash_profile
 

@@ -219,7 +219,7 @@ The cron database entries may seem a little archaic at first, but they are highl
 ```text
 
 darkstar:~$ crontab -e 
-# Keep current with slackware 
+#Keep current with slackware 
 30 02 * * * /usr/local/bin/rsync-slackware64.sh 1>/dev/null 2>&1
 
 ```
@@ -230,10 +230,10 @@ As mentioned before, the syntax for cron entries is a little difficult to unders
 
 ```text
 
-# Redirect everything to /dev/null with: 
-# 1>/dev/null 2>&1 
+#Redirect everything to /dev/null with: 
+#1>/dev/null 2>&1 
 # 
-# MIN HOUR DAY MONTH WEEKDAY COMMAND
+#MIN HOUR DAY MONTH WEEKDAY COMMAND
 
 ```
 

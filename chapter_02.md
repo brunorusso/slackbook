@@ -51,7 +51,7 @@ Entering <kbd>1</kbd> and pressing <kbd>ENTER</kbd> will give you a list of keyb
 
 Welcome to the Slackware Linux installation disk! (version 14.0) 
 
-###### IMPORTANT! READ THE INFORMATION BELOW CAREFULLY. ###### 
+'###### IMPORTANT! READ THE INFORMATION BELOW CAREFULLY. ###### 
 
 - You will need one or more partitions of type 'Linux' prepared. It is also 
   recommended that you create a swap partition (type 'Linux swap') prior 

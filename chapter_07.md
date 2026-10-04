@@ -67,16 +67,16 @@ Runlevels are configured in `inittab` (5). The most common ones are runlevel 3 (
 
 ```text
 
-# These are the default runlevels in Slackware: 
-# 0 = halt 
-# 1 = single user mode 
-# 2 = unused (but configured the same as runlevel 3) 
-# 3 = multiuser mode (default Slackware runlevel) 
-# 4 = X11 with KDM/GDM/XDM (session managers) 
-# 5 = unused (but configured the same as runlevel 3) 
-# 6 = reboot 
+#These are the default runlevels in Slackware: 
+#0 = halt 
+#1 = single user mode 
+#2 = unused (but configured the same as runlevel 3) 
+#3 = multiuser mode (default Slackware runlevel) 
+#4 = X11 with KDM/GDM/XDM (session managers) 
+#5 = unused (but configured the same as runlevel 3) 
+#6 = reboot 
 
-# Default runlevel. (Do not set to 0 or 6) 
+#Default runlevel. (Do not set to 0 or 6) 
 id:3:initdefault:
 
 ```
@@ -85,16 +85,16 @@ In this file (along with most configuration files) anything following a hash sym
 
 ```text
 
-# These are the default runlevels in Slackware: 
-# 0 = halt 
-# 1 = single user mode 
-# 2 = unused (but configured the same as runlevel 3) 
-# 3 = multiuser mode (default Slackware runlevel) 
-# 4 = X11 with KDM/GDM/XDM (session managers) 
-# 5 = unused (but configured the same as runlevel 3) 
-# 6 = reboot 
+#These are the default runlevels in Slackware: 
+#0 = halt 
+#1 = single user mode 
+#2 = unused (but configured the same as runlevel 3) 
+#3 = multiuser mode (default Slackware runlevel) 
+#4 = X11 with KDM/GDM/XDM (session managers) 
+#5 = unused (but configured the same as runlevel 3) 
+#6 = reboot 
 
-# Default runlevel. (Do not set to 0 or 6) 
+#Default runlevel. (Do not set to 0 or 6) 
 id:4:initdefault:
 
 ```

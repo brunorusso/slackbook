@@ -144,9 +144,9 @@ Running an NFS server is a little bit different. First, you must configure each 
 
 ```text
 
-# See exports(5) for a description. 
-# This file contains a list of all directories exported to other computers. 
-# It is used by rpc.nfsd and rpc.mountd. 
+#See exports(5) for a description. 
+#This file contains a list of all directories exported to other computers. 
+#It is used by rpc.nfsd and rpc.mountd. 
 
 /home/backup 192.168.1.0/24(sync,rw,no_root_squash)
 

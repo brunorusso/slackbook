@@ -133,7 +133,7 @@ Fortunately, setting up your computer to use an external (or even an internal) D
 
 ```text
 
-# /etc/resolv.conf
+#/etc/resolv.conf
 search lizella.net
 nameserver 192.168.1.254
 ```
@@ -174,12 +174,12 @@ Manually configuring interfaces is an important skill to have, but it can become
 
 ```text
 
-# Config information for eth0:
+#Config information for eth0:
 IPADDR[0]="192.168.1.250"
 NETMASK[=]"255.255.255.0"
 USE_DHCP[0]=""
 DHCP_HOSTNAME[0]=""
-# Some lines ommitted.
+#Some lines ommitted.
 GATEWAY="192.168.1.254"
 
 ```
@@ -194,7 +194,7 @@ If you need to use static IP addressing, you will have to obtain a unique static
 
 ```text
 
-# Config information for eth1:
+#Config information for eth1:
 IPADDR[1]=""
 NETMASK[1]=""
 USE_DHCP[1]="yes"

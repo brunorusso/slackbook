@@ -20,15 +20,15 @@ darkstar:~# installpkg blackbox-0.70.1-i486-2.txz
 Verifying package blackbox-0.70.1-i486-2.txz. 
 Installing package blackbox-0.70.1-i486-2.txz: 
 PACKAGE DESCRIPTION: 
-# blackbox (Blackbox window manager) 
+#blackbox (Blackbox window manager) 
 # 
-# Blackbox is that fast, light window manager you have been looking for 
-# without all those annoying library dependencies. 
+#Blackbox is that fast, light window manager you have been looking for 
+#without all those annoying library dependencies. 
 # 
-# Also included in this package is the bbkeys utility for controlling 
-# keyboard shortcut commands from within Blackbox. 
+#Also included in this package is the bbkeys utility for controlling 
+#keyboard shortcut commands from within Blackbox. 
 # 
-# The Blackbox home page is http://blackboxwm.sourceforge.net 
+#The Blackbox home page is http://blackboxwm.sourceforge.net 
 # 
 Package blackbox-0.70.1-i486-2.txz installed.
 

@@ -71,19 +71,19 @@ Unfortunately, there's no easy way to manually configure a WPA2 protected networ
 
 ```text
 
-# /etc/wpa_supplicant.conf
-# ========================
-# This line enables the use of wpa_cli which is used by rc.wireless
-# if possible (to check for successful association)
+#/etc/wpa_supplicant.conf
+#========================
+#This line enables the use of wpa_cli which is used by rc.wireless
+#if possible (to check for successful association)
 ctrl_interface=/var/run/wpa_supplicant
-# By default, only root (group 0) may use wpa_cli
+#By default, only root (group 0) may use wpa_cli
 ctrl_interface_group=0
 eapol_version=1
 ap_scan=1
 fast_reauth=1
 #country=US
 
-# WPA protected network, supply your own ESSID and WPAPSK here:
+#WPA protected network, supply your own ESSID and WPAPSK here:
 network={
   scan_ssid=1
   ssid="nest"
@@ -106,10 +106,10 @@ Recall that each NIC had a name or number that identified the variables that cor
 
 ```text
 
-# rc.inet1.conf (excert)
-# ======================
-## Example config information for wlan0.  Uncomment the lines you need and fill
-## in your info.  (You may not need all of these for your wireless network)
+#rc.inet1.conf (excert)
+#======================
+##Example config information for wlan0.  Uncomment the lines you need and fill
+##in your info.  (You may not need all of these for your wireless network)
 IFNAME[4]="wlan0"
 IPADDR[4]=""
 NETMASK[4]=""
@@ -125,8 +125,8 @@ WLAN_ESSID[4]="nest"
 #WLAN_CHANNEL[4]="auto"
 #WLAN_KEY[4]="D5AD1F04ACF048EC2D0B1C80C7"
 #WLAN_IWPRIV[4]="set AuthMode=WPAPSK | \
-#   set EncrypType=TKIP | \
-#   set WPAPSK=96389dc66eaf7e6efd5b5523ae43c7925ff4df2f8b7099495192d44a774fda16"
+#set EncrypType=TKIP | \
+#set WPAPSK=96389dc66eaf7e6efd5b5523ae43c7925ff4df2f8b7099495192d44a774fda16"
 WLAN_WPA[4]="wpa_supplicant"
 #WLAN_WPADRIVER[4]="ndiswrapper"
 
@@ -144,14 +144,14 @@ Introducing `wicd` (8), the premier wired and wireless network connection manage
 
 ```text
 
-# rc.inet1.conf
-# =============
-# Config information for eth0:
+#rc.inet1.conf
+#=============
+#Config information for eth0:
 IPADDR[0]=""
 NETMASK[0]=""
 USE_DHCP[0]="no"
 DHCP_HOSTNAME[0]=""
-# Default gateway IP address:
+#Default gateway IP address:
 GATEWAY=""
 
 ```

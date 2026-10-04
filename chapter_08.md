@@ -48,7 +48,7 @@ A typical entry would look something like this:
   Type 12308
   Filter application/vnd.cups-raw 0 -
   Filter application/vnd.cups-raster 100 rastertogutenprint.5.2
-  # standard-ish stuff below here
+  #standard-ish stuff below here
   Accepting Yes
   Shared No
   JobSheets none none
@@ -108,7 +108,7 @@ Now that you have successfully installed and configured your printer, you may al
 
 ```text
 
-# lpadmin -d r1060
+#lpadmin -d r1060
 
 ```
 

@@ -68,7 +68,7 @@ Looking up all those different options for `mkinitrd` or worse, memorizing them,
 ```text
 
 darkstar:~# >/prompt>cat /etc/mkinitrd.conf.sample 
-# See "man mkinitrd.conf" for details on the syntax of this file # 
+'# See "man mkinitrd.conf" for details on the syntax of this file # 
 SOURCE_TREE="/boot/initrd-tree" 
 CLEAR_TREE="0" 
 OUTPUT_IMAGE="/boot/initrd.gz" 
@@ -111,7 +111,7 @@ In order to use "expert" mode, you'll need to know Slackware's root partition. Y
 
 ```text
 
-# LILO configuration file 
+#LILO configuration file 
 
 boot = /dev/sda 
     bitmap = /boot/slack.bmp 
@@ -123,7 +123,7 @@ append=" vt.default_utf8=0"
 prompt 
 timeout = 50 
 
-# VESA framebuffer console @ 1024x768x256 
+#VESA framebuffer console @ 1024x768x256 
 vga = 773 
 .... many more lines ommitted ....
 
@@ -139,20 +139,20 @@ Now that we've looked into the global section, let's take a look at the operatin
 
 ```text
 
-# LILO configuration file 
+#LILO configuration file 
 ... global section ommitted .... 
-# Linux bootable partition config begins 
+#Linux bootable partition config begins 
 image = /boot/vmlinuz-generic-2.6.29.4 
     root = /dev/sda1 
     initrd = /boot/initrd.gz 
     label = Slackware64 
     read-only 
-# Linux bootable partition config ends 
-# Windows bootable partition config begins 
+#Linux bootable partition config ends 
+#Windows bootable partition config begins 
 other = /dev/sda3 
     label = Windows 
     table = /dev/sda 
-# Windows bootable partition config ends
+#Windows bootable partition config ends
 
 ```
 
