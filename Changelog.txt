@@ -1,3 +1,6 @@
+2026-10-08
+- Update ToDo list
+- Improve PDF/HTML format
 2026-10-04
 - I think we have a version ready to be shared. All chapters have been converted 
   to Markdown. Now what needs to be done is to evolve the book, 
