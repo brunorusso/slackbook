@@ -42,6 +42,14 @@ class BuildBookTest(unittest.TestCase):
             self.assertEqual((output_dir / "img" / "nested" / "logo.png").read_bytes(), b"img-data")
             self.assertEqual((output_dir / "ps-imgs" / "other" / "scan.png").read_bytes(), b"ps-data")
 
+    def test_generate_html_excludes_theme_selector_for_web(self):
+        repo_root = Path(build_book.__file__).resolve().parents[1]
+        html = build_book.generate_book_html(repo_root / "src-book")
+
+        self.assertNotIn("theme-toggle", html)
+        self.assertNotIn("data-theme=\"dark\"", html)
+        self.assertNotIn("data-theme=\"light\"", html)
+
     def test_cli_flags_parse_html_and_pdf_modes(self):
         html_args = build_book.parse_args(["--html"])
         pdf_args = build_book.parse_args(["--pdf"])
