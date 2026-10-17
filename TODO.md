@@ -26,7 +26,7 @@
  - [ ] Check if chapter 17 need improve. Necessary add information about how use slackbuilds.org
  - [ ] Check if chapter 18 need improve
  - [ ] Check if chapter 19 need improve
- - [ ] New chapter about: slacklive
+ - [ ] New chapter about: liveslack
  - [ ] New chapter about: slackware docker image
  - [ ] New chapter about: kde/xfce
  - [ ] New chapter about: bluetooth
