@@ -1,28 +1,37 @@
 # 4. Basic Shell Commands
 
-So you've installed Slackware and you're staring at a terminal prompt, what now? Now would be a good time to learn about the basic command line tools. And since you're staring at a blinking curser, you probably need a little assistance in knowing how to get around, and that is what this chapter is all about.
+So you've installed Slackware and you're staring at a terminal prompt, what now? Now would be a good time to learn about the basic command line tools. And since you're staring at a blinking cursor, you probably need a little assistance in knowing how to get around, and that is what this chapter is all about.
 
 ## 4.1 System Documentation
 
-Your Slackware Linux system comes with lots of built-in documentation for nearly every installed application. Perhaps the most common method of reading system documentation is `man` (1). `man` (short for *manual* ) will bring up the included man-page for any application, system call, configuration file, or library you tell it too. For example, `man man` will bring up the man-page for `man` itself.
+While it is common nowadays to consult an Artificial Intelligence or search the web when you get stuck, there are many situations—such as setting up a new server or troubleshooting network connectivity—where you won't have internet access. Furthermore, local documentation guarantees you are reading the exact manual for the version installed on your system. For a fast, reliable, and completely offline way to get help, Slackware comes with lots of built-in documentation for nearly every installed application.
+
+Perhaps the most common method of reading system documentation is `man` (1). `man` (short for *manual*) will bring up the included man-page for any application, system call, configuration file, or library you tell it to. For example, `man man` will bring up the man-page for `man` itself.
 
 Unfortunately, you may not always know what application you need to use for the task at hand. Thankfully, `man` has built-in search abilities. Using the `-k` switch will cause `man` to search for every man-page that matches your search terms.
 
 The man-pages are organized into groups or sections by their content type. For example, section 1 is for user applications. `man` will search each section in order and display the first match it finds. Sometimes you will find that a man-page exists in more than one section for a given entry. In that case, you will need to specify the exact section to look in. In this book, all applications and a number of other things will have a number on their right-hand side in parenthesis. This number is the man page section where you will find information on that tool.
 
 ```text
+darkstar:~$ man -k nfsd
+nfsd (7)             - special filesystem for controlling Linux NFS server
+nfsd (8)             - NFS server process
+nfsdcld (8)          - NFSv4 Client Tracking Daemon
+nfsdclddb (8)        - Tool for manipulating the nfsdcld sqlite database
+nfsdclnts (8)        - print various nfs client information for knfsd server.
+nfsdcltrack (8)      - NFSv4 Client Tracking Callout Program
+nfsdctl (8)          - control program for the Linux kernel NFS server
+rpc.nfsd (8)         - NFS server process
 
-darkstar:~$ man -k printf 
-printf (1) - format and print data 
-printf (3) - formatted output conversion 
-darkstar:~$ man 3 printf
-
+darkstar:~$ man 7 nfsd
 ```
+
+The table below shows the section numbers of the manual followed by the types of pages they contain.
 
 | Section | Contents |
 | --- | --- |
 | 1 | User Commands |
-| 2 | System Calls |
+| 2 | System Calls, provided by the kernel |
 | 3 | C Library Calls |
 | 4 | Devices |
 | 5 | File Formats / Protocols |
@@ -30,7 +39,8 @@ darkstar:~$ man 3 printf
 | 7 | Conventions / Macro Packages |
 | 8 | System Administration |
 | 9 | Kernel API Descriptions |
-| n | "New" - typically used to Tcl/Tk |
+
+
 
 ## 4.2 Dealing with Files and Directories
 
