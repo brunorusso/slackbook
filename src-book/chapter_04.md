@@ -46,13 +46,13 @@ The table below shows the section numbers of the manual followed by the types of
 
 ### 4.2.1 Listing Files and Directory Contents
 
-`ls` (1) is used to list files and directories, their permissions, size, type, inode number, owner and group, and plenty of additional information. For example, let's list what's in the `/` directory for your new Slackware Linux system.
+`ls` is used to list files and directories, their permissions, size, type, inode number, owner and group, and plenty of additional information. For example, let's list what's in the `/` directory for your new Slackware Linux system.
 
 ```text
 
 darkstar:~$ ls / 
-bin/ dev/ home/ lost+found/ mnt/ proc/ sbin/ sys/ usr/ 
-boot/ etc/ lib/ media/ opt/ root/ srv/ tmp/ var/
+bin/  boot/  dev/  etc/  home/  lib/  lib64/  lost+found/  media/  
+mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/
 
 ```
 
@@ -60,45 +60,55 @@ Notice that each of the listings is a directory. These are easily distinguished 
 
 ```text
 
-darkstar:~$ ls -l /home/alan/Desktop 
--rw-r--r-- 1 alan users 15624161 2007-09-21 13:02 9780596510480.pdf
--rw-r--r-- 1 alan users  3829534 2007-09-14 12:56 imgscan.zip
-drwxr-xr-x 3 alan root       168 2007-09-17 21:01 ipod_hack/
-drwxr-xr-x 2 alan users      200 2007-12-03 22:11 libgpod/
-drwxr-xr-x 2 alan users      136 2007-09-30 03:16 playground/
+darkstar:~$ ls -l /home/brusso/
+total 26804
+drwxr-xr-x    2 brusso users     4096 Oct 21 07:36 Desktop
+drwxr-xr-x    5 brusso users     4096 Oct 10 18:44 Documents
+drwxr-xr-x   20 brusso users    61440 Oct 21 09:40 Downloads
+drwx------    2 brusso users     4096 Oct  2  2025 Mail
+drwxr-xr-x    2 brusso users     4096 Feb 14  2025 Music
+drwxr-xr-x    4 brusso users     4096 Feb 26  2026 Pictures
+-rw-r--r--    1 brusso users      220 Oct 17 12:19 imagem.yaml
+-rw-------    1 brusso users    48099 Oct  2  2025 invoice2340711909.pdf
+-rw-r--r--    1 brusso users  2567342 Jan 27  2026 print.pdf
 
 ```
 
-A long listing lets you view the permisions, user and group ownership, file size, last modified date, and of course, the file name itself. Notice that the first two entires are files, and the last three are directories. This is denoted by the very first character on the line. Regular files get a "-"; directories get a "d". There are several other file types with their own denominators. Symbolic links for example will have an "l".
+A long listing lets you view the permissions, user and group ownership, file size, last modified date, and of course, the file name itself. Notice that the first six entries are directories, and the last three entries are files. This is denoted by the very first character on the line. Regular files get a "-"; directories get a "d". There are several other file types with their own indicators. Symbolic links for example will have an "l".
 
-Lastly, we'll show you how to list dot-files, or hidden files. Unlike other operating systems such as Microsoft Windows, there is no special property that differentiates "hidden" files from "unhidden" files. A hidden file simply begins with a dot. To display these files along with all the others, you just need to pass the `-a` argument to `ls` .
+Lastly, we'll show you how to list dot-files, or hidden files. Unlike other operating systems such as Microsoft Windows, there is no special property that differentiates "hidden" files from "unhidden" files. A hidden file simply begins with a dot. To display these files along with all the others, you just need to pass the `-a` argument to `ls`.
 
 ```text
 
-darkstar:~$ ls -a 
-.xine/ .xinitrc-backup .xscreensaver .xsession-errors SBo/ 
-.xinitrc .xinitrc-xfce .xsession .xwmconfig/ Shared/
+darkstar:~$ ls -a /home/brusso
+./          .docker/        .viminfo    
+../         .gnupg/         .vscode/    
+.bashrc     .links/         .xscreensaver  
+.cache/     .local/         .xsnowrc      
+.config/    .openoffice/    Documents/
+.cups/      .screenrc
 
 ```
 
-You also likely noticed that your files and directories appear in different colors. Many of the enhanced features of `ls` such as these colors or the trailing characters indicating file-type are special features of the `ls` program that are turned on by passing various arguments. As a convienience, Slackware sets up `ls` to use many of these optional arguments by default. These are controlled by the LS_OPTIONS and LS_COLORS environment variables. We will talk more about environment variables in chapter 5.
+You also likely noticed that your files and directories appear in different colors. Many of the enhanced features of `ls` such as these colors or the trailing characters indicating file-type are special features of the `ls` program that are turned on by passing various arguments. As a convenience, Slackware sets up `ls` to use many of these optional arguments by default. These are controlled by the LS_OPTIONS and LS_COLORS environment variables. We will talk more about environment variables in Chapter 5.
+
 
 ### 4.2.2 Moving Around the Filesystem
 
-`cd` is the command used to change directories. Unlike most other commands, `cd` is actually not it's own program, but is a shell built-in. Basically, that means `cd` does not have its own man page. You'll have to check your shell's documentation for more details on the `cd` you may be using. For the most part though, they all behave the same.
+`cd` is the command used to change directories. Unlike most other commands, `cd` is actually not its own program, but is a shell built-in. Basically, that means `cd` does not have its own man page. You'll have to check your shell's documentation for more details on the `cd` you may be using. For the most part though, they all behave the same.
 
 ```text
 
 darkstar:~$ cd / 
-darkstar:/$ls 
-bin/ dev/ home/ lost+found/ mnt/ proc/ sbin/ sys/ usr/ 
-boot/ etc/ lib/ media/ opt/ root/ srv/ tmp/ var/ 
+darkstar:/$ ls 
+bin/  boot/  dev/  etc/  home/  lib/  lib64/  lost+found/  media/  
+mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/
 darkstar:/$cd /usr/local 
 darkstar:/usr/local$
 
 ```
 
-Notice how the prompt changed when we changed directories? The default Slackware shell does this as a quick, easy way to see your current directory, but this is not actually a function of `cd` . If your shell doesn't operate in this way, you can easily get your current working directory with the `pwd` (1) command. (Most UNIX shells have configurable prompts that can be coaxed into providing this same functionality. In fact, this is another convience setup in the default shell for you by Slackware.)
+Notice how the prompt changed when we changed directories? The default Slackware shell does this as a quick, easy way to see your current directory, but this is not actually a function of `cd`. If your shell doesn't operate in this way, you can easily get your current working directory with the `pwd` command. (Most UNIX shells have configurable prompts that can be coaxed into providing this same functionality. In fact, this is another convenience setup in the default shell for you by Slackware.)
 
 ```text
 
@@ -107,26 +117,26 @@ darkstar:~$ pwd
 
 ```
 
-### 4.2.3 File and Directory Creation and Deletion
+### 4.2.3 File and Directory Creation and Deletion/Removing
 
-While most applications can and will create their own files and directories, you'll often want to do this on your own. Thankfully, it's very easy using `touch` (1) and `mkdir` (1).
+While most applications can and will create their own files and directories, you'll often want to do this on your own. Thankfully, it's very easy using `touch` and `mkdir`.
 
 `touch` actually modifies the timestamp on a file, but if that file doesn't exist, it will be created.
 
 ```text
 
 darkstar:~/foo$ ls -l
--rw-r--r-- 1 alan users 0 2012-01-18 15:01 bar1
-darkstar:~/foo$ touch bar2
--rw-r--r-- 1 alan users 0 2012-01-18 15:01 bar1
--rw-r--r-- 1 alan users 0 2012-01-18 15:05 bar2
-darkstar:~/foo$ touch bar1
--rw-r--r-- 1 alan users 0 2012-01-18 15:05 bar1
--rw-r--r-- 1 alan users 0 2012-01-18 15:05 bar2
+-rw-r--r-- 1 brusso users 0 Oct 21 21:13 file1.txt
+darkstar:~/foo$ touch file2.txt
+-rw-r--r-- 1 brusso users 0 Oct 21 21:13 file1.txt
+-rw-r--r-- 1 brusso users 0 Oct 21 21:14 file2.txt
+darkstar:~/foo$ touch file2.txt
+-rw-r--r-- 1 brusso users 0 Oct 21 21:13 file1.txt
+-rw-r--r-- 1 brusso users 0 Oct 21 21:15 file2.txt
 
 ```
 
-Note how `bar2` was created in our second command, and the third command simpl updated the timestamp on `bar1`
+Note how `file2.txt` was created in our second command, and the third command simply updated the timestamp on `file2.txt`
 
 `mkdir` is used for (obviously enough) making directories. `mkdir foo` will create the directory "foo" within the current working directory. Additionally, you can use the `-p` argument to create any missing parent directories.
 
@@ -139,26 +149,27 @@ darkstar:~$ mkdir -p /slack/foo/bar/
 
 ```
 
-In the latter case, `mkdir` will first create "/slack", then "/slack/foo", and finally "/slack/foo/bar". If you failed to use the `-p` argument, `man` would fail to create "/slack/foo/bar" unless the first two already existed, as you saw in the example.
+In the latter case, `mkdir` will first create "/slack", then "/slack/foo", and finally "/slack/foo/bar". If you failed to use the `-p` argument, `mkdir` would fail to create "/slack/foo/bar" unless the first two already existed, as you saw in the example.
 
-Removing a file is as easy as creating one. The `rm` (1) command will remove a file (assuming of course that you have permission to do this). There are a few very common arguments to `rm` . The first is `-f` and is used to force the removal of a file that you may lack explicit permission to delete. The `-r` argument will remove directories and their contents recursively.
+Removing a file is as easy as creating one. The `rm` command will remove a file (assuming of course that you have permission to do this). There are a few very common arguments to `rm` . The first is `-f` and is used to force the removal of a file that you may lack explicit permission to delete. The `-r` argument will remove directories and their contents recursively.
 
-There is another tool to remove directories, the humble `rmdir` (1). `rmdir` will only remove directories that are empty, and complain noisely about those that contain files or sub-directories.
+There is another tool to remove directories, the humble `rmdir`. `rmdir` will only remove directories that are empty, and complain noisily about those that contain files or sub-directories.
 
 ```text
 
 darkstar:~$ ls
-foo_1/ foo_2/
-darkstar:~$ ls foo_1
-bar_1
-darkstar:~$ rmdir foo_1
+file1.txt  file2.txt  foo/
+darkstar:~$ ls foo/
+file3.txt
+darkstar:~$ rmdir foo
 rmdir: foo/: Directory not empty
-darkstar:~$ rm foo_1/bar
-darkstar:~$ rmdir foo_1
-darkstar:~$ ls foo_2
-bar_2/
-darkstar:~$ rm -fr foo_2
+darkstar:~$ rm foo/file3.txt
+darkstar:~$ rmdir foo
+darkstar:~$ ls 
+file1.txt  file2.txt  
+darkstar:~$ rm -fr
 darkstar:~$ ls
+
 ```
 
 ## 4.3 Archive and Compression
