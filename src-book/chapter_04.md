@@ -174,66 +174,70 @@ darkstar:~$ ls
 
 ## 4.3 Archive and Compression
 
-Everyone needs to package a lot of small files together for easy storage from time to time, or perhaps you need to compress very large files into a more manageable size? Maybe you want to do both of those together? Thankfully there are several tools to do just that.
+Everyone needs to package a lot of small files together for easy storage from time to time, or perhaps you need to compress very large files into a more manageable size. Maybe you want to do both of those together? Thankfully there are several tools to do just that.
 
 ### 4.3.1 zip and unzip
 
 You're probably familiar with .zip files. These are compressed files that contain other files and directories. While we don't normally use these files in the Linux world, they are still commonly used by other operating systems, so we occasionally have to deal with them.
 
-In order to create a zip file, you'll (naturally) use the `zip` (1) command. You can compress either files or directories (or both) with `zip` , but you'll have to use the `-r` argument for recursive action in order to deal with directories.
+In order to create a zip file, you'll (naturally) use the `zip` command. You can compress either files or directories (or both) with `zip`, but you'll have to use the `-r` argument for recursive action in order to deal with directories.
 
 ```text
-
 darkstar:~$ zip -r /tmp/home.zip /home 
 darkstar:~$ zip /tmp/large_file.zip /tmp/large_file
-
 ```
 
-The order of the arguments is very important. The first filename must be the zip file to create (if the .zip extension is ommitted, `zip` will add it for you) and the rest are files or directories to be added to the zip file.
+The order of the arguments is very important. The first filename must be the zip file to create (if the .zip extension is omitted, `.zip` will add it for you) and the rest are files or directories to be added to the zip file.
 
-Naturally, `unzip` (1) will decompress a zip archive file.
+Naturally, `unzip` will decompress a zip archive file.
 
 ```text
-
 darkstar:~$ unzip /tmp/home.zip
-
 ```
 
 ### 4.3.2 gzip
 
-One of the oldest compression tools included in Slackware is `gzip` (1), a compression tool that is only capable or operating on a single file at a time. Whereas `zip` is both a compression and an archival tool, `gzip` is only capable of compression. At first glance this seems like a draw-back, but it is really a strength. The UNIX philosophy of making small tools that do their small jobs well allows them to be combined in myriad ways. In order to compress a file (or multiple files), simply pass them as arguments to `gzip` . Whenever `gzip` compresses a file, it adds a .gz extension and removes the original file.
+One of the oldest compression tools included in Slackware is `gzip`, a compression tool that is only capable or operating on a single file at a time. Whereas `zip` is both a compression and an archival tool, `gzip` is only capable or compression. At first glance this seems like a drawback, but it is really a strength. The UNIX philosophy of making small tools that do their small jobs well allows them to be combined in myriad ways. In order to compress a file (or multiple files), simply pass them as arguments to `gzip`. Whenever `gzip` compresses a file, it adds a `.gz` extension and removes the original file.
 
 ```text
-
 darkstar:~$ gzip /tmp/large_file
-
 ```
 
-Decompressing is just as straight-forward with `gunzip` which will create a new uncompressed file and delete the old one.
+Decompressing is just as straightforward, with `gunzip` which will create a new uncompressed file and delete the old one.
 
 ```text
-
 darkstar:~$ gunzip /tmp/large_file.gz 
 darkstar:~$ ls /tmp/large_file* 
 /tmp/large_file
 
 ```
 
-But suppose we don't want to delete the old compressed file, we just want to read its contents or send them as input to another program? The `zcat` program will read the gzip file, decompress it in memory, and send the contents to the standard output (the terminal screen unless it is redirected, see for more details on output redirection).
+But suppose we don't want to delete the old compressed file, we just want to read its contents or send them as input to another program? The `zcat` program will read the `gzip` file, decompress it in memory, and send the contents to standard output (the terminal screen unless it is redirected; see Chapter 5 for more details on output redirection)
+
 
 ```text
 
-darkstar:~$ zcat /tmp/large_file.gz Wed Aug 26 10:00:38 CDT 2009 Slackware 13.0 x86 is released as stable! Thanks to everyone who helped make this release possible -- see the RELEASE_NOTES for the credits. The ISOs are off to the replicator. This time it will be a 6 CD-ROM 32-bit set and a dual-sided 32-bit/64-bit x86/x86_64 DVD. We're taking pre-orders now at store.slackware.com. Please consider picking up a copy to help support the project. Once again, thanks to the entire Slackware community for all the help testing and fixing things and offering suggestions during this development cycle.
+darkstar:~$ zcat /tmp/UPGRADE.tar.gz 
 
+Slackware 15.0 to 16.0 Upgrade HOWTO  <volkerdi@slackware.com>
+
+This document explains how to upgrade from Slackware 15.0 to Slackware 16.0.
+
+----------------------------------------------------------------------------
+
+For details of important changes from Slackware 15.0 to 16.0, see the file
+'CHANGES_AND_HINTS.TXT'. Thanks to Robby Workman for help with this.
+...
 ```
 
 ### 4.3.3 bzip2
 
-One alternative to `gzip` is the `bzip2` (1) compression utility which works in almost the exact same way. The advantage to `bzip2` is that it boasts greater compression strength. Unfortunately, achieving that greater compression is a slow and CPU-intensive process, so `bzip2` typicall takes much longer to run than other alternatives.
+One alternative to `gzip` is the `bzip2` compression utility, which works in almost the exact same way. The advantage of `bzip2` is that it boasts greater compression strength. Unfortunately, achieving that greater compression is a slow and CPU-intensive process, so `bzip2` typically takes much longer to run than other alternatives.
+
 
 ### 4.3.4 XZ / LZMA
 
-The latest compression utility added to Slackware is `xz` , which impliments the LZMA compression algorithm. This is faster than `bzip2` and often compresses better as well. In fact, its blend of speed and compression strength caused it to replace `gzip` as the compression scheme of choice for Slackware. Unfortuantely, `xz` does not have a man page at the time of this writing, so to view available options, use the `--help` argument. Compressing files is accomplished with the `-z` argument, and decompression with `-d` .
+The latest compression utility added to Slackware is `xz`, which implements the LZMA compression algorithm. This is faster than `bzip2` and often compresses better as well. In fact, its blend of speed and compression strength caused it to replace `gzip` as the compression scheme of choice for Slackware. Compressing files is accomplished with the `-z` argument, and decompression with `-d` .
 
 ```text
 
@@ -241,11 +245,28 @@ darkstar:~$ xz -z /tmp/large_file
 
 ```
 
+To see how powerful `xz` compression is, take a look at the example below comparing an uncompressed file with its `.gz` and `.xz` versions:
+
+
+```text
+darkstar:~$ ls -l
+total 2848
+-rw-r--r-- 1 brusso users 2216045 Oct 21 22:01 ChangeLog.txt
+-rw-r--r-- 1 brusso users  434353 Oct 21 22:00 ChangeLog.txt.gz
+-rw-r--r-- 1 brusso users  257580 Oct 21 21:58 ChangeLog.txt.xz
+
+```
+
+The original ChangeLog.txt file is around 2.2 MB, ChangeLog.txt.gz drops down to 428 KB, and ChangeLog.txt.xz shrinks all the way to 252 KB.
+
+
+
 ### 4.3.5 tar
 
-So great, we know how to compress files using all sorts of programs, but none of them can archive files in the way that `zip` does. That is until now. The Tape Archiver, or `tar` (1) is the most frequently used archival program in Slackware. Like other archival programs, `tar` generates a new file that contains other files and directories. It does not compress the generated file (often called a "tarball") by default; however, the version of `tar` included in Slackware supports a variety of compression schemes, including the ones mentioned above.
+So great, we know how to compress files using all sorts of programs, but none of them can archive files in the way that `zip` does. That is until now. The Tape Archiver, or `tar` is the most frequently used archival program in Slackware. Like other archival programs, `tar` generates a new file that contains other files and directories. It does not compress the generated file (often called a "tarball") by default; however, the version of `tar` included in Slackware supports a variety of compression schemes, including the ones mentioned above.
 
-Invoking `tar` can be as easy or as complicated as you like. Typically, creating a tarball is done with the `-cvzf` arguments. Let's look at these in depth.
+Invoking `tar` can be as easy or as complicated as you like. Typically, creating a tarball is done with the `-cvzf` arguments. Let's look at these in depth:
+
 
 | Argument | Meaning |
 | --- | --- |
@@ -253,105 +274,101 @@ Invoking `tar` can be as easy or as complicated as you like. Typically, creating
 | x | Extract the contents of a tarball |
 | t | Display the contents of a tarball |
 | v | Be more verbose |
+| f | Specify the archive filename |
 | z | Use gzip compression |
 | j | Use bzip2 compression |
 | J | Use LZMA compression |
 | p | Preserve permissions |
 
-`tar` requires a bit more precision than other applications in the order of its arguments. The `-f` argument must be present when reading or writing to a file for example, and the very next thing to follow must be the filename. Consider the following examples.
+`tar` requires a bit more precision than other applications in the order of its arguments. The `-f` argument must be present when reading or writing to a file, for example, and the very next thing to follow must be the filename. Consider the following examples.
+
 
 ```text
-
 darkstar:~$ tar -xvzf /tmp/tarball.tar.gz 
 darkstar:~$ tar -xvfz /tmp/tarball.tar.gz
 
 ```
 
-Above, the first example works as you would expect, but the second fails because `tar` has been instructed to open the `z` file rather than the expected `/tmp/tarball.tar.gz` .
+Above, the first example works as you would expect, but the second fails because `tar` has been instructed to open the `z` file rather than the expected `/tmp/tarball.tar.gz`.
 
-Now that we've got our arguments straightened out, lets look at a few examples of how to create and extract tarballs. As we've noted, the `-c` argument is used to create tarballs and `-x` extracts their contents. If we want to create or extract a compressed tarball though, we also have to specify the proper compression to use. Naturally, if we don't want to compress the tarball at all, we can leave these options out. The following command creates a new tarball using the `gzip` compression alogrithm. While it's not a strict requirement, it's also good practice to add the .tar extension to all tarballs as well as whatever extension is used by the compression algorithm.
+Now that we've got our arguments straightened out, let's look at a few examples of how to create and extract tarballs. As we've noted, the `-c` argument is used to create tarballs and `-x` extracts their contents. If we want to create or extract a compressed tarball though, we also have to specify the proper compression to use. Naturally, if we don't want to compress the tarball at all, we can leave these options out. The following command creates a new tarball using the `gzip` compression algorithm. While it's not a strict requirement, it's also good practice to add the .tar extension to all tarballs as well as whatever extension is used by the compression algorithm.
 
 ```text
-
 darkstar:~$ tar -czf /tmp/tarball.tar.gz /tmp/tarball/
-
 ```
 
 ## 4.4 Reading Documents
 
 Traditionally, UNIX and UNIX-like operating systems are filled with text files that at some point in time the system's users are going to want to read. Naturally, there are plenty of ways of reading these files, and we'll show you the most common ones.
 
-In the early days, if you just wanted to see the contents of a file (any file, whether it was a text file or some binary program) you would use `cat` (1) to view them. `cat` is a very simple program, which takes one or more files, concatenates them (hence the name) and sends them to the standard output, which is usually your terminal screen. This was fine when the file was small and wouldn't scroll off the screen, but inadequate for larger files as it had no built-in way of moving within a document and reading it a paragraph at a time. Today, `cat` is still used quite extensively, but predominately in scripts or for joining two or more files into one.
+In the early days, if you just wanted to see the contents of a file (any file, whether it was a text file or some binary program), you would use `cat` to view them. `cat` is a very simple program, which takes one or more files, concatenates them (hence the name) and sends them to the standard output, which is usually your terminal screen. This was fine when the file was small and wouldn't scroll off the screen, but inadequate for larger files as it had no built-in way of moving within a document and reading it a paragraph at a time. Today, `cat` is still used quite extensively, but predominantly in scripts or for joining two or more files into one.
 
 ```text
 
 darkstar:~$ cat /etc/slackware-version 
-Slackware 14.0
+Slackware 15.0+
 
 ```
-
-Given the limitations of `cat` some very intelligent people sat down and began to work on an application to let them read documents one page at a time. Naturally, such applications began to be known as "pagers". One of the earliest of these was `more` (1), named because it would let you see "more" of the file whenever you wanted.
 
 ### 4.4.1 more
 
-`more` will display the first few lines of a text file until your screen is full, then pause. Once you've read through that screen, you can proceed down one line by pressing ENTER, or an entire screen by pressing <kbd>SPACE</kbd> , or by a specified number of lines by typing a number and then the <kbd>SPACE</kbd> bar. `more` is also capable of searching through a text file for keywords; once you've displayed a file in `more` , press the / key and enter a keyword. Upon pressing <kbd>ENTER</kbd> , the text will scroll until it finds the next match.
+Given the limitations of `cat` some very intelligent people sat down and began to work on an application to let them read documents one page at a time. Naturally, such applications began to be known as "pagers". One of the earliest of these was `more`, named because it would let you see "more" of the file whenever you wanted.
 
-This is clearly a big improvement over `cat` , but still suffers from some annoying flaws; `more` is not able to scroll back up through a piped file to allow you to read something you might have missed, the search function does not highlight its results, there is no horizontal scrolling, and so on. Clearly a better solution is possible.
+`more` will display the first few lines of a text file until your screen is full, then pause. Once you've read through that screen, you can proceed down one line by pressing <kbd>ENTER</kbd>, an entire screen by pressing <kbd>SPACE</kbd>, or a specified number of lines by typing a number and then pressing <kbd>SPACE</kbd>. `more` is also capable of searching through a text file for keywords; once you've displayed a file in `more`, press the `/` key and enter a keyword. Upon pressing <kbd>ENTER</kbd>, the text will scroll until it finds the next match.
 
-**Note**
+This is clearly a big improvement over `cat`, but still suffers from some annoying flaws: `more` is not able to scroll back up through a piped file to allow you to read something you might have missed, the search function does not highlight its results, there is no horizontal scrolling, and so on. Clearly, a better solution was possible.
 
-In fact, modern versions of `more` , such as the one shipped with Slackware, do feature a *back* function via the <kbd>b</kbd> key. However, the function is only available when opening files directly in `more` ; not when a file is piped to `more` .
+> **Note**  
+> In fact, modern versions of `more`, such as the one shipped with Slackware, do feature a *back* function via the <kbd>b</kbd> key. However, this function is only available when opening files directly in `more`, not when a file is piped to it.
+
 
 ### 4.4.2 less
 
-In order to address the short-comings of `more` , a new pager was developed and ironically dubbed `less` (1). `less` is a very powerful pager that supports all of the functions of `more` while adding lots of additional features. To begin with, `less` allows you to use your arrow keys to control movement within the document.
+In order to address the shortcomings of `more`, a new pager was developed and ironically dubbed `less`. `less` is a very powerful pager that supports all of the functions of `more` while adding lots of additional features. To begin with, `less` allows you to use your arrow keys to control movement within the document.
 
-Due to its popularity, many Linux distributions have begun to exclude `more` in favor of `less` . Slackware includes both. Moreover, Slackware also includes a handy little pre-processor for `less` called `lesspipe.sh` . This allows a user to exectute `less` on a number of non-text files. `lesspipe.sh` will generate text output from running a command on these files, and display it in `less` .
+Due to its popularity, many Linux distributions have begun to exclude `more` in favor of `less`. Slackware includes both. Moreover, Slackware also includes a handy little pre-processor for `less` called `lesspipe.sh`. This allows a user to execute `less` on a number of non-text files. `lesspipe.sh` will generate text output from running a command on these files, and display it in `less`.
 
-`Less` provides nearly as much functionality as one might expect from a text editor without actually being a text editor. Movement line-by-line can be done `vi` -style with <kbd>j</kbd> and <kbd>k</kbd> , or with the arrow keys, or <kbd>ENTER</kbd> . In the event that a file is too wide to fit on one screen, you can even scroll horizontally with the left and right arrow keys. The <kbd>g</kbd> key takes you to the top of the file, while <kbd>G</kbd> takes you to the end.
+`less` provides nearly as much functionality as one might expect from a text editor without actually being a text editor. Movement line-by-line can be done `vi` -style with <kbd>j</kbd> and <kbd>k</kbd>, or with the arrow keys, or <kbd>ENTER</kbd>. In the event that a file is too wide to fit on one screen, you can even scroll horizontally with the left and right arrow keys. The <kbd>g</kbd> key takes you to the top of the file, while <kbd>G</kbd> takes you to the end.
 
-Searching is done as with `more` , by typing the / key and then your search string, but notice how the search results are highlighted for you, and typing <kbd>n</kbd> will take you to the next occurence of the result while <kbd>N</kbd> takes you to the previous occurrence.
+Searching is done as with `more`, by typing the / key and then your search string, but notice how the search results are highlighted for you, and typing <kbd>n</kbd> will take you to the next occurrence of the result while <kbd>N</kbd> takes you to the previous occurrence.
 
-Also as with `more` , files may be opened directly in `less` or piped to it:
+Also as with `more`, files may be opened directly in `less` or piped to it:
 
 ```text
 
-darkstar:~$ less 
-/usr/doc/less-*/README 
-darkstar:~$ cat 
-/usr/doc/less*/README 
-/usr/doc/util-linux*/README | less
+darkstar:~$ less /usr/doc/less-*/README 
+darkstar:~$ cat /usr/doc/less*/README /usr/doc/util-linux*/README | less
 
 ```
 
-There is much more to `less` ; from within the application, type <kbd>h</kbd> for a full list of commands.
+There is much more to `less`; from within the application, type <kbd>h</kbd> for a full list of commands.
+
 
 ## 4.5 Linking
 
-Links are a method of referring to one file by more than one name. By using the `ln` (1) application, a user can reference one file with more than one name. The two files are not carbon-copies of one another, but rather are the exact same file, just with a different name. To remove the file entirely, all of its names must be deleted. (This is actually the result of the way that `rm` and other tools like it work. Rather than remove the contents of the file, they simply remove the reference to the file, freeing that space to be re-used. `ln` will create a second reference or "link" to that file.)
+Links are a method of referring to a single file by more than one name. Using the `ln` command, you can create additional references to an existing file. These linked files are not carbon copies of one another, but rather the exact same file on disk under different names. To delete the file entirely, all of its linked names must be removed. (This is a consequence of how `rm` and similar utilities work: rather than immediately erasing the file contents, they simply remove the reference to the file, freeing that space only when the link count reaches zero. `ln` creates a second reference or "hard link" to that file.)
+
+
 
 ```text
-
 darkstar:~$ ln /etc/slackware-version foo 
 darkstar:~$ cat foo 
-Slackware 14.0 
+Slackware 15.0+ 
 darkstar:~$ ls -l /etc/slackware-version foo 
--rw-r--r-- 1 root root 17 2007-06-10 02:23 /etc/slackware-version 
--rw-r--r-- 1 root root 17 2007-06-10 02:23 foo
-
+-rw-r--r-- 2 root root 16 Oct 11 20:00 /etc/slackware-version
+-rw-r--r-- 2 root root 16 Oct 11 20:00 foo
 ```
 
 Another type of link exists, the symlink. Symlinks, rather than being another reference to the same file, are actually a special kind of file in their own right. These symlinks point to another file or directory. The primary advantage of symlinks is that they can refer to directories as well as files, and they can span multiple filesystems. These are created with the `-s` argument.
 
+
 ```text
-
-darkstar:~$ ln -s /etc/slackware-version foo 
-darkstar:~$ cat foo 
-Slackware 14.0 
-darkstar:~$ ls -l /etc/slackware-version foo 
--rw-r--r-- 1 root root 17 2007-06-10 02:23 /etc/slackware-version 
-lrwxrwxrwx 1 root root 22 2008-01-25 04:16 foo -> /etc/slackware-version
-
+darkstar:~$ ln -s /etc/slackware-version file 
+darkstar:~$ cat file
+Slackware 15.0+ 
+darkstar:~$ ls -l /etc/slackware-version file
+-rw-r--r-- 2 root   root  16 Oct 11 20:00 /etc/slackware-version
+lrwxrwxrwx 1 brusso users 22 Oct 21 22:27 file -> /etc/slackware-version
 ```
 
-When using symlinks, remember that if the original file is deleted, your symlink is useless; it simply points at a file that doesn't exist anymore.
+When using symlinks, remember that if the original file is deleted, your symlink becomes useless (often referred to as a "broken link"); it simply points to a file that no longer exists.
