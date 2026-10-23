@@ -31,7 +31,7 @@
  - [ ] New chapter about: kde/xfce
  - [ ] New chapter about: bluetooth
  - [ ] New chapter about: udev
- 
+ - [ ] New chapter about: Install on ARM archtecture
 
 
 # Instructions
