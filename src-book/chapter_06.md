@@ -1,6 +1,6 @@
-# 6. Process Control
+# 6. Process Control and Scheduling
 
-Slackware systems often run hundreds or thousands of programs, each of which is referred to as a process. Managing these processes is an important part of system administration. So how exactly do we handle all of these seperate processes?
+Slackware systems often run hundreds or thousands of programs, each of which is referred to as a process. Managing these processes is an important part of system administration. So how exactly do we handle all of these separate processes?
 
 ## 6.1 ps
 
@@ -208,7 +208,11 @@ Swap:        0k total,        0k used,        0k free,  2082652k cached
 
 The man page has helpful details on how to interact with `top` such as changing its delay interval, the order processes are displayed, and even how to terminate processes right from within `top` itself.
 
-## 6.4 cron
+
+## 6.4 htop
+
+
+## 6.5 cron
 
 Ok, so we've learned many different ways of viewing the active processes on our system and means of signalling them, but what if we want to run a process periodically? Fortunately, Slackware includes just the thing, `crond` (8). cron runs processes for every user on the schedule that user demands. This makes it very useful for processes that need to be run periodically, but don't require full daemonization, such as backup scripts. Every user gets their own entry in the cron database, so non-root users can periodically run processes too.
 
