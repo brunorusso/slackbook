@@ -8,10 +8,11 @@
  - [X] Clean eps files and migrate png files to img directory 
 
  # New version
+ - [X] Update chapter 1. About slackware
  - [ ] Update chapter 2. Installation to new slackware version, maybe 16.0. Add information about gdisk
  - [ ] Update chapter 3. Booting add information about nvme
- - [ ] Check if chapter 4 need improve
- - [ ] Check if chapter 5 need improve
+ - [ ] Check if chapter 4 need improve (in progress)
+ - [ ] Check if chapter 5 need improve (in progress)
  - [ ] Check if chapter 6 need improve
  - [ ] Update chapter 7 X windows has any updates like wayland
  - [ ] Check if chapter 8 need improve

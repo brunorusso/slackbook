@@ -14,3 +14,11 @@ To view the complete list of pending tasks and goals, please check the [TODO.md]
 ## ChangeLog
 
 Detailed history of all changes and updates can be found in the [Changelog.txt](Changelog.txt) file.
+
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+## Any Issue
+
+If you have any issue, please submit a [New Issue](https://github.com/brunorusso/slackbook/issues/new/choose).
