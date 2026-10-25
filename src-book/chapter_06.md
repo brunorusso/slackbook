@@ -295,4 +295,4 @@ The directory names are self-explanatory:
 * `/etc/cron.hourly` — Executed once every hour
 * `/etc/cron.daily` — Executed once every day
 * `/etc/cron.weekly` — Executed once every week
-* `/etc/cron.monthly` — Executed once every month
+* `/etc/cron.monthly` — Executed once every month 
