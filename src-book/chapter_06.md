@@ -186,19 +186,17 @@ init─┬─ModemManager───3*[{ModemManager}]
      │                 │               └─26*[{akonadiserver}]
      │                 └─2*[{akonadi_control}]
 ... many more lines omitted ...
-
 ```
 
 ## 6.2 kill and killall
 
-Managing processes isn't only about knowing which ones are running, but also about communicating with them to change their behavior. The most common way of managing a program is to terminate it. Thus, the tool for the job is named `kill` (1). Despite the name, `kill` doesn't actually terminate processes, but sends signals to them. The most common signal is a SIGTERM, which tells the process to finish up what it is doing and terminate. There are a variety of other signals that can be sent, but the three most common are SIGTERM, SIGHUP, and SIGKILL.
+Managing processes isn't only about knowing which ones are running, but also about communicating with them to change their behavior. The most common way of managing a program is to terminate it. Thus, the tool for the job is named `kill`. Despite the name, `kill` doesn't actually terminate processes, but sends signals to them. The most common signal is SIGTERM, which tells the process to finish up what it is doing and terminate. There are a variety of other signals that can be sent, but the three most common are SIGTERM, SIGHUP, and SIGKILL.
 
-What a process does when it receives a signal varies. Most programs will terminate (or attempt to terminate) whenever they receive any signal, but there are a few important differences. For starters, the SIGTERM signal informs the process that it should terminate itself at its earliest convenience. This gives the process time to finish up any important activities, such as writing information to the disk, before it closes. In contrast, the SIGKILL signal tells the process to terminate itself immediately, no questions asked. This is most useful for killing processes that are not responding and is sometimes called the "silver bullet". Some processes (particularly daemons) capture the SIGHUP signal and reload their configuration files whenever they receive it.
+What a process does when it receives a signal varies. Most programs will terminate (or attempt to terminate) whenever they receive any signal, but there are a few important differences. For starters, the SIGTERM signal informs the process that it should terminate itself at its earliest convenience. This gives the process time to finish up any important activities, such as writing information to disk, before it closes. In contrast, the SIGKILL signal tells the process to terminate itself immediately, no questions asked. This is most useful for killing processes that are not responding and is sometimes called the "silver bullet". Some processes (particularly daemons) capture the SIGHUP signal and reload their configuration files whenever they receive it.
 
-In order to signal a process, we first need to know it's PID. You can get this easily with `ps` as we discused. In order to send different signals to a running process, you simply pass the signal number and `-s` as an argument. The `-l` argument lists all the signals you can choose and their number. You can also send signals by their name with `-s` .
+In order to signal a process, we first need to know it's PID. You can get this easily with `ps` as we discused. In order to send different signals to a running process, you simply pass the signal name or number and `-s` as an argument. The `-l` argument lists all the signals you can choose and their number. You can also send signals by their name with `-s` .
 
 ```text
-
 darkstar:~$ kill -l 
  1) SIGHUP   2) SIGINT   3) SIGQUIT  4) SIGILL 
  5) SIGTRAP  6) SIGABRT  7) SIGBUS   8) SIGFPE 
@@ -209,89 +207,92 @@ darkstar:~$ kill 1234 # SIGTERM
 darkstar:~$ kill -s 9 1234 # SIGKILL 
 darkstar:~$ kill -s 1 1234 # SIGHUP 
 darkstar:~$ kill -s HUP 1234 # SIGHUP
-
 ```
 
-Sometimes you may wish to terminate all running processes with a certain name. You can kill processes by name with `killall` (1). Just pass the same arguments to `killall` that you would pass to `kill` .
+Sometimes you may wish to terminate all running processes with a certain name. You can kill processes by name using `killall`. Just pass the same arguments to `killall` that you would pass to kill:
 
 ```text
-
 darkstar:~$ killall bash # SIGTERM 
 darkstar:~$ killall -s 9 bash # SIGKILL 
 darkstar:~$ killall -s 1 bash # SIGHUP 
 darkstar:~$ killall -s HUP bash # SIGHUP
-
 ```
 
 ## 6.3 top
 
-So far we've learned how to look at the active processes for a moment in time, but what if we want to monitor them for an extended period? `top` (1) allows us to do just that. It displays an ordered list of the processes on your system, along with vital information about them, and updates periodically. By default, processes are ordered by their CPU percentage and updates occur every three seconds.
 
-```text
+So far, we've learned how to look at active processes for a single moment in time, but what if we want to monitor them continuously over an extended period? `top` allows us to do just that. It displays an ordered, real-time list of active processes on your system along with vital resource consumption metrics, updating periodically (every three seconds by default).
 
-darkstar:~$ top 
-top - 16:44:15 up 26 days,  5:53,  5 users,  load average: 0.08, 0.03, 0.03
-Tasks: 122 total,   1 running, 119 sleeping,   0 stopped,   2 zombie
-Cpu(s):  3.4%us,  0.7%sy,  0.0%ni, 95.5%id,  0.1%wa,  0.0%hi,  0.2%si, 0.0%st
-Mem:   3058360k total,  2853780k used,   204580k free,   154956k buffers
-Swap:        0k total,        0k used,        0k free,  2082652k cached
+![image](img/top.png)
 
-  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND            
-    1 root      20   0  3928  632  544 S    0  0.0   0:00.99 init               
-    2 root      15  -5     0    0    0 S    0  0.0   0:00.00 kthreadd           
-    3 root      RT  -5     0    0    0 S    0  0.0   0:00.82 migration/0        
-    4 root      15  -5     0    0    0 S    0  0.0   0:00.01 ksoftirqd/0        
-    7 root      15  -5     0    0    0 S    0  0.0   0:11.22 events/0           
-    9 root      15  -5     0    0    0 S    0  0.0   0:01.19 work_on_cpu/0      
-   11 root      15  -5     0    0    0 S    0  0.0   0:00.01 khelper            
-  102 root      15  -5     0    0    0 S    0  0.0   0:02.04 kblockd/0          
-  105 root      15  -5     0    0    0 S    0  0.0   1:20.08 kacpid             
-  106 root      15  -5     0    0    0 S    0  0.0   0:01.92 kacpi_notify       
-  175 root      15  -5     0    0    0 S    0  0.0   0:00.00 ata/0              
-  177 root      15  -5     0    0    0 S    0  0.0   0:00.00 ata_aux            
-  178 root      15  -5     0    0    0 S    0  0.0   0:00.00 ksuspend_usbd      
-  184 root      15  -5     0    0    0 S    0  0.0   0:00.02 khubd              
-  187 root      15  -5     0    0    0 S    0  0.0   0:00.00 kseriod            
-  242 root      20   0     0    0    0 S    0  0.0   0:03.37 pdflush            
-  243 root      15  -5     0    0    0 S    0  0.0   0:02.65 kswapd0
-
-```
-
-The man page has helpful details on how to interact with `top` such as changing its delay interval, the order processes are displayed, and even how to terminate processes right from within `top` itself.
+The man page has helpful details on how to interact with `top`, such as changing its delay interval, altering the order in which processes are displayed, and even terminating processes right from within `top` itself.
 
 
 ## 6.4 htop
 
+The `htop` like top allow you to look active processes in real-time and allows you to scroll vertically and horizontally, and interact using a pointing device (mouse).  You can observe all processes running on the system, along with their command line arguments, as well as view them in a tree format, select multiple processes and act on them all at once.
+
+At the top of the screen, `htop` features visual meters displaying real-time CPU, memory, and swap utilization. At the bottom, a footer bar displays available actions mapped to Function keys (<kbd>F1</kbd> through <kbd>F10</kbd>). This allows you to search, filter, send signals (killing), or adjust process priorities (renicing) directly without needing to enter PIDs manually.
+
+![image](img/htop.png)
+
+
+The man page has helpful details on how to interact with `htop`.
+
+
 ## 6.5 btop
+
+Another popular resource monitor is `btop`, which displays real-time statistics and resource usage for the processor, memory, storage disks, network interfaces, and running processes. In other words, `btop` serves as a comprehensive, feature-rich TUI (Text User Interface) dashboard for system performance.
+
+If you prefer an intuitive, visually responsive interface to monitor your system, `btop` is an excellent choice. It features full mouse support, allowing you to click on elements, scroll through lists, and select individual PIDs to view detailed process trees or filter resource usage effortlessly.
+
+![image](img/btop.png)
+
+The man page has helpful details on how to interact with `btop`.
 
 
 ## 6.6 cron
 
-Ok, so we've learned many different ways of viewing the active processes on our system and means of signalling them, but what if we want to run a process periodically? Fortunately, Slackware includes just the thing, `crond` (8). cron runs processes for every user on the schedule that user demands. This makes it very useful for processes that need to be run periodically, but don't require full daemonization, such as backup scripts. Every user gets their own entry in the cron database, so non-root users can periodically run processes too.
+So far, we've learned many different ways of viewing active processes on our system and methods for signaling them, but what if we want to run a process periodically on an automated schedule? Fortunately, Slackware includes just the tool for the job: `crond`. `cron` runs processes for every user on a schedule specified by that user. This makes it extremely useful for tasks that need to run periodically without requiring a dedicated daemon, such as automated backup scripts. Every user gets their own entry in the `cron` database, allowing non-root users to schedule their own background tasks as well.
 
-In order to run programs from cron, you'll need to use the `crontab` (1). The man page lists a variety of ways to do this, but the most common method is to pass the `-e` argument. This will lock the user's entry in the cron database (to prevent it from being overwritten by another program), then open that entry with whatever text editor is specified by the VISUAL environment variable. On Slackware systems, this is typically the `vi` editor. You may need to refer to the chapter on `vi` before continuing.
+In order to manage scheduled tasks, you will need to use the `crontab` utility. The man page lists a variety of options, but the most common method is using the `-e` argument. This locks the user's entry in the `cron` database (preventing concurrent modifications) and opens it in the text editor specified by the `VISUAL` or `EDITOR` environment variable. On Slackware systems, this defaults to the `vi` editor. You may wish to review the chapter on `vi` before proceeding.
 
-The cron database entries may seem a little archaic at first, but they are highly flexible. Each uncommented line is processed by `crond` and the command specified is run if all the time conditions match.
+The `cron` database entries may seem a bit archaic at first glance, but they are remarkably flexible. Each uncommented line is processed by `crond`, and the specified command is executed whenever all time conditions match.
 
 ```text
-
 darkstar:~$ crontab -e 
 #Keep current with slackware 
 30 02 * * * /usr/local/bin/rsync-slackware64.sh 1>/dev/null 2>&1
 
 ```
 
-As mentioned before, the syntax for cron entries is a little difficult to understand at first, so let's look at each part individually. From left to right, the different sections are: Minute, Hour, Day, Month, Week Day, and Command. Any asterisk <kbd>*</kbd> entry matches every minute, hour, day, and so on. So from the example above, the command is "/usr/local/bin/rsync-slackware64.sh 1>/dev/null 2>&1", and it runs every weekday or every week of every month at 2:30 a.m.
+As mentioned before, the syntax for `cron` entries can be a little difficult to understand at first, so let's break down each part individually. From left to right, the five time fields are: **Minute**, **Hour**, **Day of Month**, **Month**, and **Day of Week**, followed by the **Command** to execute.
 
-`crond` will also e-mail the local user with any output the command generates. For this reason, many tasks have their output redirected to `/dev/null` , a special device file that immediately discards everything it receives. In order to make it easier for you to remember these rules, you might wish to paste the following commented text at the top of your own cron entries.
+An asterisk (`*`) acts as a wildcard, matching every possible value for that field (e.g., every minute, every hour, or every day).
+
+In the previous example (`30 02 * * * /usr/local/bin/rsync-slackware64.sh 1>/dev/null 2>&1`):
+* **Minute (`30`)**: At minute 30
+* **Hour (`02`)**: At 2:00 AM
+* **Day of Month (`*`)**: Every day of the month
+* **Month (`*`)**: Every month
+* **Day of Week (`*`)**: Every day of the week
+
+Therefore, the command `/usr/local/bin/rsync-slackware64.sh 1>/dev/null 2>&1` runs **every day at 2:30 a.m.**
+
+
+`crond` will also email the local user with any standard output or error generated by a executed command. For this reason, many tasks have their output redirected to `/dev/null`, a special character device file that immediately discards any data written to it.
+
+To make it easier to remember the syntax rules and output redirection, you can paste the following commented template at the top of your own `crontab` file:
 
 ```text
-
-#Redirect everything to /dev/null with: 
-#1>/dev/null 2>&1 
-# 
-#MIN HOUR DAY MONTH WEEKDAY COMMAND
-
+# MIN HOUR DAY MONTH WEEKDAY COMMAND
+# Redirect output to /dev/null: 1>/dev/null 2>&1
 ```
 
-By default, Slackware includes a number of entries and comments in root's crontab. These entries make it easier to setup periodic system tasks by creating a number of directories in `/etc` corresponding to how often the tasks should run. Any script placed within these directories will be run hourly, daily, weekly, or monthly. The names should be self-explanatory: `/etc/cron.hourly` , `/etc/cron.daily` , `/etc/cron.weekly` , and `/etc/cron.monthly` .
+By default, Slackware includes a number of pre-configured entries and comments in `root`'s `crontab`. These entries make it easier to set up periodic system maintenance by utilizing dedicated directories in `/etc` corresponding to execution frequencies. Any executable script placed within these directories will automatically run on that schedule.
+
+The directory names are self-explanatory:
+* `/etc/cron.hourly` — Executed once every hour
+* `/etc/cron.daily` — Executed once every day
+* `/etc/cron.weekly` — Executed once every week
+* `/etc/cron.monthly` — Executed once every month
