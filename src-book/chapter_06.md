@@ -1,10 +1,14 @@
 # 6. Process Control
 
-Slackware systems often run hundreds or thousands of programs, each of which is referred to as a process. Managing these processes is an important part of system administration. So how exactly do we handle all of these seperate processes?
+Slackware systems often run hundreds or thousands of programs, each of which is referred to as a process in a Linux environment. Managing these processes is an important part of system administration.
+
+So how exactly do we handle all of these separate processes? To help us with this task, there are several utilities we can use. In this chapter, we will explore some of the most common ones.
+
 
 ## 6.1 ps
 
-The first step in managing processes is figuring out what processes are currently running. The most popular and powerful tool for this is `ps` (1). Without any arguments, `ps` won't tell you much information. By default, it only tells you what processes are running in your currently active shell. If we want more information, we'll need to look deeper.
+The first step in managing processes is figuring out what processes are currently running. The most popular and powerful tool for this is `ps`. Without any arguments, `ps` won't tell you much information. By default, it only tells you what processes are running in your currently active shell. If we want more information, we'll need to look deeper.
+
 
 ```text
 
@@ -17,22 +21,33 @@ darkstar:~$ ps
 
 Here you can see what processes you are running in your currently active shell or terminal and only some information is included. The PID is the "Process ID"; every process is assigned a unique number. The TTY tells you what terminal device the process is attached to. Naturally, CMD is the command that was run. You might be a little confused by TIME though, since it seems to move so slowly. This isn't the amount of real time the process has been running, but rather the amount of CPU time the process has consumed. An idle process uses virtually no CPU time, so this value may not increase quickly.
 
+Here, you can see what processes you are running in your currently active shell or terminal, with only basic information included. The PID is the "Process ID" — every process is assigned a unique number. The TTY tells you what terminal device the process is attached to. Naturally, CMD is the command that was run. You might be a little confused by TIME, though, since it seems to move so slowly. This isn't the amount of real time the process has been running, but rather the amount of CPU time the process has consumed. An idle process uses virtually no CPU time, so this value may not increase quickly.
+
+
 Viewing only our own processes isn't very much fun, so let's take a look at all the processes on the system with the `-e` argument.
 
 ```text
 
 darkstar:~$ ps -e 
 PID TTY         TIME     CMD 
-  1 ?           00:00:00 init 
-  2 ?           00:00:00 kthreadd 
-  3 ?           00:00:00 migration/0 
-  4 ?           00:00:00 ksoftirqd/0 
-  7 ?           00:00:11 events/0 
-  9 ?           00:00:01 work_on_cpu/0 
- 11 ?           00:00:00 khelper 
-102 ?           00:00:02 kblockd/0 
-105 ?           00:01:19 kacpid 
-106 ?           00:00:01 kacpi_notify 
+  1 ?        00:00:00 init 
+  2 ?        00:00:00 kthreadd 
+  3 ?        00:00:00 pool_workqueue_release
+  4 ?        00:00:00 kworker/R-rcu_gp
+  5 ?        00:00:00 kworker/R-sync_wq
+  6 ?        00:00:00 kworker/R-kvfree_rcu_reclaim
+  7 ?        00:00:00 kworker/R-slub_flushwq
+  8 ?        00:00:00 kworker/R-netns
+ 10 ?        00:00:00 kworker/0:0H-kblockd
+ 11 ?        00:00:00 kworker/0:1-events
+ 12 ?        00:00:01 kworker/u64:0-gfx
+ 13 ?        00:00:00 kworker/R-mm_percpu_wq
+ 14 ?        00:00:00 ksoftirqd/0
+ 15 ?        00:00:01 rcu_preempt
+ 16 ?        00:00:00 rcu_exp_par_gp_kthread_worker/0
+ 17 ?        00:00:00 rcu_exp_gp_kthread_worker
+ 18 ?        00:00:00 migration/0
+ 19 ?        00:00:00 kprobe-optimizer
 ... many more lines omitted ...
 
 ```
@@ -41,100 +56,136 @@ PID TTY         TIME     CMD
 
 The above example uses the standard `ps` syntax, but much more information can be discovered if we use BSD syntax. In order to do so, we must use the `aux` argument.
 
-This is distinct from the `-aux` argument, but in most cases the two arguments are equivilant. This is a decades-old relic. For more information, see the man page for `ps` .
+This is distinct from the `-aux` argument, but in most cases the two arguments are equivalent. This is a decades-old relic. For more information, see the man page for `ps`.
 
 ```text
 
 darkstar:~$ ps aux 
 USER    PID     %CPU    %MEM    VSZ     RSS TTY STAT START TIME COMMAND 
-root      1     0.0     0.0     3928    632 ?   Ss   Apr05 0:00 init [3] 
-root      2     0.0     0.0     0       0 ?     S    Apr05 0:00 [kthreadd] 
-root      3     0.0     0.0     0       0 ?     S    Apr05 0:00 [migration/0] 
-root      4     0.0     0.0     0       0 ?     S    Apr05 0:00 [ksoftirqd/0] 
-root      7     0.0     0.0     0       0 ?     S    Apr05 0:11 [events/0] 
-root      9     0.0     0.0     0       0 ?     S    Apr05 0:01 [work_on_cpu/0] 
-root     11     0.0     0.0     0       0 ?     S    Apr05 0:00 [khelper] 
+root      1     0.0     0.0     3928    632 ?   Ss   15:45 0:00 init [4] 
+root      2     0.0     0.0        0      0 ?   S    15:45 0:00 [kthreadd]
+root      3     0.0     0.0        0      0 ?   S    15:45 0:00 [pool_workqueue_release]
+root      4     0.0     0.0        0      0 ?   I<   15:45 0:00 [kworker/R-rcu_gp]
+root      5     0.0     0.0        0      0 ?   I<   15:45 0:00 [kworker/R-sync_wq]
+root      6     0.0     0.0        0      0 ?   I<   15:45 0:00 [kworker/R-kvfree_rcu_reclaim]
+root      7     0.0     0.0        0      0 ?   I<   15:45 0:00 [kworker/R-slub_flushwq]
+root      8     0.0     0.0        0      0 ?   I<   15:45 0:00 [kworker/R-netns]
+root     10     0.0     0.0        0      0 ?   I<   15:45 0:00 [kworker/0:0H-kblockd]
+root     11     0.0     0.0        0      0 ?   I    15:45 0:00 [kworker/0:1-events]
+root     12     0.1     0.0        0      0 ?   I    15:45 0:01 [kworker/u64:0-gfx]
+root     13     0.0     0.0        0      0 ?   I<   15:45 0:00 [kworker/R-mm_percpu_wq]
+root     14     0.0     0.0        0      0 ?   S    15:45 0:00 [ksoftirqd/0]
+root     15     0.1     0.0        0      0 ?   I    15:45 0:01 [rcu_preempt]
 ... many more lines omitted ....
 
 ```
 
-As you can see, BSD syntax offers much more information, including what user controls the process and what percentage of RAM and CPU the process is consuming when `ps` is run.
+As you can see, the `aux` argument offers much more information, including which user controls the process and what percentage of CPU and RAM the process is consuming when `ps` is run.
 
-To accomplish bits of this, on a per process basis, `ps` allows one or more process IDs (PIDs) to be provided in the command line, and has the '-o' flag to show a particular attribute of the PID.
+To accomplish this on a per-process basis, `ps` allows one or more process IDs (PIDs) to be provided on the command line and features the `-o` flag to display specific attributes of a PID.
 
-```text
-
-darkstar:~$ ps -o cmd -o etime $$ 
-CMD         ELAPSED 
-/bin/bash   12:22
-
-```
-
-What this is displaying, is the PID's command name (cmd), and its elapsed time (etime). The PID in this example, is a shell variable for the PID of the current shell. So you can see, in this example, the shell process has existed for 12 minutes, 22 seconds.
-
-Using the `pgrep` (1) command, this can get more automatable.
 
 ```text
-
-darkstar:~$ ps -o cmd -o rss -o vsz $(pgrep httpd) 
-CMD                          RSS   VSZ 
-/usr/sbin/httpd -k restart 33456 84816 
-/usr/sbin/httpd -k restart 33460 84716 
-/usr/sbin/httpd -k restart 33588 84472 
-/usr/sbin/httpd -k restart 30424 81608 
-/usr/sbin/httpd -k restart 33104 84900 
-/usr/sbin/httpd -k restart 33268 85112 
-/usr/sbin/httpd -k restart 30640 82724 
-/usr/sbin/httpd -k restart 15168 67396 
-/usr/sbin/httpd -k restart 33180 84416 
-/usr/sbin/httpd -k restart 33396 84592 
-/usr/sbin/httpd -k restart 32804 84232
-
+darkstar:~$ ps -o cmd -o etime
+CMD                             ELAPSED
+/bin/bash                         09:21
+fish                              09:21
+ps -o cmd -o etime                00:00
 ```
 
-In this example, a subshell execution, using `pgrep` , is returning the PIDs of any process, whose command name includes 'httpd'. Then `ps` displaying the command name, resident memory size, and virtual memory size.
+What this is displaying, is the PID's command name (cmd), and its elapsed time (etime). The PID in this example, is a shell variable for the PID of the current shell. So you can see, in this example, the shell process has existed for 9 minutes, 21 seconds.
+
+By combining `ps` with the `pgrep` command, this process can be easily automated:
+
+```text
+darkstar:~$  ps -o cmd -o rss -o vsz $(pgrep chrome)
+CMD                           RSS    VSZ
+/opt/google/chrome/chrome   516976 51688644
+/opt/google/chrome/chrome_c  4396 50355400
+/opt/google/chrome/chrome_c  3812 50346164
+/opt/google/chrome/chrome - 65816 50774672
+/opt/google/chrome/chrome - 66164 50774660
+/opt/google/chrome/chrome - 19420 50774688
+/opt/google/chrome/chrome - 196028 51243208
+/opt/google/chrome/chrome - 153324 50886676
+/opt/google/chrome/chrome - 57752 50858720
+/opt/google/chrome/chrome - 158208 1518473728
+/opt/google/chrome/chrome - 353032 1524425320
+/opt/google/chrome/chrome - 512404 1518545988
+/opt/google/chrome/chrome - 289524 1518470868
+/opt/google/chrome/chrome - 94932 50848384
+/opt/google/chrome/chrome - 122228 1518466812
+/opt/google/chrome/chrome - 165912 1518475280
+/opt/google/chrome/chrome - 198144 1518534900
+/opt/google/chrome/chrome - 53908 67618392
+/opt/google/chrome/chrome - 418120 1518642108
+/opt/google/chrome/chrome - 112568 1518360188
+/opt/google/chrome/chrome - 126632 1520336712
+/opt/google/chrome/chrome - 136956 1518380384
+/opt/google/chrome/chrome - 77984 1518350972
+
+
+```
+In this example, command substitution using $(pgrep chrome) returns the PIDs of all running processes whose command names match 'chrome'. ps then displays each process's command name (cmd), resident set size (rss), and virtual memory size (vsz).
+
 
 Finally, `ps` can also create a process tree. This shows you which processes have children processes. Ending the parent of a child process also ends the child. We do this with the `-ejH` argument.
+
+
 
 ```text
 
 darkstar:~$ ps -ejH 
 ... many lines omitted ... 
- 3660  3660 3660 tty1 00:00:00 bash 
-29947 29947 3660 tty1 00:00:00  startx 
-29963 29947 3660 tty1 00:00:00   xinit 
-29964 29964 29964 tty7 00:27:11   X 
-29972 29972 3660 tty1 00:00:00    sh 
-29977 29972 3660 tty1 00:00:05     xscreensaver 
-29988 29972 3660 tty1 00:00:04     xfce4-session 
-29997 29972 3660 tty1 00:00:16      xfwm4 
-29999 29972 3660 tty1 00:00:02      Thunar 
+3091  3091  3091 ?        00:00:00   login
+3111  3111  3111 tty2     00:00:00     bash
+3130  3130  3111 tty2     00:00:00       sddm.bin
+3135  3135  3135 tty7     00:00:00         Xorg
+3175  3130  3111 tty2     00:00:00         sddm-helper
+3176  3130  3111 tty2     00:00:01           sddm-greeter-qt
+3182  3130  3111 tty2     00:00:00   dbus-launch
+3183  3183  3183 ?        00:00:00   dbus-daemon
+3239  3239  3239 ?        00:00:00   sddm.bin
+3244  3244  3244 tty8     00:00:55     Xorg
+3327  3239  3239 ?        00:00:00     sddm-helper
+3343  3239  3239 ?        00:00:00       dbus-run-sessio
+3365  3239  3239 ?        00:00:01         dbus-daemon
+3366  3239  3239 ?        00:00:00         startplasma-x11
+3373  3239  3239 ?        00:00:00           plasma_session
+3423  3239  3239 ?        00:00:01             kded6
 ... many more lines omitted ...
 
 ```
 
-As you can see, `ps` (1) is an incredibly powerful tool for determining not only what processes are currently active on your system, but also for learning lots of important information about them.
+As you can see, `ps` is an incredibly powerful tool for determining not only what processes are currently active on your system, but also for learning lots of important information about them.
 
-As is the case with many of the applications, there is often several tools for the job. Similar to the `ps -ejH` output, but more terse, is `pstree` (1). It displays the process tree, a bit more visually.
+As is the case with many of the applications, there is often several tools for the job. Similar to the `ps -ejH` output, but more terse, is `pstree`. It displays the process tree, a bit more visually.
 
 ```text
-
 darkstar:~$ pstree 
-init-+-atd 
-|-crond 
-|-dbus-daemon 
-|-httpd---10*[httpd] 
-|-inetd 
-|-klogd 
-|-mysqld_safe---mysqld---8*[{mysqld}] 
-|-screen-+-4*[bash] 
-|        |-bash---pstree 
-|        |-2*[bash---ssh] 
-|        `-bash---irssi 
-|-2*[sendmail] 
-|-ssh-agent 
-|-sshd---sshd---sshd---bash---screen 
-`-syslogd
+init─┬─ModemManager───3*[{ModemManager}]
+     ├─NetworkManager─┬─dhcpcd─┬─dhcpcd───2*[dhcpcd]
+     │                │        └─dhcpcd
+     │                └─3*[{NetworkManager}]
+     ├─acpid
+     ├─4*[agetty]
+     ├─akonadi_contact───2*[{akonadi_contact}]
+     ├─akonadi_control─┬─akonadi_archive───4*[{akonadi_archive}]
+     │                 ├─akonadi_contact───2*[{akonadi_contact}]
+     │                 ├─akonadi_followu───3*[{akonadi_followu}]
+     │                 ├─akonadi_indexin───2*[{akonadi_indexin}]
+     │                 ├─akonadi_maildir───2*[{akonadi_maildir}]
+     │                 ├─akonadi_maildis───3*[{akonadi_maildis}]
+     │                 ├─akonadi_mailfil───4*[{akonadi_mailfil}]
+     │                 ├─akonadi_mailmer───3*[{akonadi_mailmer}]
+     │                 ├─akonadi_migrati───3*[{akonadi_migrati}]
+     │                 ├─akonadi_newmail───3*[{akonadi_newmail}]
+     │                 ├─akonadi_sendlat───3*[{akonadi_sendlat}]
+     │                 ├─akonadi_unified───3*[{akonadi_unified}]
+     │                 ├─akonadiserver─┬─mysqld───14*[{mysqld}]
+     │                 │               └─26*[{akonadiserver}]
+     │                 └─2*[{akonadi_control}]
+... many more lines omitted ...
 
 ```
 
@@ -208,7 +259,13 @@ Swap:        0k total,        0k used,        0k free,  2082652k cached
 
 The man page has helpful details on how to interact with `top` such as changing its delay interval, the order processes are displayed, and even how to terminate processes right from within `top` itself.
 
-## 6.4 cron
+
+## 6.4 htop
+
+## 6.5 btop
+
+
+## 6.6 cron
 
 Ok, so we've learned many different ways of viewing the active processes on our system and means of signalling them, but what if we want to run a process periodically? Fortunately, Slackware includes just the thing, `crond` (8). cron runs processes for every user on the schedule that user demands. This makes it very useful for processes that need to be run periodically, but don't require full daemonization, such as backup scripts. Every user gets their own entry in the cron database, so non-root users can periodically run processes too.
 
