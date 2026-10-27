@@ -296,3 +296,52 @@ The directory names are self-explanatory:
 * `/etc/cron.daily` — Executed once every day
 * `/etc/cron.weekly` — Executed once every week
 * `/etc/cron.monthly` — Executed once every month
+
+
+## 6.7 at
+
+Similar to `cron`, the `at` utility allows you to schedule tasks for automatic execution, but with a key difference: while `cron` is designed for recurring, periodic jobs, `at` executes a scheduled task **only once** at a specified future time.
+
+To schedule a task, you specify the time as an argument. You can either enter commands interactively (pressing <kbd>Ctrl</kbd>+<kbd>d</kbd> when finished) or specify a script file directly using the `-f` option.
+
+Following the previous update script example, to schedule a single execution at 10:35 AM:
+
+```bash
+darkstar:~$ at 10:35 -f /usr/local/bin/rsync-slackware64.sh
+warning: commands will be executed using /bin/sh
+job 1 at Wed Oct 29 10:35:00 2026
+```
+
+To schedule a task for 10:35 PM, you can specify:
+
+```bash
+darkstar:~$ at 10:35PM -f /usr/local/bin/rsync-slackware64.sh
+warning: commands will be executed using /bin/sh
+job 1 at Wed Oct 29 22:35:00 2026
+```
+
+To view currently scheduled jobs, use the -l option:
+
+```bash
+darkstar:~$ at -l
+2       Tue Oct 29 22:45:00 2026 a brusso
+1       Wed Oct 28 10:45:00 2026 a brusso
+```
+
+> Note: An alternative to `at -l` is the standalone `atq` command.
+
+
+To remove a scheduled job, pass its job number using the -r option (or use the equivalent atrm command):
+
+```bash
+darkstar:~$ at -r 1
+2       Tue Oct 29 22:45:00 2026 a brusso
+1       Wed Oct 28 10:45:00 2026 a brusso
+
+
+darkstar:~$ at -l
+2       Tue Oct 29 22:45:00 2026 a brusso
+```
+
+
+Another useful feature of at is its flexible time specification syntax—it supports natural expressions such as now + 3 hours, noon, or tomorrow. Consult the man page for at for full details on supported time formats and interaction options.
