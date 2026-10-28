@@ -317,7 +317,7 @@ To schedule a task for 10:35 PM, you can specify:
 ```bash
 darkstar:~$ at 10:35PM -f /usr/local/bin/rsync-slackware64.sh
 warning: commands will be executed using /bin/sh
-job 1 at Wed Oct 29 22:35:00 2026
+job 2 at Wed Oct 29 22:35:00 2026
 ```
 
 To view currently scheduled jobs, use the -l option:
@@ -332,6 +332,7 @@ darkstar:~$ at -l
 
 
 To remove a scheduled job, pass its job number using the -r option (or use the equivalent atrm command):
+
 
 ```bash
 darkstar:~$ at -r 1
