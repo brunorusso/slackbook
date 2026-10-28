@@ -19,7 +19,7 @@
  - [ ] Check if chapter 9 need improve
  - [ ] Check if chapter 10 need improve
  - [ ] Check if chapter 11 need improve
- - [ ] Check if chapter 12 need improve
+ - [ ] Check if chapter 12 need improve (in progress)
  - [ ] Check if chapter 13 need improve. Is it necessary?
  - [ ] Update chapter 14. Network
  - [ ] Update chapter 15. Wireless Network
