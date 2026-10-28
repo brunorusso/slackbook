@@ -24,7 +24,7 @@
  - [ ] Update chapter 14. Network
  - [ ] Update chapter 15. Wireless Network
  - [ ] Check if chapter 16 need improve
- - [ ] Check if chapter 17 need improve. Necessary add information about how use slackbuilds.org
+ - [ ] Check if chapter 17 need improve.
  - [ ] Check if chapter 18 need improve
  - [ ] Check if chapter 19 need improve
  - [ ] New chapter about: liveslack
@@ -33,6 +33,7 @@
  - [ ] New chapter about: bluetooth
  - [ ] New chapter about: udev
  - [ ] New chapter about: Install on ARM archtecture
+ - [ ] New Chapter about: slackbuilds.org and Third-party repositories
 
 
 # Instructions
