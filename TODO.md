@@ -13,7 +13,7 @@
  - [ ] Update chapter 3. Booting add information about nvme
  - [ ] Check if chapter 4 need improve (in progress)
  - [ ] Check if chapter 5 need improve (in progress)
- - [ ] Check if chapter 6 need improve
+ - [X] Check if chapter 6 need improve
  - [ ] Update chapter 7 X windows has any updates like wayland
  - [ ] Check if chapter 8 need improve
  - [ ] Check if chapter 9 need improve

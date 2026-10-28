@@ -1,3 +1,5 @@
+2026-10-27
+- Chapter-06 update, by brunorusso
 2026-10-23
 - Chapter01 update, by brunorusso
 - Migrate to GitHub
