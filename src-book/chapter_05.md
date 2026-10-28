@@ -85,132 +85,171 @@ lib/  lib64/  libexec/  local/
 ```
 
 
---## 5.4 Wildcards
+## 5.4 Wildcards
 
-Wildcards are special characters that tell the shell to match certain criteria. If you have experience with DOS, you'll recognize * as a wildcard that matches anything. `bash` makes use of this wildcard and several others to enable you to easily define exactly what you want to do.
+Wildcards are special characters that allow you to match files and directories based on patterns. If you have experience with DOS/CMD, you will recognize `*` as a wildcard that matches anything. `bash` makes extensive use of wildcards to simplify file management.
 
-This first and most common of these is, of course, *. The asterisk matches any character or combination of characters, including none. Thus `b*` would match any files named b, ba, bab, babc, bcdb, and so forth. Slightly less common is the ?. This wildcard matches one instance of any character, so `b?` would match ba and bb, but not b or bab.
+The first and most common wildcard is the asterisk (`*`). It matches any sequence of characters, including an empty string. For example, `b*` matches any filename starting with the letter "b" (such as `b`, `ba`, `bab`, or `bcdb`).
 
-```text
+Slightly less common is the question mark (`?`). It matches exactly one instance of any single character. Thus, `b?` matches `ba` and `bb`, but will not match `b` or `bab`.
 
+
+```bash
 darkstar:~$ touch b ba bab 
 darkstar:~$ ls * 
 b ba bab 
 darkstar:~$ ls b? 
 ba
-
 ```
 
-No, the fun doesn't stop there! In addition to these two we also have the bracket pair "[ ]" which allows us to fine tune exactly what we want to match. Whenever `bash` see the bracket pair, it substitutes the contents of the bracket. Any combination of letters or numbers may be specified in the bracket as long as they are comma seperated. Additionally, ranges of numbers and letters may be specified as well. This is probably best shown by example.
+The fun doesn't stop there! bash also supports square brackets ([ ]), which allow you to specify exact sets or ranges of characters to match at a single position. Unlike shell brace expansion, characters inside brackets are not separated by commas.
 
-```text
+You can list individual characters inside the brackets (e.g., [ab]) or specify ranges of letters and numbers using a hyphen (e.g., [a-z] or [0-9]):
 
+
+```bash
+darkstar:~$ touch a1 a2 a3 a4 a5 a6 a7 a8 a9 10
 darkstar:~$ ls a[1-4,9] 
 a1 a2 a3 a4 a9
-
 ```
 
-Since Linux is case-sensitive, capital and lower-case letters are treated differently. All capital letters come before all lower-case letters in "alphabetical" order, so when using ranges of capital and lower-case letters, make sure to get them right.
+Because Linux and ASCII collation are case-sensitive, uppercase and lowercase letters are treated as distinct characters. In standard ASCII ordering, all uppercase letters (A–Z) come before lowercase letters (a–z). Therefore, when specifying ranges that span both uppercase and lowercase letters, you must list the character with the lower ASCII value first.
 
-```text
+For example, `[W-b]` is a valid range (matching W, X, Y, Z, a, and b), whereas `[w-B]` is invalid because w comes after B in ASCII order:
 
+
+```bash
 darkstar:~$ ls 1[W-b] 
 1W 1X 1Y 1Z 1a 1b 
 darkstar:~$ ls 1[w-B] 
 /bin/ls: cannot access 1[b-W]: No such file or directory
-
 ```
 
-In the second example, 1[b-W] isn't a valid range, so the shell treats it as a filename, and since that file doesn't exist, `ls` tells you so.
+In the second example, because `[w-B]` is an invalid range (since w has a higher ASCII value than B), bash fails to expand the wildcard pattern and treats `1[w-B]` as a literal filename. Since no file with that exact name exists, ls returns an error.
 
 
---## 5.5 Input and Output Redirection
 
-One of the defining features of Linux and other UNIX-like operating systems is the number of small, relatively simple applications and the ability to stack them together to create complex systems. This is achieved by redirecting the output of one program to another, or by drawing input from a file or second program.
+## 5.5 Input and Output Redirection
 
-To get started, we're going to show you how to redirect the output of a program to a file. This is easily done with the '>' character. When `bash` sees the '>' character, it redirects all of the standard output (also known as stdout) to whatever file name follows.
+One of the defining features of Linux and UNIX-like operating systems is the availability of many small, specialized applications and the ability to chain them together to build complex systems. This modularity is achieved by redirecting the output of one program to a file or another program, or by drawing input from an external file or stream.
 
-```text
+By default, every command in `bash` interacts with three standard data channels known as **file descriptors**:
+* **`0` (stdin)** — Standard Input (keyboard input by default)
+* **`1` (stdout)** — Standard Output (terminal display by default)
+* **`2` (stderr)** — Standard Error (error messages displayed on screen)
 
+
+**Redirecting Standard Output (`>` and `>>`)**
+
+```bash
 darkstar:~$ echo foo 
 foo 
 darkstar:~$ echo foo > /tmp/bar 
 darkstar:~$ cat /tmp/bar 
 foo
-
 ```
 
-In this example, we show you what `echo` would do if its stdout was not redirected to a file, then we re-direct it to the `/tmp/bar` file. If `/tmp/bar` does not exist, it is created and the output from `echo` is placed within it. If `/tmp/bar` did exist, then its contents are over-written. This might not be the best idea if you want to keep those contents in place. Thankfully, `bash` supports '>>' which will append the output to the file.
+If you want to preserve existing content and append new lines to the end of the file instead, use the `>>` operator:
 
-```text
 
-darkstar:~$ echo foo 
-foo 
-darkstar:~$ echo foo > /tmp/bar 
-darkstar:~$ cat /tmp/bar 
-foo 
+```bash
 darkstar:~$ echo foo2 >> /tmp/bar 
 darkstar:~$ cat /tmp/bar 
 foo 
 foo2
-
 ```
 
-You can also re-direct the standard error (or stderr) to a file. This is slightly different in that you must use '2>' instead of just '>'. (Since `bash` can re-direct input, stdout, and stderr, each must be uniquely identifiable. 0 is input, 1 is stdout, and 2 is stderr. Unless one of these is specified, `bash` will make its best guess as to what you actually meant, and assumed anytime you use '>' you only want to redirect stdout. 1> would have worked just as well.)
+**Redirecting Standard Error (2>)**
 
-```text
+Error messages are sent to standard error (stderr) rather than standard output (stdout). To redirect error messages to a file, specify file descriptor `2` before the redirection symbol (`2>`):
 
+
+```bash
 darkstar:~$ rm bar 
-rm: cannot remove `bar': No such file or directory 
-darkstar:~$ rm bar 2> /tmp/foo 
-darkstar:~$ cat /tmp/foo 
-rm: cannot remove `bar': No such file or directory
+rm: cannot remove 'bar': No such file or directory 
 
+darkstar:~$ rm bar 2> /tmp/err.log 
+darkstar:~$ cat /tmp/err.log 
+rm: cannot remove 'bar': No such file or directory
 ```
 
-You may also redirect the standard input (known as stdin) with the '<' character, though it's not used very often.
+> Note: Since stdout is descriptor 1, 1> is functionally identical to >. You can also redirect both stdout and stderr into the same file using &> (or 2>&1).
 
-```text
 
-darkstar:~$ fromdos < dosfile
+**Redirecting Standard Input (<)**
 
+You can instruct a program to read its input directly from a file instead of waiting for keyboard input using the `<` operator:
+
+```bash
+darkstar:~$ fromdos < dosfile.txt
 ```
 
-Finally, you can actually redirect the output of one program as input to another. This is perhaps the most useful feature of `bash` and other shells, and is accomplished using the '|' character. (This character is referred to as 'pipe'. If you here some one talk of piping one program to another, this is exactly what they mean.)
+**Pipelines (|)**
 
-```text
+Perhaps the most powerful feature of `bash` is the pipe operator (`|`). A pipeline connects the standard output of one command directly into the standard input of another, enabling you to combine utilities seamlessly:
 
+
+```bash
 darkstar:~$ ps auxw | grep getty
-root      2632  0.0  0.0   1656   532 tty2     Ss+  Feb21   0:00 /sbin/agetty 38400 tty2 linux
-root      3199  0.0  0.0   1656   528 tty3     Ss+  Feb15   0:00 /sbin/agetty 38400 tty3 linux
-root      3200  0.0  0.0   1656   532 tty4     Ss+  Feb15   0:00 /sbin/agetty 38400 tty4 linux
-root      3201  0.0  0.0   1656   532 tty5     Ss+  Feb15   0:00 /sbin/agetty 38400 tty5 linux
-root      3202  0.0  0.0   1660   536 tty6     Ss+  Feb15   0:00 /sbin/agetty 38400 tty6 linux
-
+root      1500  0.0  0.0   5616  3288 tty1     Ss+  out27   0:00 /sbin/agetty --noclear 38400 tty1 linux
+root      1501  0.0  0.0   5616  3308 tty2     Ss+  out27   0:00 /sbin/agetty 38400 tty2 linux
+root      1502  0.0  0.0   5616  3308 tty3     Ss+  out27   0:00 /sbin/agetty 38400 tty3 linux
+root      1503  0.0  0.0   5616  3380 tty4     Ss+  out27   0:00 /sbin/agetty 38400 tty4 linux
+root      1504  0.0  0.0   5616  3312 tty5     Ss+  out27   0:00 /sbin/agetty 38400 tty5 linux
+root      1505  0.0  0.0   5616  3464 tty6     Ss+  out27   0:00 /sbin/agetty 38400 tty6 linux
 ```
 
---## 5.6 Task Management
+In this example, `ps aux` lists all running processes on the system, and the pipe passes that text output directly to `grep getty`, which filters and displays only the lines matching "getty".
 
-`bash` has yet another cool feature to offer, the ability to suspend and resume tasks. This allows you to temporarily halt a running process, perform some other task, then resume it or optionally make it run in the background. Upon pressing <kbd>CTRL-Z</kbd> , `bash` will suspend the running process and return you to a prompt. You can return to that process later. Additionally, you can suspend multiple processes in this way indefinitely. The `jobs` built-in command will display a list of suspended tasks.
 
-```text
+## 5.6 Task Management
 
+`bash` provides robust task management features, allowing you to suspend, resume, and manage multiple running programs from a single terminal session. This enables you to temporarily pause a process, return to the shell prompt to perform other work, and resume the paused task later—either in the foreground or in the background.
+
+
+Suspending Tasks (<kbd>Ctrl</kbd>+<kbd>Z</kbd> and `jobs`)
+
+Pressing <kbd>Ctrl</kbd>+<kbd>Z</kbd> sends a signal to the active process, pausing it and returning you to the shell prompt. You can suspend multiple applications indefinitely.
+
+To view all currently suspended or backgrounded tasks, use the `jobs` built-in command:
+
+
+```bash
 darkstar:~$ jobs 
 [1]- Stopped vi TODO 
 [2]+ Stopped vi chapter_05.xml
+```
+
+In the output above:
+- The number in brackets (`[1]`, `[2]`) represents the Job ID.
+- The plus sign (`+`) indicates the current (most recently suspended) job.
+- The minus sign (`-`) indicates the previous job.
+
+
+**Foregrounding Tasks (fg)**
+
+To resume a suspended process in the foreground, use the `fg` command. Running `fg` without any arguments resumes the current job (marked with +). To bring a specific job back, pass its Job ID (e.g., `fg 1` or `fg %1`):
+
+```bash
+darkstar:~$ fg 
+# Resumes job [2] ("vi chapter_05.xml")
+
+darkstar:~$ fg 1 
+# Resumes job [1] ("vi TODO")
 
 ```
 
-In order to return to a suspended task, run the `fg` built-in to bring the the most recently suspended task back into the foreground. If you have mutiple suspended tasks, you can specify a number as well to bring one of them to the foreground.
+**Backgrounding Tasks (`bg` and `&`)**
 
-```text
+If you want a suspended command to continue executing in the background without taking over your terminal prompt (useful for long-running scripts, downloads, or compilations), use the `bg` command:
 
-darkstar:~$ fg # "vi TODO" 
-darkstar:~$ fg 1 # "vi chapter_05.xml"
-
+```bash
+darkstar:~\$ bg 1
+[1]+ vi TODO &
 ```
 
-You can also background a task with (surprize) `bg` . This will allow the process to continue running without maintaining control of your shell. You can bring it back to the foreground with `fg` in the same way as suspended tasks.
+> Tip: You can also launch a command directly in the background from the start by appending an ampersand (`&`) to the end of the command line (e.g., `command &`).
+
 
 
 ## 5.7 Terminals
