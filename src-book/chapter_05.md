@@ -262,61 +262,76 @@ On desktop and laptop workstations where a graphical interface (`X`) is running,
 
 
 
---## 5.8 Customization
+## 5.8 Customization
 
-By now you should be pretty familiar with `bash` and you may have even noticed some odd behavior. For example, when you login at the console, you're presented with a prompt that looks a bit like this.
 
-```text
+By now, you should be fairly familiar with `bash`, and you may have even noticed some seemingly odd behavior. For example, when you log in at a text console, you are presented with a prompt that looks like this:
 
-alan@darkstar:~$
-
+```bash
+brusso@darkstar:~$
 ```
 
-However, sometimes you'll see a much less helpful prompt like this one.
+However, inside certain terminal windows, you might see a much less informative prompt:
 
-```text
-
+```bash
 bash-3.1$
-
 ```
 
-The cause here is a special environment variable that controls the `bash` prompt. Some shells are considered "login" shells and others are "interactive" shells, and both types read different configuration files when started. Login shells read `/etc/profile` and `~/.bash_profile` when executed. Interactive shells read `~/.bashrc` instead. This has some advantages for power users, but is a common annoyance for many new users who want the same environment anytime they execute `bash` and don't care about the difference between login and interactive shells. If this applies to you, simply edit your own ~/.bashrc file and include the following lines. (For more information on the different configuration files used, read the INVOCATION section of the `bash` man page.)
+This variation occurs because different types of shell sessions read different configuration files upon startup:
 
-```text
+- **Login Shells**: Executed when you log into the system (e.g., at the console prompt or via SSH). A login shell reads `/etc/profile` first for global settings, followed by the user's `~/.bash_profile`.
+- **Interactive Non-Login Shells**: Launched when you open a terminal window inside a graphical desktop environment. An interactive shell reads `~/.bashrc` instead.
 
+
+
+This distinction allows power users to fine-tune environment behavior, but it can confuse new users who want a consistent environment everywhere. To unify your settings, you can edit your `~/.bashrc` file to automatically source your login profile:
+
+
+```bash
 #~/.bashrc 
 . /etc/profile 
 . ~/.bash_profile
-
 ```
 
-When using the above, all your login and interactive shells will have the same environment settings and behave identically. Now, anytime we wish to customize a shell setting, we only have to edit `~/.bash_profile` for user-specific changes and `/etc/profile` for global settings. Let's start by configuring the prompt.
+With this configuration in place, both login and interactive shells will share identical settings. From then on, you only need to edit `~/.bash_profile` for personal shell customizations and `/etc/profile` for system-wide changes.
 
-`bash` prompts come in all shapes, colors, and sizes, and every user has their own preferances. Personally, I prefer short and simple prompts that take up a minimum of space, but I've seen and used mutli-line prompts many times. One personal friend of mine even included ASCII-art in his bash prompt. To change your prompt you need only to change your PS1 variable. By default, Slackware attempts to configure your PS1 variable thusly:
 
-```text
 
+**Configuring the Prompt (PS1)**
+
+The appearance of your `bash` prompt is controlled by the `PS1` environment variable. By default, Slackware defines `PS1` as follows:
+
+```bash
 darkstar:~$ echo $PS1 
 \u@\h:\w\$
-
 ```
 
-Yes, this tiny piece of funny-looking figures controls your `bash` prompt. Basicaly, every character in the PS1 variable is included in the prompt, unless it is a escaped by a <kbd>\</kbd> , which tells `bash` to interpret it. There are many different escape sequences and we can't discuss them all, but I'll explain these. The first "\u" translates to the username of the current user. "\h" is the hostname of the machine the terminal is attached to. "\w" is the current working directory, and "\$" displays either a <kbd>#</kbd> or a <kbd>$</kbd> sign, depending on whether or not the current user is root. A complete listing of all prompt escape sequences is listed in the `bash` man page under the PROMPTING section.
+Every literal character in `PS1` is displayed as-is, while characters preceded by a backslash (`\`) are interpreted as special escape sequences:
 
-Since we've gone through all this trouble to discuss the default prompt, I thought I'd take some time to show you a couple example prompts and the PS1 variable values needed to use them.
+- **\u** — The current username
+- **\h** — The hostname up to the first dot
+- **\H** — The full hostname
+- **\w** — The current working directory (with $HOME abbreviated as ~)
+- **\$** — Displays # if the current user is root, or $ for a standard user
+- **\d** — The current date (e.g., "Wed Jan 14")
+- **\@** — The current time in 12-hour AM/PM format
+- **\n** — Inserts a newline
+- **\j** — The number of background jobs currently managed by the shell
+- **\l** — The basename of the shell's terminal device (e.g., 1 for tty1 or pts/0)
 
-```text
+Here are two examples of custom multi-line prompts and the `PS1` values used to create them:
 
-Wed Jan 14 12:08 AM 
-alan@raven:~$ echo $PS1 
-\d \@\n\u@\h:\w$ 
-HOST: raven - JOBS: 0 - TTY: 3 
-alan@~/Desktop/sb_3.0:$ echo $PS1 
-HOST: \H - JOBS: \j - TTY: \l\n\u@\w:\$
 
+```bash
+brusso@darkstar:~$ echo $PS1 
+\u@\h:\w\$
 ```
 
-For even more information on configuring your bash prompt, including information on setting up colored prompts, refer to `/usr/doc/Linux-HOWTOs/Bash-Prompt-HOWTO` . After reading that for a short while, you'll get an idea of just how powerful your `bash` prompts can be. I once even had a prompt that gave me up to date weather information such as temperature and barometric pressure!
-
+For comprehensive guidance on creating advanced prompt layouts—including adding ANSI color codes—refer to the documentation in `/usr/doc/Linux-HOWTOs/Bash-Prompt-HOWTO`.
 
 ## 5.9 Another words about Shell
+
+The shell is far more than a simple command-line interface—it is an indispensable Swiss Army knife for system administration. Throughout this chapter, we have seen how features like environment variables, wildcards, I/O redirection, pipelines, and job control transform routine terminal operations into powerful, streamlined workflows.
+
+Beyond executing standalone commands, the shell enables you to automate complex tasks, build customized system maintenance scripts, and manage your Slackware environment with total control. Mastering `bash` is one of the most rewarding investments you can make in your Linux journey. We strongly encourage you to keep exploring, writing your own shell scripts, and discovering new ways to elevate your productivity.
+
