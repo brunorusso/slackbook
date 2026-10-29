@@ -2,42 +2,84 @@
 
 ## 12.1 What is vi?
 
-Scattered all around your computer are thousands of text files. To a new user, this may seem inconsequential, but almost everything in Slackware Linux uses a plain-text file for configuration. This allows users to make changes to the system quickly, easily, and intuitively. In chapter 5, we looked at a few commands such as `cat` and `less` that can be used to read these files, but what if we want to make changes to them? For that, we need a text editor, and `vi` is up to the task.
+Scattered all around your computer are thousands of text files. To a new user, this may seem inconsequential, but almost everything in Slackware Linux uses a plain-text file for configuration. This allows users to make changes to the system quickly, easily, and intuitively. In Chapter 5, we looked at commands such as `cat` and `less` that can be used to read these files, but what if we want to modify them? For that, we need a text editor, and `vi` is more than up to the task.
 
-In short, `vi` is one of the oldest and most powerful text editors still used today. It's beloved by system administrators, programmers, hobbiests, and others the world over. In fact, nearly this entire book was written using `vi` ; only the next chapter on `emacs` was written with that editor.
+In short, `vi` is one of the oldest and most powerful text editors still widely used today. It is beloved by system administrators, programmers, hobbyists, and power users worldwide.
 
-A little further explanation is needed to learn exactly what `vi` is today though, as Slackware Linux technically doesn't include `vi` . Rather, Slackware includes two vi "clones", `elvis` (1) and `vim` (1). These clones add many additional features to vi such as syntax highlighting, binary editing modes, and network support. We won't go too deeply into all these details. By default, if you execute `vi` on Slackware Linux, you'll be using `elvis` , so all examples in this chapter will assume that is what you are using. If you've used another Linux distribution before, you may be more familiar with `vim` . If so, you might wish to change the symlink for `/usr/bin/vi` to point to `/usr/bin/vim` , or add an alias to your shell's startup scripts. `vim` is generally considered to be more feature-rich than `elvis` , but `elvis` is a much smaller program and contains more features than most users will ever need.
+A bit of clarification is helpful to understand what `vi` actually is on modern systems, as Slackware Linux technically does not ship with the original BSD `vi`. Instead, Slackware includes two popular `vi` "clones": `elvis` and `vim`. These clones add many modern features to `vi`, such as syntax highlighting, binary editing modes, and network support. By default, when you execute `vi` on Slackware Linux, you are launching `elvis`, so all examples in this chapter assume you are using `elvis`. If you are accustomed to another Linux distribution, you may be more familiar with `vim`. If so, you can easily change the `/usr/bin/vi` symlink to point to `/usr/bin/vim` or set up a shell alias. While `vim` is generally considered more feature-rich, `elvis` is extremely lightweight and offers more than enough functionality for most administration tasks.
 
-`vi` is very powerful, but also somewhat cumbersome and challening for a new user to learn. However, mastering `vi` is an important skill for any self-respecting system administrator to learn, as `vi` is included on nearly every Linux distribution, every BSD system, and every UNIX system in existance. It's even included in Mac OS X. Once you've learned `vi` , you'll not have to learn another text editor to work on any of these systems. In fact, `vi` clones have even been ported to Microsoft Windows systems, so you can use it there too.
+`vi` is remarkably powerful, though it can feel somewhat unintuitive and challenging for new users at first. However, mastering `vi` is an essential skill for any system administrator, as `vi` (or one of its clones) is included on virtually every Linux distribution, BSD system, and UNIX variant in existence—it is even installed by default on macOS. Once you learn `vi`, you will be able to edit configuration files on almost any system without needing to install additional software.
+
 
 ## 12.2 The Different Modes of vi
 
-New users are often frustrated when using `vi` for the first time. When invoked without any arguments, `vi` will display a screen something like this.
+New users are often frustrated when using `vi` for the first time. When invoked without any file arguments, `vi` displays a clean editor interface:
 
-```text
 
-~ 
-~ 
-~ 
-~ 
-~ 
-~ 
-~ 
-~ 
-~ 
-~ 
-~ 
-                           Command
+![image](img/vi-screen.png)
 
-```
+At this point, a beginner will typically begin typing and expect the pressed keys to appear directly in the document. Instead, unexpected behaviors occur—the cursor jumps around, lines disappear, or the terminal beeps.
 
-At this point, the user will being typing and expect the keys he presses to appear in the document. Instead, something really strange happens. The reason for this is simple. `vi` has different operation "modes". There is a command mode and an insert mode. Command mode is the default; in this mode, each keystroke performs a particular action such as moving the cursor around, deleting text, yanking (copying) text, searching, etc.
+The reason for this is simple: `vi` is a **modal editor**. Unlike traditional text editors, `vi` operates in distinct modes:
+
+* **Command Mode (Normal Mode):** This is the default mode when `vi` starts. In Command Mode, keystrokes are interpreted as editing commands rather than literal text. Keystrokes allow you to navigate the document, delete text, copy (yank) and paste lines, search, and perform formatting.
+* **Insert Mode:** In this mode, `vi` behaves like a standard text editor. Everything you type is inserted directly into the file.
+* **Ex Mode (Command-line Mode):** Accessed by typing `:` while in Command Mode. This mode places the cursor on the bottom line of the screen, allowing you to save files, quit, perform global replacements, or run shell commands.
+
+To switch from **Command Mode** to **Insert Mode**, press <kbd>i</kbd> (to insert before the cursor), <kbd>a</kbd> (to append after the cursor), or <kbd>o</kbd> (to open a new line below). To return to **Command Mode** at any time, press the <kbd>Esc</kbd> key.
+
 
 ## 12.3 Opening, Saving, and Quitting
 
-Ok, so you've decided that you want to learn how to use `vi` . The first thing to do is learn how to open and save files. Opening files is actually pretty easy. Simply type the filename as an argument on the command-line and `vi` will happily load it for you. For example, `vi chapter_11.xml` will open the file `chapter_11.xml` and load its content onto the screen, simple enough. But what if we've finished with one document and wish to save it? We can do that in command mode using the `:w` command. When in command mode, pressing the <kbd>:</kbd> key temporarily positions the cursor on the very bottom line of the window and allows you to enter special commands. (This is technically known as ex-mode after the venerable `ex` application which we will not document here.) The command to save your current work is `:w` . Once this is done, `vi` will write your changes to the buffer back into the file. If you wish to open another document, simply use the `:e other_document` command and `vi` will happily open it for you. If you've made changes to the buffer but haven't saved it yet, `:e` will fail and print a warning message on the bottom line. You can bypass this with the `:e!` command. Most ex-mode commands in `vi` can be "forced" by adding <kbd>!</kbd> to them. This tells `vi` that you want to abandon any changes you've made to the buffer and open the other document immediately.
+Now that you understand the basic operational modes of `vi`, the first practical step is learning how to open, save, and exit files.
 
-But what if I don't like my changes and want to quit or start over? That's easily done as well. Executing the `:e!` command without any arguments will re-open the current document from the beginning. Quitting `vi` is as simple as running the `:q` command if you haven't made any changes to the buffer, or `:q!` if you'd like to quit and abandon those changes.
+Opening a file is straightforward—simply pass the filename as an argument when launching `vi` from the command line:
+
+```bash
+darkstar:~$ vi chapter_12.md
+```
+
+This opens `chapter_12.md` and loads its content into a buffer. The next image show its.
+
+![image](img/vi-buffer.png)
+
+
+**Saving Changes (`:w` and `:wq`)**
+
+To save your work, you must be in **Command Mode**. Pressing the <kbd>:</kbd> key temporarily moves the cursor to the bottom line of the screen, entering **Ex Mode** (Command-line Mode). 
+
+* **`:w`** — Writes (saves) the buffer contents back to the file on disk.
+* **`:wq`** — Writes the changes and quits `vi` in a single command.
+
+If you want to switch to editing another file without closing `vi`, use `:e filename`:
+
+```text
+:e chapter_05.md
+```
+
+If you have unsaved changes in your current buffer, `:e` will prevent you from switching files and display a warning. You can force `vi` to discard your unsaved changes and open the new file immediately by appending an exclamation mark: **`:e!`**. Adding <kbd>!</kbd> to most Ex Mode commands forces the action, ignoring unsaved buffer warnings.
+
+
+**Quitting `vi` (`:q` and `:q!`)**
+
+To close `vi` and return to your shell prompt:
+
+* **`:q`** — Quits `vi` (succeeds only if there are no unsaved changes).
+* **`:q!`** — Forces `vi` to quit immediately, abandoning all unsaved changes.
+* **`:e!`** — Reloads the original file from disk, resetting your current buffer to its last saved state.
+
+**Quick Reference: Ex Mode Commands**
+
+| Command | Action |
+| :--- | :--- |
+| `:w` | Save current changes without exiting |
+| `:wq` | Save changes and exit `vi` |
+| `:q` | Exit `vi` (fails if there are unsaved changes) |
+| `:q!` | Force exit `vi`, discarding all unsaved changes |
+| `:e filename` | Open a different file in the buffer |
+| `:e!` | Revert current file to its last saved state |
+
+
 
 ## 12.4 Moving Around
 
