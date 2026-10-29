@@ -11,15 +11,15 @@
  - [X] Update chapter 1. About slackware
  - [ ] Update chapter 2. Installation to new slackware version, maybe 16.0. Add information about gdisk
  - [ ] Update chapter 3. Booting add information about nvme
- - [ ] Check if chapter 4 need improve (in progress)
- - [ ] Check if chapter 5 need improve (in progress)
+ - [X] Check if chapter 4 need improve
+ - [X] Check if chapter 5 need improve
  - [X] Check if chapter 6 need improve
  - [ ] Update chapter 7 X windows has any updates like wayland
  - [ ] Check if chapter 8 need improve
  - [ ] Check if chapter 9 need improve
  - [ ] Check if chapter 10 need improve (in progress)
  - [ ] Check if chapter 11 need improve
- - [ ] Check if chapter 12 need improve (in progress)
+ - [X] Check if chapter 12 need improve
  - [ ] Check if chapter 13 need improve. Is it necessary?
  - [ ] Update chapter 14. Network
  - [ ] Update chapter 15. Wireless Network
