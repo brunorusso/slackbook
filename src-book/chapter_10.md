@@ -2,16 +2,23 @@
 
 ## 10.1 Permissions Overview
 
-As we've discussed, Slackware Linux is a multi-user operating system. Because of this, its filesystems are mutli-user as well. This means that every file or directory has a set of permissions that can grant or deny privileges to different users. There are three basic permissions and three sets of permissions for each file. Let's take a look at an example file.
+As we have discussed, Slackware Linux is a multi-user operating system. Because of this, its filesystems are multi-user as well. This means that every file or directory has a set of permissions that grant or deny privileges to different users. There are three basic permissions (read, write, execute) and three permission sets for every file or directory.
 
-```text
+Let's examine an example file using `ls -l`:
 
+
+```bash
 darkstar:~$ ls -l /bin/ls 
--rwxr-xr-x 1 root root 81820 2007-06-08 21:12 /bin/ls
-
+-rwxr-xr-x 1 root root 163384 Oct 24 20:46 /bin/ls
 ```
+Recall from Chapter 4 that ls -l displays permissions along with the user and group that own the file. In this example:
 
-Recall from chapter 4 that `ls` `-l` lists the permissions for a file or directory along with the user and group that "own" the file. In this case, the permissions are rwxr-xr-x, the user is root and the group is also root. The permissions section, while grouped together, is really three seperate pieces. The first set of three letters are the permissions granted to the user that owns the file. The second set of three are those granted to the group owner, and the final three are permissions for everyone else.
+- The leading - indicates a regular file.
+- The permission string is rwxr-xr-x.
+- The user owner is root and the group owner is also root.
+
+While displayed together, the 9-character permission string is divided into three separate triplets:
+
 
 | Set | Listing | Meaning |
 | --- | --- | --- |
@@ -19,27 +26,35 @@ Recall from chapter 4 that `ls` `-l` lists the permissions for a file or directo
 | Group | r-x | The group "root" may read and execute |
 | Others | r-x | Everyone else may read and execute |
 
-The permissions are pretty self explainatory of course, at least for files. Read, write, and execute allow you to read a file, write to it, or execute it. But what do these permissions mean for directories? Simply put, the read permissions grants the ability to list the directory's contents (say with `ls` ). The write permission grants the ability to create new files in the directory as well as delete the entire directory, even if you otherwise wouldn't be able to delete some of the other files inside it. The execute permission grants the ability to actually enter the directory (with the `bash` built-in command cd for example).
+Permissions behave slightly differently depending on whether they apply to a file or a directory:
 
-Let's look at the permissions on a directory now.
+- Read (`r`): On a file, allows reading its contents. On a directory, allows listing its contained files (e.g., using `ls`).
+- Write (`w`): On a file, allows modifying or truncating its contents. On a directory, allows creating, deleting, or renaming files within it.
+- Execute (`x`): On a file, allows running it as a program or script. On a directory, allows entering the directory (e.g., using `cd`) and accessing its subdirectories or file metadata.
 
-```text
+Let's inspect the permissions on a user's home directory using `ls -ld`:
 
-darkstar:~$ ls -ld /home/alan 
-drwxr-x--- 60 alan users 3040 2008-06-06 17:14 /home/alan/
-
+```bash
+darkstar:~$ ls -ld /home/brusso
+drwx--x--- 114 brusso users 4096 Oct 28 11:57 /home/brusso/
 ```
 
-Here we see the permissions on my home directory and its ownership. The directory is owned by the user alan and the group users. The user is granted all rights (rwx), the group is granted only read and execute permissions (r-x), and everyone else is prohibited from doing anything.
+Here, the leading d indicates a directory. The directory is owned by the user `brusso` and the group `users`:
 
+- Owner (`brusso`): Granted full access (`rwx`).
+- Group (`users`): Granted read and execute permissions (`r-x`).
+- Others: Prohibited from accessing, listing, or entering the directory (`---`).
+
+
+
+----> Stopped here
 ## 10.2 chmod, chown, and chgrp
 
 So now that we know what permissions are, how do we change them? And for that matter, how do we assign user and group ownership? The answer is right here in this section.
 
-The first tool we'll discuss is the useful `chown` (1) command. Using `chown` , we can (you guessed it), change the ownership of a file or directory. `chown` is historically used only to change the user ownership, but can change the group ownership as well.
+The first tool we'll discuss is the useful `chown` command. Using `chown`, we can (you guessed it), change the ownership of a file or directory. `chown` is historically used only to change the user ownership, but can change the group ownership as well.
 
-```text
-
+```bash
 darkstar:~# ls -l /tmp/foo
 total 0
 -rw-r--r-- 1 alan users 0 2008-06-06 22:29 a
@@ -49,7 +64,6 @@ darkstar:~# ls -l /tmp/foo
 total 0
 -rw-r--r-- 1 root users 0 2008-06-06 22:29 a
 -rw-r--r-- 1 alan users 0 2008-06-06 22:29 b
-
 ```
 
 By using a colon after the user account, you may also specify a new group account.
