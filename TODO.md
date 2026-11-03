@@ -17,8 +17,8 @@
  - [ ] Update chapter 7 X windows has any updates like wayland
  - [ ] Check if chapter 8 need improve
  - [ ] Check if chapter 9 need improve
- - [ ] Check if chapter 10 need improve (in progress)
- - [ ] Check if chapter 11 need improve
+ - [X] Check if chapter 10 need improve
+ - [ ] Check if chapter 11 need improve (in progress)
  - [X] Check if chapter 12 need improve
  - [ ] Check if chapter 13 need improve. Is it necessary?
  - [ ] Update chapter 14. Network
