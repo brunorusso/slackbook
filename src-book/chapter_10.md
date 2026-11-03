@@ -21,7 +21,7 @@ While displayed together, the 9-character permission string is divided into thre
 
 
 | Set | Listing | Meaning |
-| --- | --- | --- |
+| --- | ------- | ------- |
 | Owner | rwx | The owner "root" may read, write, and execute |
 | Group | r-x | The group "root" may read and execute |
 | Others | r-x | Everyone else may read and execute |
@@ -133,6 +133,7 @@ Each basic permission has a specific numeric value based on powers of 2:
 By adding these values together, you can specify any permission combination from `0` (no permissions) to `7` (full read, write, and execute permissions):
 
 | Value | Permissions | String | Meaning |
+| ----- | ----------- | ------ | ------- |
 | 0 | None | --- | No access |
 | 1 | Execute only | --x | Execute |
 | 2 | Write only | -w- | Write
@@ -246,6 +247,7 @@ As a shared directory for temporary file storage, `/tmp` must be readable, writa
 Special Permissions Syntax Reference
 
 | Permission Type | Octal Value | Letter Symbol | Affected Slot | Primary Function | 
+| --------------- | ----------- | ------------- | ------------- | ---------------- | 
 | SUID | 4 | s | User (u) | Executes process as file owner | 
 | SGID | 2 | s | Group (g) | Executes process as group owner / inherits directory group | 
 | Sticky Bit | 1 | t | Others (o) | Restricts file deletion to file owner| 
