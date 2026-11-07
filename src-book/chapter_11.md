@@ -12,7 +12,7 @@ While these devices can technically be mounted almost anywhere, Slackware provid
 
 Below is a breakdown of the standard directories found on virtually all Slackware Linux installations and their primary functions:
 
-
+| Directory | Description |
 | --- | --- |
 | **`/`** | The root directory, under which all others exist |
 | **`/bin`** | Minimal set of binary programs for all users |
@@ -38,45 +38,95 @@ Below is a breakdown of the standard directories found on virtually all Slackwar
 
 ## 11.2 Local Filesystem Types
 
-The Linux kernel supports a wide variety of filesystems, which allows you to choose from a long list of features to tailor to your particular need. Fortunately, most of the default filesystem types are adequate for any needs you may have. Some filesystems are geared towards particular media. For example, the iso9660 filesystem is used almost exclusively for CD and DVD media.
+The Linux kernel supports a wide variety of filesystems, allowing you to choose from a rich set of features tailored to your specific needs. Fortunately, the default filesystem choices in Slackware Linux are well-suited for almost any scenario, from general-purpose desktop computing to high-performance enterprise servers.
 
->>>>>>>>STOP HERE
+The filesystem types listed below are enabled and supported during the Slackware installation process:
+
 
 ### 11.2.1 ext2
 
-ext2 is the oldest filesystem included in Slackware Linux for storing data on hard disks. Compared to other filesystems, ext2 is simplistic. It is faster than most others for reading and writing data, but does not include any journaling capability. This means that after a hard crash, the filesystem must be exhaustively checked to discover and (hopefully) fix any errors.
+ext2 is the oldest filesystem included in Slackware Linux for storing data on hard disks. Compared to other filesystems, ext2 is simplistic. It is faster than most others for reading and writing data, but does **not include any journaling capability**. This means that after a hard crash, the filesystem must be exhaustively checked to discover and (hopefully) fix any errors.
+
+`ext2` is the oldest filesystem in the `ext` family included with Linux for storing data on block devices. Compared to modern filesystems, `ext2` is simplistic. While it offers fast read and write speeds due to its low metadata overhead, it does **not include journaling capabilities**. Consequently, after an unclean shutdown or hard system crash, the entire filesystem must undergo an exhaustive consistency check (`fsck`) to discover and repair errors. Today, `ext2` is primarily used for small boot partitions or solid-state flash media where minimizing write cycles is critical.
+
 
 ### 11.2.2 ext3
 
-ext3 is the younger cousin of ext2. It was designed to replace ext2 in most situations and shares much the same code-base, but adds journaling support. In fact, ext3 and ext2 are so much alike that it is possible to convert one to the other on the fly without lose of data. ext3 enjoys a lot of popularity for these reasons. There are many tools available for recovering data from this filesystem in the event of catastrophic hardware failure as well. ext3 is a good general purpose filesystem with journaling support, but fails to perform as well as other journaling filesystems in specific cases. One pitfall to ext3 is that the filesystem must still go through this exhaustive check every so often. This is done when the filesystem is mounted, usually when the computer is booted, and causes an annoying delay.
+`ext3` is the direct successor to `ext2`. It was designed to replace `ext2` by adding **journaling support** while maintaining backwards compatibility with the existing `ext2` codebase. Journaling logs pending filesystem changes to a dedicated area before committing them to main storage, drastically reducing recovery times after a system power failure. In fact, `ext2` and `ext3` share a nearly identical on-disk structure, allowing seamless in-place conversion between the two without data loss. While highly reliable and supported by extensive recovery utilities, `ext3` requires periodic, full `fsck` checks at boot time, which can cause noticeable delays on large volumes.
+
 
 ### 11.2.3 ext4
 
-ext4 is the latest in the ext series of filesystems. It was designed to build upon ext3 with new ideas on what filesystems should do. While Slackware supports ext4, you should remember that this filesystem is still very new (particularly in file system terms) and is under heavy development. If you require stability over performance, you may wish to use a different filesystem such as ext3. With that said, ext4 does boast some major improvements over ext3 in the performance arena, but many people don't yet trust it for stable use.
+`ext4` is the default and most widely recommended general-purpose filesystem for Slackware Linux across desktops, laptops, and a lot of enterprise servers. Building upon the foundation of `ext3`, `ext4` introduces substantial performance, capacity, and reliability improvements:
 
-### 11.2.4 reiserfs
+* **Extents:** Replaces traditional block mapping with extents, improving large file performance and reducing disk fragmentation.
+* **Delayed Allocation:** Optimizes block allocation decisions right before writing data to disk, enhancing write speed and storage efficiency.
+* **Scalability:** Supports volume sizes up to 1 Exabyte (EB) and individual files up to 16 Terabytes (TB).
+* **Faster Filesystem Checks:** Unallocated block groups are skipped during `fsck`, making maintenance checks significantly faster than on `ext3`.
 
-reiserfs is one of the oldest journaling filesystems for the Linux kernel and has been supported by Slackware for many years. It is a very fast filesystem particularly well suited for storing, retrieving, and writing lots of small files. Unfortunately there are few tools for recovering data should you experience a drive failure, and reiserfs partitions experience corruption more often than ext3.
+For the vast majority of modern Slackware desktop and server installations, `ext4` provides the optimal balance of rock-solid stability and high performance.
 
-### 11.2.5 XFS
 
-XFS was contributed to the Linux kernel by SGI and is one of the best filesystems for working with large volumes and large files. XFS uses more RAM than other filesystems, but if you need to work with large files its performance there is well worth the penalty in memory usage. XFS is not particularly ill-suited for desktop or laptop use, but really shines on a server that handles medium to large size files all day long. Like ext3, XFS is a fully journaled filesystem.
+### 11.2.4 JFS
 
-### 11.2.6 JFS
+`JFS` was contributed to the Linux kernel by IBM and is renowned for its low CPU usage and rapid responsiveness even under heavy server workloads. Designed for high-end enterprise systems, `JFS` handles scaling across massive storage volumes with ease. Its long history of rigorous testing makes it one of the most stable and reliable journaling filesystems available for Linux, particularly for Network-Attached Storage (NAS) appliances.
 
-JFS was contributed to the Linux kernel by IBM and is well known for its responsiveness even under extreme conditions. It can span colossal volumes making it particularly well-suited for Network Attached Storage (NAS) devices. JFS's long history and thorough testing make it one of the most reliable journaling filesystems available for Linux.
 
-### 11.2.7 iso9660
+### 11.2.5 btrfs
 
-iso9660 is a filesystem specifically designed for optical media such as CDs and DVDs. Since optical disks are read-only media, the linux kernel does not even include write support for this filesystem. In order to create an iso9660 filesystem, you must use user-land tools like `mkisofs` (8) or `growisofs` (8).
+`Btrfs` is a modern **Copy-on-Write (CoW)** filesystem designed for advanced storage management and data integrity. Key features of `Btrfs` include:
 
-### 11.2.8 vfat
+* **Snapshots & Subvolumes:** Allows creating near-instantaneous, writable or read-only point-in-time system snapshots.
+* **Data Integrity:** Computes checksums for both data and metadata, enabling automatic detection and recovery from silent data corruption (*bit rot*).
+* **Transparent Compression:** Supports real-time data compression algorithms (such as `zstd`, `lzo`, and `zlib`) to save storage space and increase write throughput.
+* **Integrated Volume Management:** Supports multi-device pooling and RAID configurations directly at the filesystem level.
 
-Sometimes you may need to share data between Windows and Linux computers, but can't transfer the files over a network. Instead you require a shared hard drive partition or a USB flash drive. The humble vfat filesystem is the best choice here since it is supported by the largest variety of operating systems. Unfortuantely, being a Microsoft designed filesystem, it does not store permissions in the same way as traditional Linux filesystems. This means that special options must be used to allow multiple users to access data on this filesystem.
+`Btrfs` is ideal for users who require advanced features like system rollbacks and storage pooling without relying on external logical volume managers.
 
-### 11.2.9 swap
 
-Unlike other filesystems which hold files and directories, swap partitions hold virtual memory. This is very useful as it prevents the system from crashing should all your RAM be consumed. Instead, the kernel copies portions of the RAM into swap and frees them up for other applications to use. Think of it as adding virtual memory to your computer, very slow virtual memory. swap is typically a fail-safe and shouldn't be relied upon for continual use. Add more RAM to your system if you find yourself using lots of swap.
+### 11.2.6 f2fs
+
+`F2FS` was developed by Samsung specifically for NAND flash-based storage devices, such as Solid-State Drives (SSDs), NVMe storage, micro-SD cards, and eMMC chips. Unlike traditional filesystems designed around the geometry of spinning hard disk platters, `F2FS` uses a log-structured layout optimized for the internal characteristics of flash memory. This layout minimizes write amplification, extends drive lifespan, and delivers superior read/write performance on flash storage media.
+
+
+### 11.2.7 xfs
+
+Originally developed by Silicon Graphics (SGI) for enterprise UNIX platforms, `XFS` is a mature 64-bit journaling filesystem engineered for high performance, high concurrency, and massive scalability. `XFS` excels at managing large files and colossal storage arrays, using extent-based allocation and dynamic inode allocation. While `XFS` consumes slightly more system RAM than simpler filesystems, its exceptional parallel I/O throughput makes it the premier choice for database servers, media rendering hosts, and large data repositories.
+
+
+### 11.2.8 swap
+
+Unlike standard filesystems designed to store files and directories, a `swap` partition (or swap file) serves as **virtual memory** for the Linux kernel. When physical RAM approaches full capacity, the kernel moves inactive memory pages out of RAM and writes them into swap space, preventing Out-Of-Memory (OOM) process crashes. 
+
+Because accessing physical disk storage is exponentially slower than system RAM, heavy swap utilization results in system latency (*disk thrashing*). Swap should be treated as an essential safety net rather than a substitute for physical memory; if your system frequently relies on swap, adding more RAM is recommended.
+
+
+### 11.2.9 iso9660
+
+`iso9660` is a standard filesystem specifically designed for optical media such as CDs and DVDs, as well as disk image files (`.iso`). Because optical media are read-only by nature, the Linux kernel includes native read support for `iso9660`, but does not support direct in-kernel writing. To master or generate `iso9660` images, user-space tools such as `mkisofs`, `xorriso`, or `growisofs` are used.
+
+In Slackware Linux, `iso9660` plays a crucial role: the official installation media (such as installer DVDs and live ISOs) use this format combined with **Rock Ridge extensions**, which allow POSIX file permissions, symbolic links, and long filenames to be preserved on optical media.
+
+
+
+
+### 11.3. Other suportted filesystems
+
+In addition to the primary filesystems configured during installation, Slackware Linux supports a wide variety of additional filesystems through kernel drivers and user-space tools. Below is a breakdown of these filesystems and their primary use cases:
+
+* **`bcachefs`** — A modern Copy-on-Write (CoW) filesystem engineered for high performance, reliability, and advanced features such as multi-device caching, native encryption, data checksumming, and transparent compression.
+* **`bfs`** — The legacy Boot Filesystem used by UnixWare systems. Linux includes read-only support primarily for mounting and retrieving files from old UnixWare boot partitions.
+* **`cramfs`** — Compressed ROM Filesystem, a lightweight, read-only filesystem designed for memory-constrained embedded systems and bootable ROM images where storage space is critical.
+* **`exfat`** — Extended File Allocation Table, a proprietary filesystem created by Microsoft for high-capacity flash storage (such as SDXC cards and large USB drives). It removes the 4 GB individual file size limit of FAT32 while offering broad cross-platform compatibility.
+* **`f2fs`** — Flash-Friendly File System, developed by Samsung specifically for NAND flash memory media (SSDs, NVMe drives, SD cards, eMMC). It utilizes a log-structured architecture optimized to reduce write amplification and extend drive longevity.
+* **`fat`** — The core Linux kernel module providing underlying driver support for File Allocation Table filesystems (including FAT12, FAT16, and FAT32).
+* **`fuse.bcachefs`** — A user-space implementation of `bcachefs` operating via FUSE (Filesystem in Userspace), allowing systems lacking native in-kernel `bcachefs` driver modules to mount and access `bcachefs` volumes.
+* **`fuseblk.bcachefs`** — A block-device variant of FUSE utilized by mount helpers when accessing `bcachefs` volumes on physical block devices via user space.
+* **`minix`** — The historic filesystem created for the MINIX operating system. As the very first filesystem supported by the Linux kernel, it is retained today mainly for legacy compatibility and creating small floppy disk images.
+* **`msdos`** — The legacy MS-DOS FAT filesystem driver using strict 8.3 filename conventions, lacking support for modern long filenames.
+* **`ntfs`** — New Technology File System, the default filesystem for modern Microsoft Windows operating systems. Linux supports reading and writing NTFS partitions natively through kernel modules and user-space utilities such as `ntfs-3g`.
+* **`vfat`** — Virtual FAT, an extension to the MS-DOS FAT filesystem introduced with Microsoft Windows 95 to support long filenames (up to 255 characters). Sometimes you may need to share data between Windows and Linux computers when network transfer isn't an option, making `vfat` a reliable choice due to its universal operating system support. However, because it does not store POSIX Linux permissions, special mount options (such as `uid`, `gid`, and `umask`) must be used to allow non-root users proper access.
+
 
 ## 11.3 Using mount
 
