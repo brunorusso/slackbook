@@ -110,7 +110,7 @@ In Slackware Linux, `iso9660` plays a crucial role: the official installation me
 
 
 
-### 11.3. Other suportted filesystems
+### 11.3 Other suportted filesystems
 
 In addition to the primary filesystems configured during installation, Slackware Linux supports a wide variety of additional filesystems through kernel drivers and user-space tools. Below is a breakdown of these filesystems and their primary use cases:
 
@@ -128,60 +128,238 @@ In addition to the primary filesystems configured during installation, Slackware
 * **`vfat`** — Virtual FAT, an extension to the MS-DOS FAT filesystem introduced with Microsoft Windows 95 to support long filenames (up to 255 characters). Sometimes you may need to share data between Windows and Linux computers when network transfer isn't an option, making `vfat` a reliable choice due to its universal operating system support. However, because it does not store POSIX Linux permissions, special mount options (such as `uid`, `gid`, and `umask`) must be used to allow non-root users proper access.
 
 
-## 11.3 Using mount
+## 11.5 Creating and Formatting a Filesystem
 
-Now that we've learned what (some of) the different filesystems available in Linux are, it's time we looked at how to use them. In order to read or write data on a filesystem, that filesystem must first be mounted. To do this, we (naturally) use `mount` (8). The first thing we must do is decide where we want the filesystem located. Recall that there are no such things are drive letters denoting filesystems in Linux. Instead, all filesystems are mounted on directories. The base filesystem on which you install Slackware is always located at `/` and others are always located in subdirectories of `/` . `/mnt/hd` is a common place to temporarily locate a partition, so we'll use that in our first example. In order to mount a filesystem's contents, we must tell mount what kind of filesystem we have, where to mount it, and any special options to use.
+Now that we have covered the different filesystems available in Slackware Linux, the next logical step is learning how to add, partition, and format a new storage drive.
 
-```text
+To demonstrate this process, we will add a new 30 GB virtual hard disk to our test machine.
 
-darkstar:~# mount -t ext3 /dev/hda3 /mnt/hd -o ro
+
+Before modifying any storage drive, list the existing disks and partition layouts using `fdisk -l`:
+
+
+```bash
+root@darkstar:~# fdisk -l
+Disk /dev/vda: 30 GiB, 32212254720 bytes, 62914560 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+Disk /dev/sda: 90 GiB, 96636764160 bytes, 188743680 sectors
+Disk model: QEMU HARDDISK
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: AEAF9752-02D6-494B-8878-6BB396807DF7
+
+Device         Start       End   Sectors  Size Type
+/dev/sda1       2048    206847    204800  100M EFI System
+/dev/sda2     206848   2303999   2097152    1G Linux filesystem
+/dev/sda3    2304000  10692607   8388608    4G Linux swap
+/dev/sda4   10692608 188741631 178049024 84.9G Linux filesystem
+root@darkstar:~#
+```
+
+In this output, `/dev/sda` contains the operating system, while `/dev/vda` is the newly added, unpartitioned 30 GiB drive.
+
+> Warning: Disk partitioning and formatting are inherently destructive operations. Always verify that you are targeting the correct device node (such as `/dev/vda`), as executing partition or format commands on the wrong disk will cause permanent data loss!
+
+Execute `fdisk` pointing directly to the target device:
+
+Inside the interactive `fdisk` interface, execute the following sequence (pressing <kbd>Enter</kbd> after each command):
+
+1. Type `n` — Creates a new partition.
+2. Type `p` — Selects a primary partition type. (Note: On GPT disks or certain fdisk versions, it may skip this prompt and move directly to partition numbering).
+3. Type `1` — Assigns `1` as the partition number.
+4. Press <kbd>Enter</kbd> — Accepts the default starting sector (2048).
+5. Press <kbd>Enter</kbd> — Accepts the default ending sector, allocating the full 30 GiB capacity to the partition.
+6. Type `w` — Writes the new partition table to disk and exits fdisk.
+
+Here is the complete terminal interaction:
+
+
+```bash
+root@darkstar:~# fdisk /dev/vda
+
+Welcome to fdisk (util-linux 2.42.4).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table.
+Created a new DOS (MBR) disklabel with disk identifier 0x66aa0c2c.
+
+Command (m for help): n
+Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): p
+Partition number (1-4, default 1): 1
+First sector (2048-62914559, default 2048): 
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-62914559, default 62914559): 
+
+Created a new partition 1 of type 'Linux' and of size 30 GiB.
+
+Command (m for help): w
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+```
+
+To verify that the new partition was created successfully, execute:
+
+```bash
+root@darkstar:~# fdisk -l
+Disk /dev/vda: 30 GiB, 32212254720 bytes, 62914560 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x66aa0c2c
+
+Device     Boot Start       End  Sectors Size Id Type
+/dev/vda1        2048  62914559 62912512  30G 83 Linux
+
+
+Disk /dev/sda: 90 GiB, 96636764160 bytes, 188743680 sectors
+Disk model: QEMU HARDDISK
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: AEAF9752-02D6-494B-8878-6BB396807DF7
+
+Device         Start       End   Sectors  Size Type
+/dev/sda1       2048    206847    204800  100M EFI System
+/dev/sda2     206848   2303999   2097152    1G Linux filesystem
+/dev/sda3    2304000  10692607   8388608    4G Linux swap
+/dev/sda4   10692608 188741631 178049024 84.9G Linux filesystem
+```
+
+Now that `/dev/vda1` exists, a filesystem must be written to the partition before it can store data. In Linux, filesystems are created using tools from the mkfs (make filesystem) family.
+
+To format the partition with ext4 (the standard general-purpose filesystem in Slackware):
+
+```bash
+root@darkstar:~# mkfs.ext4 /dev/vda1
+mke2fs 1.47.4 (6-Mar-2025)
+64-bit filesystem support is not enabled.  The larger fields afforded by this fe
+Discarding device blocks: done
+Creating filesystem with 7864064 4k blocks and 1966080 inodes
+Filesystem UUID: 9fc1a090-b99a-468c-9dcd-15a82503ef5f
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+        4096000
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information: done
+```
+
+> Note: To format the partition using a different filesystem, use the corresponding tool, such as `mkfs.xfs /dev/vda1`, `mkfs.btrfs /dev/vda1`, or `mkfs.vfat /dev/vda1`.
+
+
+That it! The disk is done to use.
+
+
+## 11.6 Using `mount`, `umount`, and `/etc/fstab`
+
+Now that a partition has been created and formatted (as demonstrated in the previous section with `/dev/vda1`), the filesystem must be **mounted** onto a directory before it can be used. 
+
+In Linux, all storage devices are attached somewhere beneath the single root directory (`/`). There are no drive letters (such as `C:` or `D:`) like those found in Microsoft Windows.
+
+To attach a filesystem to the directory tree, we use the `mount` command. The target directory where the filesystem is attached is called a **mount point**. A standard location for temporarily mounting storage drives in Slackware is under `/mnt` (for example, `/mnt/hd`).
+
+The basic syntax for the `mount` command is:
+
+```bash
+darkstar:~# mount -t ext4 /dev/vda1 /mnt/hd
 
 ```
 
-Let's disect this. We have an ext3 filesystem located on the third partition of the first IDE device, and we've decided to mount its contents on the directory `/mnt/hd` . Additionally, we have mounted it read-only so no changes can be made to these contents. The `-t ext3` argument tells `mount` what type of filesystem we are using, in this case it is ext3. This lets the kernel know which driver to use. Often `mount` can determine this for itself, but it never hurts to explicitly declare it. Second, we tell `mount` where to locate the filesystem's contents. Here we've chosen `/mnt/hd` . Finally, we must decide what options to use if any. These are declared with the `-o` argument. A short-list of the most common options follows.
+By default, when no specific options are declared, `mount` attaches the disk in read-write mode (`rw`) with standard system defaults. However, custom behavior can be defined using the `-o` flag.
+
+Below are some of the most common mount options:
+
 
 | ro | read-only |
 | --- | --- |
-| rw | read-write (default) |
-| uid | user to own the contents of the filesystem |
-| gid | group to own the contents of the filesystem |
-| noexec | prevent execution of any files on the filesystem |
-| defaults | sane defaults for most filesystems |
+| `rw` | Mounts the filesystem in read-write mode (default) |
+| `ro` | Mounts the filesystem in read-only mode (prevents any changes) |
+| `defaults` | Applies standard default options (rw, suid, dev, exec, auto, nouser, async). |
+| `noexec` | prevent execution of any files on the filesystem |
+| `nosuid` | Disables Set-User-Identifier (SUID) and Set-Group-Identifier (SGID) bits for security |
+| `uid=user` | Sets the user owner for all files (essential for non-POSIX filesystems like vfat or exfat) |
+| `gid=group` | Sets the group owner for all files (essential for vfat, exfat, or ntfs) |
+| `umask=mask` | Defines default permission masks for filesystems lacking native Linux permissions |
 
-If this is your first Linux installation, the only options you typically need to be concerned about are `ro` and `rw` . The exception to this rule comes when you are dealing with filesystems that don't handle traditional Linux permissions such as vfat or NTFS. In those cases you'll need to use the `uid` or `gid` options to allow non-root users access to these filesystems.
 
-```text
+When you finish using a mounted storage device (especially removable devices like USB flash drives or optical media), you must safely unmount it before removal. This ensures that all cached data in memory is completely written (flushed) to physical storage.
+Unmounting is performed using the `umount` command, passing either the device node or the mount point directory:
 
-darkstar:~# mount -t vfat /dev/hda4 /mnt/hd -o uid=alan
-
-```
-
-But Alan, that's appalling! I don't want to have to tell mount what filesystem or options to use everytime I load a CD. It should be easier than that. Well thankfully, it is. The `/etc/fstab` file contains all this information for filesystems that the installer sets up for you, and you can make additions to it as well. `fstab` (5) looks like a simple table containing the device to mount along with its filesystem type and optional arguments. Let's take a look.
-
-```text
-
-darkstar:~# cat /etc/fstab
-/dev/hda1        /                reiserfs    defaults               1   1
-/dev/hda2        /home            reiserfs    defaults               1   2
-/dev/hda3        swap             swap        defaults               0   0
-/dev/cdrom       /mnt/cdrom       auto        noauto,owner,ro,users  0   0
-/dev/fd0         /mnt/floppy      auto        noauto,owner           0   0
-devpts           /dev/pts         devpts      gid=5,mode=620         0   0
-proc             /proc            proc        defaults               0   0
+```bash
+darkstar:~# umount /mnt/hd
 
 ```
 
-If you have an entry in `fstab` for your filesystem, you need only tell mount the device node or the mount location.
 
-```text
+> Troubleshooting: "Target is busy" If `umount` fails with a `target is busy` (or `device is busy`) error, a process or open terminal shell is actively using a file or directory inside that mount point. Move your terminal session out of the directory (e.g., run `cd /`), close any programs accessing files on that volume, and retry `umount`.
 
-darkstar:~# mount /dev/cdrom 
-darkstar:~# mount /home
 
+Manually typing `mount` with full arguments every time the system boots or whenever a disk is inserted quickly becomes tedious. To automate this process, Slackware Linux relies on the `/etc/fstab` (Filesystem Table) configuration file.
+
+The `/etc/fstab` file acts as a system table listing all block devices, their assigned mount points, filesystem types, and default options.
+
+Let's inspect a typical Slackware `/etc/fstab` file using `cat`:
+
+```bash
+root@darkstar:~# cat /etc/fstab
+/dev/sda3        swap             swap        pri=1               0   0
+/dev/sda4        /                ext4        defaults            1   1
+/dev/sda2        /boot            ext4        defaults            1   2
+/dev/sda1        /boot/efi        vfat        defaults            1   0
+#/dev/cdrom      /mnt/cdrom       auto        noauto,owner,ro,comment=x-gvfs-sho
+/dev/fd0         /mnt/floppy      auto        noauto,owner        0   0
+devpts           /dev/pts         devpts      gid=5,mode=620      0   0
+proc             /proc            proc        defaults            0   0
+tmpfs            /dev/shm         tmpfs       nosuid,nodev,noexec 0   0
 ```
 
-One final use for `mount` is to tell you what filesystems are currently mounted and with what options. Simply run `mount` without any arguments to display these.
 
+The `/etc/fstab` file uses 6 distinct columns:
+
+1. **Device Specifier**: The block device node (e.g., `/dev/sda1`, `/dev/sda2`)
+2. **Mount Point**: The target directory where the volume is attached (e.g., `/boot` or `/`).
+3. **Filesystem Type**: The filesystem driver (e.g., `ext4, vfat, swap, auto`).
+4. **Mount Options**: Comma-separated mount parameters (e.g., `defaults, noauto,owner,ro,users`).
+5. **Dump Frequency**: Used by the legacy dump backup utility (`0` disables dump backups).
+6. **FSCK Pass Number**: Determines the check sequence for fsck at boot time (`1` for root `/`, `2` for secondary local filesystems, `0` to skip).
+
+
+To ensure that the newly created partition `/dev/vda1` is automatically mounted every time Slackware Linux boots, you can add an entry for it in the `/etc/fstab` configuration file.
+
+Using a text editor like `vi` (as covered in Chapter 12), open `/etc/fstab` with `root` privileges:
+
+
+```bash
+root@darkstar:~# cat /etc/fstab
+/dev/sda3        swap             swap        pri=1               0   0
+/dev/sda4        /                ext4        defaults            1   1
+/dev/sda2        /boot            ext4        defaults            1   2
+/dev/sda1        /boot/efi        vfat        defaults            1   0
+/dev/vda1        /mnt/hd          ext4        defaults            0   2
+#/dev/cdrom      /mnt/cdrom       auto        noauto,owner,ro,comment=x-gvfs-sho
+/dev/fd0         /mnt/floppy      auto        noauto,owner        0   0
+devpts           /dev/pts         devpts      gid=5,mode=620      0   0
+proc             /proc            proc        defaults            0   0
+tmpfs            /dev/shm         tmpfs       nosuid,nodev,noexec 0   0
+```
+
+With this entry in place, `/dev/vda1` will automatically mount to `/mnt/hd` upon every system reboot (or whenever `mount -a` is executed), making storage immediately accessible without manual intervention.
+
+
+>>>>>>>>>>>>>>>>>>Stop here
 ## 11.4 Network Filesystems
 
 In addition to local filesystems, Slackware supports a number of network filesystems as both client and server. This allows you to share data between multiple computers transparently. We'll discuss the two most common: NFS and SMB.
