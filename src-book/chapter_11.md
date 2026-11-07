@@ -2,30 +2,45 @@
 
 ## 11.1 The Filesystem Hierarchy
 
-Slackware Linux stores all of its files and directories under a single `/` directory, typically referred to as "root". This is in stark contract to what you may be familiar with in the form of Microsoft Windows. Different hard disk partitions, cdroms, usb flash drives, and even floppy disks can all be mounted in directories under `/` , but do not have anything like "drive letters". The contents of these devices can be found almost anywhere, but there are some sane defaults that Slackware sets up for you. For example, cd-rw drives are most often found at `/mnt/cd-rw` . Here are a few common directories present on nearly all Slackware Linux installations, and what you can expect to find there.
+Slackware Linux stores all of its files and directories under a single `/` directory, typically referred to as "root". This is in stark contrast to what you may be familiar with in Microsoft Windows. Different hard disk partitions, USB flash drives, memory cards (and even CD-ROMs and/or floppy disks, if you still use them) can all be mounted in directories under `/`, rather than relying on "drive letters" (such as `C:` or `D:`).
 
-| / | The root directory, under which all others exist |
+While these devices can technically be mounted almost anywhere, Slackware provides sensible default locations:
+
+* **The `/mnt` directory:** Its primary purpose is to provide a location for system administrators to mount block devices temporarily. You can mount volumes directly on `/mnt` (the traditional UNIX approach), use predefined subdirectories such as `/mnt/hd` or `/mnt/tmp`, or create custom mount points as needed.
+
+* **The `/media` directory:** Its purpose is to provide a standardized location across different Linux systems for users and desktop applications to mount removable media. For example, desktop environments (such as KDE) or file managers (like Konqueror) can utilize `/media` for auto-mounting devices. While Slackware traditionally defaults to using `/mnt` (e.g., `/mnt/cdrom` as the CD-ROM mount point in `/etc/fstab`), you can edit `/etc/fstab` if you prefer to strictly follow FHS (Filesystem Hierarchy Standard) recommendations.
+
+Below is a breakdown of the standard directories found on virtually all Slackware Linux installations and their primary functions:
+
+
 | --- | --- |
-| /bin | Minimal set of binary programs for all users |
-| /boot | The kernel, initrd, and other requirements for booting Slackware |
-| /etc/ | System configuration files |
-| /dev | Collection of special files allowing direct access to hardware |
-| /home | User directories where personal files and settings are stored |
-| /media | Directory for auto-mounting features in DBUS/HAL |
-| /mnt | Places to temporarily mount removable media |
-| /opt | Directory where some (typicaly proprietary) software may be installed |
-| /proc | Kernel exported filesystem for process information |
-| /root | The root user's home directory |
-| /sbin | Minimal set of system or superuser binaries |
-| /srv | Site-specific data such as web pages served by this system |
-| /sys | Special kernel implimentation details |
-| /tmp | Directory reserved for temporary files for all users |
-| /usr | All non-essential programs, libraries, and shared files |
-| /var | Regularly changing data such as log files |
+| **`/`** | The root directory, under which all others exist |
+| **`/bin`** | Minimal set of binary programs for all users |
+| **`/boot`** | The kernel, initrd, and other requirements for booting Slackware |
+| **`/dev`** | Collection of special files allowing direct access to hardware |
+| **`/etc`** | System configuration files |
+| **`/home`** | User directories where personal files and settings are stored |
+| **`/lib`** | Core shared libraries needed to boot the system and run binaries in `/bin` and `/sbin` |
+| **`/lib64`** | Essential 64-bit system libraries (on 64-bit Slackware architectures) |
+| **`/lost+found`** | Directory where `fsck` stores recovered file fragments after an unclean shutdown |
+| **`/media`** | Directory for auto-mounting features in DBUS/HAL |
+| **`/mnt`** | Places to temporarily mount removable media |
+| **`/opt`** | Directory where some (typically proprietary) software may be installed |
+| **`/proc`** | Kernel exported filesystem for process information |
+| **`/root`** | The root user's home directory |
+| **`/run`** | Volatile runtime data describing system state since the last boot (`tmpfs`) |
+| **`/sbin`** | Minimal set of system or superuser binaries |
+| **`/srv`** | Site-specific data such as web pages served by this system |
+| **`/sys`** | Special kernel implimentation details |
+| **`/tmp`** | Directory reserved for temporary files for all users |
+| **`/usr`** | All non-essential programs, libraries, and shared files |
+| **`/var`** | Regularly changing data such as log files |
 
 ## 11.2 Local Filesystem Types
 
 The Linux kernel supports a wide variety of filesystems, which allows you to choose from a long list of features to tailor to your particular need. Fortunately, most of the default filesystem types are adequate for any needs you may have. Some filesystems are geared towards particular media. For example, the iso9660 filesystem is used almost exclusively for CD and DVD media.
+
+>>>>>>>>STOP HERE
 
 ### 11.2.1 ext2
 
