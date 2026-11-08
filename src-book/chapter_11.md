@@ -307,6 +307,7 @@ darkstar:~# umount /mnt/hd
 > Troubleshooting: "Target is busy" If `umount` fails with a `target is busy` (or `device is busy`) error, a process or open terminal shell is actively using a file or directory inside that mount point. Move your terminal session out of the directory (e.g., run `cd /`), close any programs accessing files on that volume, and retry `umount`.
 
 
+
 Manually typing `mount` with full arguments every time the system boots or whenever a disk is inserted quickly becomes tedious. To automate this process, Slackware Linux relies on the `/etc/fstab` (Filesystem Table) configuration file.
 
 The `/etc/fstab` file acts as a system table listing all block devices, their assigned mount points, filesystem types, and default options.
@@ -359,66 +360,77 @@ tmpfs            /dev/shm         tmpfs       nosuid,nodev,noexec 0   0
 With this entry in place, `/dev/vda1` will automatically mount to `/mnt/hd` upon every system reboot (or whenever `mount -a` is executed), making storage immediately accessible without manual intervention.
 
 
->>>>>>>>>>>>>>>>>>Stop here
 ## 11.4 Network Filesystems
 
 In addition to local filesystems, Slackware supports a number of network filesystems as both client and server. This allows you to share data between multiple computers transparently. We'll discuss the two most common: NFS and SMB.
 
 ### 11.4.1 NFS
 
-NFS is the Network File System for Linux as well as several other common operating systems. It has modest performance but supports the full range of permissions for Slackware. In order to use NFS as either a client or a server, you must run the remote procedure call daemon. This is easily accomplished by setting the `/etc/rc.d/rc.rpc` file executable and telling it to start. Once it has been set executable, it will run automatically every time you boot into Slackware.
+NFS (Network File System) is a widely used protocol in UNIX and Linux environments for sharing files and directories across a network. One of its primary advantages is that it preserves native POSIX Linux file permissions (ownership, groups, and access rights) seamlessly between the client and server.
 
-```text
+Before mounting a remote NFS share in Slackware Linux, the Remote Procedure Call (RPC) daemon must be running. Slackware manages RPC services through the `/etc/rc.d/rc.rpc` initialization script.
 
+To enable RPC automatically at boot and start it for your current session, make the script executable and launch it:
+
+```bash
 darkstar:~# chmod +x /etc/rc.d/rc.rpc 
 darkstar:~# /etc/rc.d/rc.rpc start
 
 ```
 
-Mounting an NFS share is little different than mounting a local filesystem. Rather than specifying a local device, you must tell mount the domain name or IP address of the NFS server and the directory to mount with a colon between them.
+Mounting an NFS share is very similar to mounting a local filesystem. Instead of specifying a physical block device (such as `/dev/vda1`), you pass the remote server's hostname or IP address, followed by a colon (`:`) and the path to the remote exported directory:
 
-```text
 
+```bash
 darkstar:~# mount -t nfs darkstar.example.com:/home /home
-
 ```
 
-Running an NFS server is a little bit different. First, you must configure each directory to be exported in the `/etc/exports` file. `exports` (5) contains information about what directories will be shared, who they will be shared with, and what special permissions to grant or deny.
+In this example, the local directory `/home` acts as the mount point. All files and directories inside `/home` appear and function as if they were stored on the local hard drive, even though the data actually resides on the remote server (`darkstar.example.com`).
 
-```text
+> Note: Setting up an NFS server requires configuring exported directories in `/etc/exports` and running `/etc/rc.d/rc.nfsd`. For details on server-side configuration, consult the exports(5) man page or official Slackware documentation.
 
-#See exports(5) for a description. 
-#This file contains a list of all directories exported to other computers. 
-#It is used by rpc.nfsd and rpc.mountd. 
-
-/home/backup 192.168.1.0/24(sync,rw,no_root_squash)
-
-```
-
-The first column in `exports` is a list of the files to be exported via NFS. The second column is a list of what systems may access the export along with special permissions. You can specify hosts via domain name, IP address, or netblock address (as I have here). Special permissions are always a parenthetical list. For a complete list, you'll need to read the man page. For now, the only special option that matters is `no_root_squash` . Usually the root user on an NFS client cannot read or write an exported share. Instead, the root user is "squashed" and forced to act as the nobody user. `no_root_squash` prevents this.
-
-You'll also need to run the NFS daemon. Starting and stopping NFS server support is done with the `/etc/rc.d/rc.nfsd` rc script. Set it executable and run it just like we did for `rc.rpc` and you are ready to go.
 
 ### 11.4.2 SMB
 
-SMB is the Windows network file-sharing protocol. Connecting to SMB shares (commonly called samba shares) is fairly straight forward. Unfortuantely, SMB isn't as strongly supported as NFS. Still, it offers higher performance and connectivity with Windows computers. For these reasons, SMB is the most common network file-sharing protocol deployed on local networks. Exporting SMB shares from Slackware is done through the samba daemon and configured in `smb.conf` (5). Unfortunately configuring samba as a service is beyond the scope of this book. Check online for additional documentation, and as always refer to the man page.
+SMB (Server Message Block) is the standard network file-sharing protocol used in Microsoft Windows environments. Connecting to SMB shares (commonly referred to as Samba shares) from a Slackware Linux client is straightforward and allows seamless connectivity across heterogeneous networks.
 
-Thankfully mounting an SMB share is easy and works almost exactly like mounting an NFS share. You must tell mount where to find the server and what share you wish to access in exactly the same way. Additionally, you must specify a username and password.
+> Note: Exporting SMB shares from a Slackware server is handled by the Samba suite and configured via `/etc/samba/smb.conf`. Configuring Samba as a server service is beyond the scope of this chapter; consult the `smb.conf`(5) manual page or official documentation for server-side setup.
 
-```text
+Mounting a remote SMB share works similarly to mounting an NFS share or a local filesystem. However, SMB requires specifying network location parameters, a target share name, and valid authentication credentials (username and password):
 
-darkstar:~# mount -t cifs //darkstar/home /home -o username=alan,password=secret
-
+```bash
+darkstar:~# mount -t cifs //darkstar/home /home -o username=name,password=secret
 ```
 
-You may be wondering why the filesystem type is cifs instead of smbfs. In older versions of the Linux kernel, smbfs was used. This has been deprecated in favor of the better performing and more secure general purpose cifs driver.
+**Why cifs instead of smbfs?**
 
-All SMB shares require the `username` and `password` arguments. This can create a security problem if you wish to place your samba share in fstab. You may avoid this problem by using the `credentials` argument. `credentials` points to a file which contains the username and password information. As long as this file is safely guarded and readable only by root, the likelyhood that your authentication credentials will be compromised is lessened.
+You might notice that the filesystem type specified is `cifs` rather than `smbfs`. In older Linux kernels, `smbfs` was used to mount Samba shares. However, `smbfs` has been deprecated and replaced by the modern CIFS (Common Internet File System) driver, which provides significantly better performance, enhanced security, and full POSIX compliance.
 
-```text
 
-darkstar:~# echo "username=alan" > /etc/creds-home 
+**Secure Credential Management**
+
+Passing a clear-text password directly on the command line or storing it inside `/etc/fstab` poses a security risk. To protect sensitive credentials, you can store your login information in a restricted credentials file and reference it with the `credentials` mount option.
+
+First, create the credentials file containing your username and password:
+
+
+```bash
+darkstar:~# echo "username=user" > /etc/creds-home 
 darkstar:~# echo "password=secret" >> /etc/creds-home 
-darkstar:~# mount -t cifs //darkstar/home -o credentials=/etc/creds-home
-
 ```
+
+Next, restrict file permissions so that only the root superuser can read it:
+
+
+```bash
+darkstar:~# chmod 600 /etc/creds-home
+```
+
+
+Finally, mount the SMB share using the `credentials` file option:
+
+```bash
+darkstar:~# mount -t cifs //darkstar/home -o credentials=/etc/creds-home
+```
+
+Using a secured credentials file prevents unauthorized local users from viewing your network passwords in process lists or system configuration files.
