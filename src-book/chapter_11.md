@@ -110,7 +110,7 @@ In Slackware Linux, `iso9660` plays a crucial role: the official installation me
 
 
 
-### 11.3 Other suportted filesystems
+## 11.3 Other suportted filesystems
 
 In addition to the primary filesystems configured during installation, Slackware Linux supports a wide variety of additional filesystems through kernel drivers and user-space tools. Below is a breakdown of these filesystems and their primary use cases:
 
@@ -128,7 +128,7 @@ In addition to the primary filesystems configured during installation, Slackware
 * **`vfat`** — Virtual FAT, an extension to the MS-DOS FAT filesystem introduced with Microsoft Windows 95 to support long filenames (up to 255 characters). Sometimes you may need to share data between Windows and Linux computers when network transfer isn't an option, making `vfat` a reliable choice due to its universal operating system support. However, because it does not store POSIX Linux permissions, special mount options (such as `uid`, `gid`, and `umask`) must be used to allow non-root users proper access.
 
 
-## 11.5 Creating and Formatting a Filesystem
+## 11.4 Creating and Formatting a Filesystem
 
 Now that we have covered the different filesystems available in Slackware Linux, the next logical step is learning how to add, partition, and format a new storage drive.
 
@@ -263,7 +263,7 @@ Writing superblocks and filesystem accounting information: done
 That it! The disk is done to use.
 
 
-## 11.6 Using `mount`, `umount`, and `/etc/fstab`
+## 11.5 Using `mount`, `umount`, and `/etc/fstab`
 
 Now that a partition has been created and formatted (as demonstrated in the previous section with `/dev/vda1`), the filesystem must be **mounted** onto a directory before it can be used. 
 
@@ -360,11 +360,11 @@ tmpfs            /dev/shm         tmpfs       nosuid,nodev,noexec 0   0
 With this entry in place, `/dev/vda1` will automatically mount to `/mnt/hd` upon every system reboot (or whenever `mount -a` is executed), making storage immediately accessible without manual intervention.
 
 
-## 11.4 Network Filesystems
+## 11.6 Network Filesystems
 
 In addition to local filesystems, Slackware supports a number of network filesystems as both client and server. This allows you to share data between multiple computers transparently. We'll discuss the two most common: NFS and SMB.
 
-### 11.4.1 NFS
+### 11.6.1 NFS
 
 NFS (Network File System) is a widely used protocol in UNIX and Linux environments for sharing files and directories across a network. One of its primary advantages is that it preserves native POSIX Linux file permissions (ownership, groups, and access rights) seamlessly between the client and server.
 
@@ -390,7 +390,7 @@ In this example, the local directory `/home` acts as the mount point. All files 
 > Note: Setting up an NFS server requires configuring exported directories in `/etc/exports` and running `/etc/rc.d/rc.nfsd`. For details on server-side configuration, consult the exports(5) man page or official Slackware documentation.
 
 
-### 11.4.2 SMB
+### 11.6.2 SMB
 
 SMB (Server Message Block) is the standard network file-sharing protocol used in Microsoft Windows environments. Connecting to SMB shares (commonly referred to as Samba shares) from a Slackware Linux client is straightforward and allows seamless connectivity across heterogeneous networks.
 
