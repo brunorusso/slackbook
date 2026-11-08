@@ -2,31 +2,69 @@
 
 ## 13.1 What is Emacs?
 
-`vi` and its clones are very functional and powerful editors. However, they are often considered not particularly extensible. `vim` is a successful and powerful `vi` variant that shrugs this trend, being both extremely extensible and lightweight. However, many users prefer a more "heavy" and extensible editor. This is why many people (including the author of this chapter) prefer `Emacs` .
+`vi` and its clones are functional, fast, and powerful text editors. However, traditional `vi` is not particularly extensible. While `vim` breaks this trend by being both lightweight and highly extensible, many users prefer an editor with even greater customization capabilities and built-in features. This is why many system administrators and programmers prefer **GNU Emacs**.
 
-Emacs takes extensibility up to eleven. Outside of a core of C, the rest of `Emacs` is written in a Lisp variant, nearly all of which is exposed to you, so that you may configure it or even extend it at will (many good Emacs Lisp tutorials can be found on the Internet). People have written all sorts of extensions in Emacs Lisp, from syntax highlighting for an obscure language, to a built-in terminal. In fact, there's even a `vi` emulation mode within `Emacs` (called viper), so you can still get the modal editing that comes with vi, while having access to the power of the `Emacs` core.
+`Emacs` takes extensibility to the next level. Outside of a minimal core written in C for performance, the vast majority of `Emacs` is written in **Emacs Lisp** (Elisp)—a dialect of the Lisp programming language. Nearly all of `Emacs` is exposed to the user, allowing you to configure, tweak, or completely extend the editor at will.
 
-Like `vi` , there are many variants of `Emacs` (termed "emacsen"). However, the one most commonly used (and the only one in Slackware) is GNU Emacs. When people reference "Emacs" directly, they almost always mean GNU Emacs.
+Over the decades, the community has written an incredible variety of extensions in Emacs Lisp, ranging from syntax highlighting for obscure languages to full web browsers, email clients, and terminal emulators. In fact, `Emacs` even includes a `vi` emulation mode (such as `viper` or `evil-mode`), allowing you to enjoy modal editing while leveraging the underlying power of the `Emacs` environment.
 
-Unlike `vi` , `Emacs` operates more like a traditional editor by default. This means that most keyboard shortcuts can be performed without repeatedly changing modes. You can open up a file and start typing away without having to learn what the modes do, or forgetting which one you are currently using.
+Like `vi`, there are multiple implementations of `Emacs` (collectively referred to as "emacsen"). However, the most widely used variant—and the one included with Slackware Linux—is **GNU Emacs**. When people mention "Emacs", they are almost always referring to GNU Emacs.
+
+Unlike `vi`, `Emacs` operates more like a traditional editor by default. It is modeless, meaning most actions and keyboard shortcuts are performed using modifier keys (such as <kbd>Ctrl</kbd> and <kbd>Alt</kbd>) without needing to switch between Command and Insert modes. You can open a file and immediately begin typing without worrying about which operational mode is active.
+
 
 ## 13.2 Starting Out
 
-`Emacs` can be started simply by running the `emacs` command in your terminal. When you first start it in a console without arguments, you will see something that resembles this:
+`Emacs` can be started simply by running the `emacs` command in your terminal. When launched in a console without any arguments, `Emacs` displays a startup screen containing helpful documentation links and tutorial options.
+
 
 ![image](img/emacs.png)
 
+If you are running the X Window System, `Emacs` may launch its graphical user interface (GUI) by default. If you prefer running it directly inside your terminal console, invoke it with the `-nw` (*no window*) flag:
 
-If you are in X windows, `Emacs` may start a GUI instead of running in your console. If this is the case and you don't want a GUI, you can invoke it with the flag `'-nw'` .
+```bash
+darkstar:~$ emacs -nw
+```
 
-While here, you can browse around using the keyboard arrow keys. Underlined elements are links, and you can activate them by moving over them and pressing 'enter'. The documentation mentioned is very good, and can help you get your bearings should you have any problems. Also note how they describe key sequences such as <kbd>C-h</kbd> , meaning press the <kbd>h</kbd> key while holding down the <kbd>CTRL</kbd> key. Same deal with <kbd>M-`</kbd> , meaning to hold the the <kbd>Meta</kbd> key (usually " <kbd>Alt</kbd> ") and press the backtick "`" key. When they say (e.g.) <kbd>C-x C-c</kbd> , this means to press the "x" key while holding down the <kbd>CTRL</kbd> key, then press the "x" key while also holding down the <kbd>CTRL</kbd> key. Conveniently, this is also one of the more important commands in `Emacs` : to close it.
+While on the startup screen, you can navigate using the keyboard arrow keys. Underlined items are links that can be activated by moving the cursor over them and pressing <kbd>Enter</kbd>.
 
-Alternatively, if you call `emacs` with a file name as an argument, it will open that file, just like `vi` . Upon doing this, you will be presented with the contents of the file in question. Here, you can navigate the document using traditional arrow keys and type in information at will without any issues.
+**Understanding Emacs Key Notation**
 
-Say you make some edits, and you now want to save your file. The following key sequence will do that: <kbd>C-x C-s</kbd> . If you made a new file, you will be prompted for this in what is called the "minibuffer", the blank line below the gray line at the bottom of the screen. Type in the file name of your choice, then hit <kbd>Enter</kbd> . If you don't want to save the file, you can press <kbd>C-g</kbd> , which aborts operations that ask for input. Do note that tab-completion is usually available for operations that use the minibuffer.
+`Emacs` keyboard shortcuts rely heavily on modifier keys and use a specific shorthand notation throughout manuals and built-in help:
 
-Should you want to open a new file within your same `Emacs` session, type in <kbd>C-x C-f</kbd> . You will be prompted for a file name in the minibuffer. `Emacs` doesn't care whether it exists or not. If it doesn't exist, a new buffer will be created for it (the file will be created upon saving with <kbd>C-x C-s</kbd> ), or it will be opened as expected. However, the old file will still be open! You can switch back to it using <kbd>C-x C-b</kbd> , entering in the file's name (or more technically, the buffer's name), then hitting <kbd>Enter</kbd> .
+- `C- (Control)`: Hold down the <kbd>Ctrl</kbd> key while pressing the specified key. For example, <kbd>C-h</kbd> means holding <kbd>Ctrl</kbd> and pressing <kbd>h</kbd>.
+- `M- (Meta)`: Hold down the <kbd>Meta</kbd> key (mapped to <kbd>Alt</kbd> on modern keyboards) or press <kbd>Esc</kbd> before the key. For example, <kbd>M-x</kbd> means holding <kbd>Alt</kbd> and pressing <kbd>x</kbd>.
+- `Sequential Key Combinations`: Sequences such as <kbd>C-x C-c</kbd> mean holding <kbd>Ctrl</kbd> and pressing <kbd>x</kbd>, then holding <kbd>Ctrl</kbd> and pressing <kbd>c</kbd>. Conveniently, <kbd>C-x C-c</kbd> is the command to save modified buffers and exit Emacs.
 
+
+**Opening, Editing, and Saving Files**
+
+You can also launch `Emacs` directly with a filename as an argument:
+
+```bash
+darkstar:~\$ emacs chapter_13.md
+```
+
+**Saving Files (C-x C-s)**
+
+To save your changes back to disk, press <kbd>C-x C-s</kbd>.
+
+If you are creating a new file, `Emacs` will prompt you for a filename in the minibuffer—the single text input line located at the very bottom of the screen. Type your desired filename and press <kbd>Enter</kbd>.
+
+If you make a mistake or want to cancel any active minibuffer prompt, press <kbd>C-g</kbd> to abort the current command.
+
+> Note: Tab completion is available in the minibuffer for filenames and command names.
+
+
+**Managing Files and Buffers (C-x C-f, C-x b, C-x C-b)**
+
+In `Emacs`, open files are held in memory structures called buffers.
+
+- Opening or Creating Files (C-x C-f): Press <kbd>C-x C-f</kbd> (find-file) to open another file within the same Emacs session. Enter the file path in the minibuffer. If the file does not exist, Emacs creates a new buffer for it, which will be written to disk when saved (<kbd>C-x C-s</kbd>).
+- Switching Buffers (C-x b): Opening a new file does not close previously opened files. To switch back to an open buffer, press <kbd>C-x b</kbd> (switch-to-buffer), type the buffer name in the minibuffer, and press <kbd>Enter</kbd>.
+- Listing All Buffers (C-x C-b): Press <kbd>C-x C-b</kbd> (list-buffers) to open a split window displaying all active buffers.
+
+>>>>>>>>>>Stop here
 ## 13.3 How to Move Around
 
 Like `vi` , `Emacs` is also older than the arrow keys on your keyboard. Also, like in `vi` , using the arrow keys to navigate files is also supported. While the `vi` movement keys are more ergonomic, `emacs` 's are more "mnemonic". However, it is still very possible to operate using the main `Emacs` keybindings quickly and efficiently. Here is a table of the basic movement keybindings:
