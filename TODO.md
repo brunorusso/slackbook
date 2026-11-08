@@ -23,10 +23,10 @@
  - [ ] Check if chapter 13 need improve. Is it necessary? (in progress)
  - [ ] Update chapter 14. Network
  - [ ] Update chapter 15. Wireless Network
- - [ ] Check if chapter 16 need improve (in progress)
+ - [ ] Check if chapter 16 need improve
  - [ ] Check if chapter 17 need improve.
- - [ ] Check if chapter 18 need improve
- - [ ] Check if chapter 19 need improve
+ - [ ] Check if chapter 18 need improve  (in progress)
+ - [ ] Check if chapter 19 need improve  (in progress)
  - [ ] New chapter about: liveslack
  - [ ] New chapter about: slackware docker image
  - [ ] New chapter about: kde/xfce
