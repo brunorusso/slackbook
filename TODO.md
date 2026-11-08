@@ -20,7 +20,7 @@
  - [X] Check if chapter 10 need improve
  - [ ] Check if chapter 11 need improve (in progress)
  - [X] Check if chapter 12 need improve
- - [ ] Check if chapter 13 need improve. Is it necessary?
+ - [ ] Check if chapter 13 need improve. Is it necessary? (in progress)
  - [ ] Update chapter 14. Network
  - [ ] Update chapter 15. Wireless Network
  - [ ] Check if chapter 16 need improve
