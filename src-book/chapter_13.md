@@ -64,74 +64,131 @@ In `Emacs`, open files are held in memory structures called buffers.
 - Switching Buffers (C-x b): Opening a new file does not close previously opened files. To switch back to an open buffer, press <kbd>C-x b</kbd> (switch-to-buffer), type the buffer name in the minibuffer, and press <kbd>Enter</kbd>.
 - Listing All Buffers (C-x C-b): Press <kbd>C-x C-b</kbd> (list-buffers) to open a split window displaying all active buffers.
 
->>>>>>>>>>Stop here
 ## 13.3 How to Move Around
 
-Like `vi` , `Emacs` is also older than the arrow keys on your keyboard. Also, like in `vi` , using the arrow keys to navigate files is also supported. While the `vi` movement keys are more ergonomic, `emacs` 's are more "mnemonic". However, it is still very possible to operate using the main `Emacs` keybindings quickly and efficiently. Here is a table of the basic movement keybindings:
+Like `vi`, `Emacs` predates dedicated arrow keys on standard computer keyboards. While modern implementations of `Emacs` fully support navigation via arrow keys, using native keyboard shortcuts allows you to move through files efficiently without taking your hands off the main typing row.
 
-| Command | Result |
+While `vi` movement keys (`h`, `j`, `k`, `l`) focus on ergonomic home-row positioning, `Emacs` movement keys are **mnemonic**—designed around the first letter of each corresponding motion:
+
+* **`f`** = **F**orward
+* **`b`** = **B**ackward
+* **`n`** = **N**ext line
+* **`p`** = **P**revious line
+
+Below is a reference of basic character and line movement keybindings:
+
+
+| Command | Action |
 | --- | --- |
-| C-f | Move the cursor one character to the right (forward) |
-| C-b | Move the cursor one character to the left (backward) |
-| C-n | Move the cursor one line down (next) |
-| C-p | Move the cursor one line up (previous) |
+| <kbd>C-f</kbd> | Move the cursor one character to the right (**f**orward) |
+| <kbd>C-b</kbd> | Move the cursor one character to the left (**b**ackward) |
+| <kbd>C-n</kbd> | Move the cursor one line down (**n**ext) |
+| <kbd>C-p</kbd> | Move the cursor one line up (**p**revious) |
 
-Of course, like with `vi` it is also possible to repeat these commands with a numeric argument. If you type in <kbd>M-1 M-0 C-p</kbd> , or <kbd>C-u 10 C-p</kbd> , the cursor will move ten lines up. If you type in <kbd>M-5 C-f</kbd> or <kbd>C-u 5 C-f</kbd> , the cursor will move five characters to the right.
+
+**Repeating Movement Commands**
+
+Just as with `vi`, you can repeat movement actions by passing a numeric multiplier:
+
+* **Using the Universal Argument (`C-u`):** Type <kbd>C-u</kbd> followed by a number and the movement command. For example, <kbd>C-u 10 C-p</kbd> moves the cursor up 10 lines, and <kbd>C-u 5 C-f</kbd> moves it 5 characters forward.
+* **Using Meta Digits (`M-`):** Hold the <kbd>Meta</kbd> (<kbd>Alt</kbd>) key while typing the numbers. For example, <kbd>M-1 M-0 C-p</kbd> moves the cursor 10 lines up, and <kbd>M-5 C-f</kbd> moves it 5 characters to the right.
+
+
 
 ## 13.4 Getting Help
 
-`Emacs` contains a great deal of documentation, to the point that it is often called a "self-documenting" editor. This is because it provides mechanisms for providing users with documentation while you are using it. Here are some useful functions that display documentation (they all start with <kbd>C-h</kbd> ):
 
-| Command | Result |
+`Emacs` contains an extensive built-in help system, to the point that it is often described as a "self-documenting" editor. This is because it provides interactive mechanisms to inspect keybindings, look up function descriptions, and search manual topics directly within your editing session without needing an external browser or terminal.
+
+All help commands share the **<kbd>C-h</kbd>** prefix. Below are some of the most useful documentation functions:
+
+
+| Command | Action |
 | --- | --- |
-| C-h f FUNCTION-NAME Enter | Show documentation for function FUNCTION-NAME |
-| C-h k C-x C-c | Show documentation for the function bound to the keys C-x C-c |
-| C-h t | Show the Emacs tutorial |
-| C-h ? | Show all help-related functions |
+| <kbd>C-h t</kbd> | Open the interactive **Emacs Tutorial** |
+| <kbd>C-h f</kbd> `FUNCTION-NAME` <kbd>Enter</kbd> | Display documentation for a specific function |
+| <kbd>C-h k</kbd> `KEY-SEQUENCE` | Describe the function bound to a key sequence (e.g., <kbd>C-h k C-x C-c</kbd>) |
+| <kbd>C-h ?</kbd> | Display a list of all available help options |
 
-<kbd>C-h t</kbd> is especially useful if you want or need practice using `Emacs` .
+
+The interactive tutorial launched by **<kbd>C-h t</kbd>** is especially recommended if you are new to `Emacs` and need hands-on practice with basic navigation and text manipulation commands.
+
 
 ## 13.5 Calling Functions
 
-As noted earlier, `Emacs` exports a large number of functions to for interactive use. Some of these, like those opening and saving files, are mapped to keys. Others (like the ones for moving to the beginning and end of lines) are not. To call them, you have to invoke them. Say we want to call the function "end-of-line". We would do this:
+As noted earlier, `Emacs` exposes a vast number of internal functions for interactive use. Many common actions—such as opening or saving files—are bound directly to keyboard shortcuts. However, thousands of other functions (such as toggling display modes or navigating to specific positions) are not bound to any default key combination.
 
-<kbd>M-x end-of-line Enter</kbd>
+To execute any interactive function by name, press **<kbd>M-x</kbd>** (*execute-extended-command*). This opens a prompt in the minibuffer at the bottom of the screen where you can type the function name and press <kbd>Enter</kbd>.
 
-And the cursor would move to the end of the line, as the function name suggests.
+For example, to move the cursor to the end of the current line using its function name, you would press:
+
+<kbd>M-x</kbd> `end-of-line` <kbd>Enter</kbd>
+
+The cursor immediately moves to the end of the line.
+
+> Note: Tab completion is fully supported in the minibuffer when typing function names after pressing <kbd>M-x</kbd>, making it easy to search for and run commands even if you only remember part of their name.
+
 
 ## 13.6 Emacs Cheat Sheet
 
-While Emacs can be simple to use, its scope can easily be overwhelming. Below are some useful Emacs commands. Some aspects have been simplified, most notably regarding text selection. These concepts, and more, are described the `Emacs` manual, and various on-line tutorials. Decent summaries can also be gleaned from web searches.
+While `Emacs` can be simple to use once you get the hang of basic concepts, its vast scope can easily feel overwhelming. Below is a categorized reference guide covering the most essential `Emacs` commands. 
 
-| Command | Result |
+> Note: Advanced features, detailed selection modes, and customization options are fully documented in the built-in `Emacs` manual (<kbd>C-h r</kbd>) and online tutorials.
+
+**Cursor Movement & Navigation**
+
+| Command | Action |
 | --- | --- |
-| C-f | Move the cursor one character to the right (forward) |
-| C-b | Move the cursor one character to the left (backward) |
-| C-n | Move the cursor one line down (next) |
-| C-p | Move the cursor one line up (previous) |
-| C-h f FUNCTION-NAME Enter | Show documentation for function FUNCTION-NAME |
-| C-h k C-x C-c | Show documentation for the function bound to the keys C-x C-c |
-| C-h t | Show the Emacs tutorial |
-| C-h ? | Show all help-related functions |
-| M-` | Access the Menu Bar |
-| C-g | Cancel the current operation. This is most useful when in the minibuffer. |
-| M-x FUNCTION-NAME Enter | Call the interactive function FUNCTION-NAME |
-| M-1 M-0 C-n | Move the cursor ten lines down |
-| C-u 10 C-n | Move the cursor ten lines down (same as above) |
-| M-x beginning-of-line | Move the cursor to the beginning of the current line |
-| M-x end-of-line | Move the cursor to the end of the current line |
-| M-> | Move the cursor to the end of the buffer |
-| M-< | Move the cursor to the beginning of the buffer |
-| C-k | Remove text from the cursor to the end of the line and place it into the kill ring |
-| C-space | Enter selection mode (use normal motion keys to move around). Press C-space again to leave it. |
-| C-w | While in selection mode, delete the selected region, and store the result into the kill ring |
-| M-w | While in selection mode, store the selected region into the kill ring. |
-| C-y | "Yanks" the contents of the kill ring and places them at the cursor's location |
-| C-/ | Undo the previous action. Unlike most other editors, this includes previous undo actions. |
-| insert | Enable or disable overwriting characters |
-| C-s asdf Enter | Forward incremental search for the string "asdf". Repeat C-s as needed to search for future items, or C-r (below) to search backwards. |
-| C-r asdf Enter | Backward incremental search for the string "asdf". Repeat C-r as needed to search for future items, or C-s (above) to search forwards. |
-| M-% old Enter new Enter | Search for each instance of "old" and prompt you to replace it with "new". You can force replacement of all items by typing "!" at the replacement prompt. |
-| C-x C-c | Exit Emacs, prompting you to save each unsaved buffer before doing so |
-| C-x C-s | Save the currrent buffer to its file |
-| C-x C-w new-file.txt Enter | Save the current buffer to a file "new-file.txt" |
+| <kbd>C-f</kbd> / <kbd>C-b</kbd> | Move cursor forward / backward one character |
+| <kbd>C-n</kbd> / <kbd>C-p</kbd> | Move cursor down / up one line |
+| <kbd>M-f</kbd> / <kbd>M-b</kbd> | Move cursor forward / backward one word |
+| <kbd>C-a</kbd> / <kbd>C-e</kbd> | Jump to the beginning / end of the current line |
+| <kbd>M-x beginning-of-line</kbd> | Move to beginning of current line (via function call) |
+| <kbd>M-x end-of-line</kbd> | Move to end of current line (via function call) |
+| <kbd>M-<</kbd> / <kbd>M-></kbd> | Jump to the beginning / end of the buffer |
+| <kbd>M-1 M-0 C-n</kbd> (or <kbd>C-u 10 C-n</kbd>) | Move down 10 lines (using numeric argument) |
+
+
+**Editing, Selection & Kill Ring (Copy / Cut / Paste)**
+
+| Command | Action |
+| --- | --- |
+| <kbd>C-Space</kbd> | Set mark to start text selection (press again to toggle selection mode) |
+| <kbd>C-w</kbd> | **Cut** (kill) selected region and store it in the kill ring |
+| <kbd>M-w</kbd> | **Copy** selected region into the kill ring |
+| <kbd>C-y</kbd> | **Paste** (yank) the contents of the kill ring at cursor position |
+| <kbd>C-k</kbd> | Kill text from cursor position to the end of the current line |
+| <kbd>C-/</kbd> | **Undo** previous action (includes stepping back through undo history) |
+| <kbd>Insert</kbd> | Toggle between Insert mode and Overwrite mode |
+| <kbd>C-g</kbd> | **Cancel** current operation or active minibuffer prompt |
+
+
+**Incremental Search & Replace**
+
+| Command | Action |
+| --- | --- |
+| <kbd>C-s</kbd> `text` <kbd>Enter</kbd> | Search **forward** incrementally for `text` (press <kbd>C-s</kbd> again for next match) |
+| <kbd>C-r</kbd> `text` <kbd>Enter</kbd> | Search **backward** incrementally for `text` (press <kbd>C-r</kbd> again for previous match) |
+| <kbd>M-%</kbd> `old` <kbd>Enter</kbd> `new` <kbd>Enter</kbd> | Query replace `old` with `new` (press <kbd>y</kbd> to replace, <kbd>n</kbd> to skip, <kbd>!</kbd> for all) |
+
+
+**Help, Commands & Menu Bar**
+
+| Command | Action |
+| --- | --- |
+| <kbd>C-h t</kbd> | Launch the interactive **Emacs Tutorial** |
+| <kbd>C-h f</kbd> `FUNCTION-NAME` <kbd>Enter</kbd> | Display documentation for a specific function |
+| <kbd>C-h k</kbd> `KEY-SEQUENCE` | Show documentation for the function bound to a key sequence |
+| <kbd>C-h ?</kbd> | Display all available help functions |
+| <kbd>M-x</kbd> `FUNCTION-NAME` <kbd>Enter</kbd> | Call an interactive function by name |
+| <kbd>M-`</kbd> | Access the top menu bar from terminal mode |
+
+
+**File & Session Management**
+
+| Command | Action |
+| --- | --- |
+| <kbd>C-x C-f</kbd> | Open (find) a file or create a new buffer |
+| <kbd>C-x C-s</kbd> | Save current buffer to disk |
+| <kbd>C-x C-w</kbd> `new-file.txt` <kbd>Enter</kbd> | "Save As" (write buffer contents to `new-file.txt`) |
+| <kbd>C-x C-c</kbd> | **Exit Emacs** (prompts to save modified buffers before quitting) |
