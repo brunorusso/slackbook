@@ -18,13 +18,14 @@ Unlike `vi`, `Emacs` operates more like a traditional editor by default. It is m
 `Emacs` can be started simply by running the `emacs` command in your terminal. When launched in a console without any arguments, `Emacs` displays a startup screen containing helpful documentation links and tutorial options.
 
 
-![image](img/emacs.png)
+![image](img/emacs-gui.png)
 
 If you are running the X Window System, `Emacs` may launch its graphical user interface (GUI) by default. If you prefer running it directly inside your terminal console, invoke it with the `-nw` (*no window*) flag:
 
 ```bash
 darkstar:~$ emacs -nw
 ```
+![image](img/emacs.png)
 
 While on the startup screen, you can navigate using the keyboard arrow keys. Underlined items are links that can be activated by moving the cursor over them and pressing <kbd>Enter</kbd>.
 
