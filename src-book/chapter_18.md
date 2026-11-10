@@ -49,7 +49,24 @@ To subscribe to the mailing list:
 subscribe slackware-security
 ```
 
-## 18.3 Upgrading Slackware Versions
+## 18.3 Slackware's Roadmap
+
+By default, Slackware does not follow a fixed business roadmap or a rigid release schedule, as target release dates in software development are often pure speculation. It is impossible to predict exactly how much time is required to integrate major upstream package updates, resolve complex dependencies, and thoroughly test system stability.
+
+As new packages and components are prepared for an upcoming release, they are continuously built and uploaded into the **-current** development tree. If the **-current** tree is temporarily frozen or unlinked on repository mirrors, it typically indicates that a new stable version of Slackware has just been officially released. A new **-current** tree is initialized shortly after each stable release to begin the next development cycle.
+
+
+## 18.4 Development version
+As noted earlier, the active development version of Slackware is publicly accessible within the **-current** directory across official repository mirrors.
+
+For 64-bit x86_64 architectures, the primary development tree can be browsed at:
+
+* **Slackware 64-bit `-current` Mirror:** [https://mirrors.slackware.com/slackware/slackware64-current/](https://mirrors.slackware.com/slackware/slackware64-current/)
+
+Users and testers who wish to follow ongoing changes, inspect new package additions, or update a testing machine can sync directly against this tree using mirrors, `rsync`, or package management tools configured for the **-current** branch.
+
+
+## 18.5 Upgrading Slackware Versions
 
 Upgrading from one major release of Slackware to another is considerably more complex than simply updating individual security patches. Each new release introduces widespread changes—and while many are minor, some structural changes can cause severe system breakage if you do not prepare for them properly.
 
@@ -80,7 +97,7 @@ After reviewing `CHANGES_AND_HINTS.TXT` and `UPGRADE.TXT`, many system administr
 Because every new version of Slackware introduces unique changes, static instructions in external guides quickly become outdated. **Always rely directly on the official documentation included on your Slackware installation media or repository mirror.**
 
 
-## 18.4 Upgrade Slackware Version
+## 18.6 Practical Upgrade Workflow
 
 After evaluating the benefits and risks of upgrading to a new Slackware version, you can proceed with the upgrade process. While the exact procedures may vary slightly between releases, the general workflow follows the official `UPGRADE.TXT` guidelines:
 
@@ -98,18 +115,3 @@ After evaluating the benefits and risks of upgrading to a new Slackware version,
 > **Warning:** Specific upgrade steps can vary depending on the release. Always read the official `UPGRADE.TXT` file included with your target Slackware version before performing an upgrade.
 
 
-## 18.5 Slackware's Roadmap
-
-By default, Slackware does not follow a fixed business roadmap or a rigid release schedule, as target release dates in software development are often pure speculation. It is impossible to predict exactly how much time is required to integrate major upstream package updates, resolve complex dependencies, and thoroughly test system stability.
-
-As new packages and components are prepared for an upcoming release, they are continuously built and uploaded into the **-current** development tree. If the **-current** tree is temporarily frozen or unlinked on repository mirrors, it typically indicates that a new stable version of Slackware has just been officially released. A new **-current** tree is initialized shortly after each stable release to begin the next development cycle.
-
-
-## 18.4 Development version
-As noted earlier, the active development version of Slackware is publicly accessible within the **-current** directory across official repository mirrors.
-
-For 64-bit x86_64 architectures, the primary development tree can be browsed at:
-
-* **Slackware 64-bit `-current` Mirror:** [https://mirrors.slackware.com/slackware/slackware64-current/](https://mirrors.slackware.com/slackware/slackware64-current/)
-
-Users and testers who wish to follow ongoing changes, inspect new package additions, or update a testing machine can sync directly against this tree using mirrors, `rsync`, or package management tools configured for the **-current** branch.
