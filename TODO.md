@@ -24,7 +24,7 @@
  - [ ] Update chapter 14. Networking
  - [ ] Update chapter 15. Wireless Networking
  - [ ] Check if chapter 16. Basic Networking Utilities - need improve. Add Curl
- - [ ] Check if chapter 17. Package Management - need improve.
+ - [ ] Check if chapter 17. Package Management - need improve (in progress)
  - [X] Check if chapter 18. Keeping Track of Updates
  - [ ] Check if chapter 19. The Linux Kernel - need improve  (in progress)
  - [X] New chapter about: 20. Slackware Live Edition
