@@ -63,7 +63,7 @@ xt_tcpudp              12288  3
 veth                   40960  0
 xt_conntrack           12288  3
 xt_MASQUERADE          12288  4
-nf_conntrack_netlink    57344  0
+nf_conntrack_netlink   57344  0
 ip6table_nat           12288  1
 ip6table_filter        12288  1
 ip6_tables             32768  2 ip6table_filter,ip6table_nat
@@ -115,154 +115,201 @@ darkstar:~# lsmod | grep fs
 darkstar:~#
 ```
 
-
->> Stop here
 ## 19.3 Compiling A Kernel and Why to do So
 
-Most Slackware users will never need to compile a kernel. The huge and generic kernels contain virtually all the support you will need.
+Most Slackware users will never need to compile a custom kernel. The stock **vmlinuz** kernel supplied by Slackware includes built-in support and modules for virtually all modern hardware configurations.
 
-However, some users may need to compile a kernel. If your computer contains bleeding edge hardware, a newer kernel may offer improved support. Sometimes a kernel patch my be available that corrects a problem you are experiencing. In these cases a kernel compile is probably warranted. Users who simply want the latest and greatest version or who believe using a custom compiled kernel will give them greater performance can certainly upgrade, but are unlikely to actually notice any major changes.
+However, some users may still need to compile a kernel. If your computer contains bleeding-edge hardware, a newer kernel version may offer improved support. In other cases, a specific kernel patch may be available to correct an issue you are experiencing. Users who simply want the latest kernel version or believe that a custom-compiled kernel will yield better performance can certainly build one, though major performance differences are rarely noticeable on modern systems.
 
-If you still think compiling your own kernel is something you want or need to do, this section should walk you through the many steps. Compiling and installing a kernel is not that difficult, but there are a number of mistakes that can be made along the way, many of which can prevent your computer from booting and cause major frustration.
 
-The first step is ensuring you have the kernel source code installed on your system. The kernel source package is included in the "k" disk set in the Slackware installer, or you can download another version from http://www.kernel.org/ . Traditionally, the kernel source is located in `/usr/src/linux` , a symbolic link that points to the specific kernel release used, but this is by no means set in stone. You can place the kernel source code virtually anywhere without encountering any problems.
+If you decide that compiling a custom kernel is necessary for your environment, this section walks you through each step. Compiling and installing a kernel is straightforward, but several critical mistakes can render your system unbootable.
+
+
+**Obtaining Kernel Source Code**
+
+The first step is ensuring the kernel source code is installed on your system. The official kernel source package is included in the **`k`** package series in the Slackware installer, or you can download vanilla source archives directly from [https://www.kernel.org/](https://www.kernel.org/). I recommend you use the package.
+
+For the examples in this section, we will use **kernel 7.2.14**.
+
+Traditionally, the kernel source resides in `/usr/src/linux`, which is usually a symbolic link pointing to the specific installed kernel release directory. However, this path is not mandatory; you can extract and build kernel source code inside any directory where you have write permissions.
 
 ```text
-
-darkstar:~# ls -l /usr/src 
-lrwxrwxrwx 1 root root 14 2009-07-22 19:59 linux -> linux-2.6.29.6/ 
-drwxr-xr-x 23 root root 4096 2010-03-17 19:00 linux-2.6.29.6/
+root@darkstar:/usr/src# ls -l
+total 16
+drwxr-xr-x 3 root root 4096 Oct 13 15:10 bcachefs-1.39.7/
+lrwxrwxrwx 1 root root   10 Nov 14 14:17 gmock -> googlemock/
+drwxr-xr-x 6 root root 4096 Nov 14 14:17 googlemock/
+drwxr-xr-x 7 root root 4096 Nov 14 14:17 googletest/
+lrwxrwxrwx 1 root root   10 Nov 14 14:17 gtest -> googletest/
+lrwxrwxrwx 1 root root   12 Nov 14 14:15 linux -> linux-7.2.14/
+drwxr-xr-x 26 root root 4096 Oct 30 11:49 linux-7.2.14/
 
 ```
 
-The most difficult part of any kernel compile is the kernel configuration. There are hundreds of options, many of which can optionally be compiled into modules. This means there are thousands of ways to configure a kernel. Fortunately, there are a few handy tricks that can keep you from running into too much trouble. The kernel configuration file is `.config` . If you are very brave, you can manually edit this file with a text editor, but I highly recommend you use the kernel's built-in tools for manipulating `.config` .
+**Base Kernel Configuration (`.config`)**
 
-Unless you are very familiar with configuring kernels, you should always start with a solid base configuration and modify it. This prevents you from skipping an important option that might force you to compile the kernel again and again until you get it right. The best kernel `.config` files to start with are those used by Slackware's default kernels. You can find them on your Slackware install disks or at your favorite mirror in the `kernels/` directory.
+The most difficult part of compiling a kernel is the configuration process. With thousands of configurable drivers, subsystems, and options, configuring a kernel from scratch can be overwhelming. 
 
-```text
+The entire kernel configuration is stored in a hidden file named `.config` located at the root of the kernel source directory. While `.config` is a plain-text file, manually editing it with a text editor is strongly discouraged; instead, you should always rely on the kernel's built-in interactive configuration tools.
 
-darkstar:~# mount /mnt/cdrom 
-darkstar:~# cd /mnt/cdrom/kernels 
-darkstar:/mnt/cdrom/kernels# ls 
-VERSIONS.TXT huge.s/ generic.s/ speakup.s/ 
-darkstar:/mnt/cdrom/kernels# ls genric.s System.map.gz bzImage config
+Unless you are an experienced kernel developer, you should always start with a known, working base configuration and modify it as needed. Building upon an established base prevents you from accidentally omitting critical hardware drivers or filesystem support required to boot your machine.
 
+The best starting points for a solid base `.config` are the stock configurations provided by Slackware:
+
+* **Installed System:** The active configuration is saved directly in `/boot/config` (or versioned files such as `/boot/config-generic-7.2.14`).
+* **Running Kernel (`/proc` filesystem):** If supported by your active kernel, the exact running configuration can be extracted from `/proc/config.gz`.
+* **Installation Media & Mirrors:** Stock configurations can also be found on the Slackware installation media or repository mirrors within the `kernels/` directory.
+
+> Note: In this example `7.2.14` is a version of kernel that I have Installed in my computer. This number can change.
+
+
+**Setting Up .config from /boot**
+
+The most difficult part of compiling a kernel is the configuration process. The entire configuration is stored in a hidden file named `.config` located at the root of the kernel source directory. While `.config` is a plain-text file, manually editing it with a text editor is strongly discouraged.
+
+Unless you are an experienced kernel developer, you should always start with a known, working base configuration. The most practical and reliable way is to copy the active kernel configuration file directly from /boot into your kernel source root directory:
+
+```bash
+darkstar:~# cp /boot/config /usr/src/linux/.config
 ```
 
-You can replace the default `.config` file easily by copying or downloading the `config` file for the kernel you wish to use as a base. Here I am using Slackware's recommended generic.s kernel for a base, but you may wish to use the huge.s config file. The generic kernel builds more things as modules and thus creates a smaller kernel image, but it usually requires the use of an initrd.
+> Note: On systems with multiple versioned configuration files in `/boot`, copy the specific file matching your active kernel, such as `cp /boot/config-generic-7.2.14 /usr/src/linux/.config`.
 
-```text
 
-darkstar:/mnt/cdrom/kernels# cp generic.s/config /usr/src/linux/.config
+Alternatively, if your running kernel was compiled with `/proc/config.gz support`, you can extract the active configuration using `zcat`:
 
-```
-**Important**
-
-The Slackware kernel file lacks the "dot" while the kernel file includes it. If you forget, or simply copy the `config` to `/usr/src` whatever `.config` file was already present will be used instead.
-
-If you want to use the configuration for the currently running kernel as your base, you may be able to locate it at `/proc/config.gz` . This is a special kernel-related file that includes the entire kernel configuration in a compressed format and requires that your kernel was built to support it.
-
-```text
-
+```bash
 darkstar:~# zcat /proc/config.gz > /usr/src/linux/.config
-
 ```
 
-Now that we've created a solid base configuration, it's time to make any configuration changes we want. The entire kernel build process from configuration to compilation is performed with the `make` (1) command and special arguments to it. Each argument performs a different function.
 
-If you are upgrading to a newer kernel release, you will definitely want to use the `oldconfig` argument. This will step through your base `.config` and look for missing elements that usually indicates that the new kernel release contains additional options. Since options are added at virtually every kernel release, this is generally a good thing to do.
+**Customizing Options with make menuconfig**
 
-```text
+Once your `.config` base file is in place, you can customize hardware options, filesystem support, and kernel subsystems using the interactive terminal interface:
 
-darkstar:/usr/src/linux# make oldconfig 
-scripts/kconfig/conf -o arch/x86/Kconfig 
-* 
-* Restart config... 
-* 
-* 
-* File systems 
-* 
-Second extended fs support (EXT2_FS) [M/n/y/?] m 
-    Ext2 extended attributes (EXT2_FS_XATTR) [N/y/?] n 
-    Ext2 execute in place support (EXT2_FS_XIP) [N/y/?] n 
-Ext3 journalling file system support (EXT3_FS) [M/n/y/?] m 
-    Ext3 extended attributes (EXT3_FS_XATTR) [Y/n/?] y 
-        Ext3 POSIX Access Control Lists (EXT3_FS_POSIX_ACL) [Y/n/?] y 
-        Ext3 Security Labels (EXT3_FS_SECURITY) [Y/n/?] y 
-The Extended 4 (ext4) filesystem (EXT4_FS) [N/m/y/?] (NEW) m
-
+```bash
+darkstar:/usr/src/linux# make menuconfig
 ```
 
-Here you can see that I the new kernel I am compiling has added support for a new filesystem: ext4. `oldconfig` has gone through my original configuration, kept all the old options exactly as they were set, and prompted me on what to do with new options. Typically it is save to choose the default option, but you may wish change this. `oldconfig` is a very handy tool for presenting you with only new configuration options, making it ideal for users who simply have to try out the latest kernel release.
+Running `make menuconfig` opens an `ncurses-driven`, menu-based interface. It allows you to navigate submenus using arrow keys, toggle built-in drivers ([*]), loadable modules ([M]), or disabled features ([ ]), and save your updated `.config` file when finished.
 
-For more serious configuration tasks, there are a multitude of options. The linux kernel can be configured in three primary ways. The first is `config` , which will step through each and every option one by one and ask what you would like to do. This is so tedious that hardly anyone ever uses it anymore.
+> Note: If you are upgrading to a newer upstream kernel version using an existing base configuration, running make oldconfig beforehand will prompt you specifically for any newly introduced kernel features.
 
-```text
 
-darkstar:/usr/src/linux# make config 
-scripts/kconfig/conf arch/x86/Kconfig 
-* 
-* Linux Kernel Configuration 
-* 
-* 
-* General setup 
-* 
-Prompt for development and/or incomplete code/drivers (EXPERIMENTAL) [Y/n/?] Y 
-Local version - append to kernel release (LOCALVERSION) [] -test 
-Automatically append version information to the version string (LOCALVERSION_AUTO) [N/y/?] n 
-Support for paging of anonymous memory (swap) (SWAP) [Y/n/?]
+![image](img/kernel-menuconfig.png)
 
-```
 
-Fortunately, there are two much easier ways to configure your kernel, `menuconfig` and `xconfig` . Both of these create a menu-driven program that lets you select and de-select options without having to step through each one. `menuconfig` is the most commonly used method, and the one I recommend. `xconfig` is only useful if you are attempting to compile the kernel from a graphical user interface within `X` . Both are so similar however, that we are only going to document `menuconfig` .
+**Compiling and Installing the Kernel**
 
-Running `make menuconfig` from a terminal will present you with the friendly curses-driven interface you see below. Each kernel section is given its own submenu, and you can navigate with the arrow keys.
 
-![image](img/make-menuconfig-w.png)
+Once configuration is complete, compile the compressed kernel image (bzImage) and its loadable modules:
 
-**Warning**
-
-If you are compiling a kernel that is the same release as the stock Slackware kernel, you must set the "Local version" option. This is found on the "General setup" submenu. Failure to set this will result in your kernel compile over-writing all the modules used by the stock kernels. This can quickly render your system unbootable.
-
-Once you've finished configuring the kernel, it's time to begin compiling it. There are many different methods for this, but the most reliable is to use `bzImage` . When you pass this argument to `make` , the kernel compilation will begin and you will see lots of data scroll through the terminal until either the compile process is complete or a fatal error is encountered.
-
-```text
-
-darkstar:/usr/src/linux# make bzImage 
-scripts/kconfig/conf -s arch/x86/Kconfig 
-    CHK include/linux/version.h 
-    CHK include/linux/utsrelease.h 
-    SYMLINK include/asm -> include/asm-x86 
-    CALL scripts/checksyscalls.sh 
-    CC scripts/mod/empty.o 
-    HOSTCC scripts/mod/mk_elfconfig 
-    MKELF scripts/mod/elfconfig.h 
-    HOSTCC scripts/mod/file2alias.o 
-... many hundreds of lines ommitted ...
-
-```
-
-If the process ends in an error, you should check your kernel configuration first. Compile errors are usually caused by a fault `.config` file. Assuming everything went alright, we're still not entirely finished, as we need to build the modules.
-
-```text
-
-darkstar:/usr/src/linux# make modules 
-    CHK include/linux/version.h 
-    CHK include/linux/utsrelease.h 
-    SYMLINK include/asm -> include/asm-x86 
-    CALL scripts/checksyscalls.sh 
-    HOSTCC scripts/mod/file2alias.o 
-... many thousands of lines omitted ...
-
-```
-
-If both the kernel and the modules compiles finished sucessfully, we're ready to install them. The kernel image needs to be copied into a safe location, typically the `/boot` directory, and you should give it a unique name to avoid overwriting any other kernel images located there. Traditionaly kernel images are named `vmlinuz` with the kernel release and local version appended.
-
-```text
-
-darkstar:/usr/src/linux# cat arch/x86/boot/bzImage > /boot/vmlinuz-release_number-local_version 
+```bash
+darkstar:/usr/src/linux# make -j$(nproc)
 darkstar:/usr/src/linux# make modules_install
-
+darkstar:/usr/src/linux# cp arch/x86/boot/bzImage /boot/vmlinuz-7.2.14-custom
+darkstar:/usr/src/linux# cp System.map /boot/System.map-7.2.14-custom
+darkstar:/usr/src/linux# cp .config /boot/config-7.2.14-custom
 ```
 
-Once these steps have been completed, you will have a new kernel image located under `/boot` and a new kernel modules directory under `/lib/modules` . In order to use this new kernel, you will need to edit `lilo.conf` , create an initrd for it (only if you need to load one or more of this kernel's modules to boot), and run `lilo` to update the boot loader. When you reboot, if all went according to plan, you should have an option to boot with your newly compiled kernel. If something went wrong, you may be spending some time fixing the problem.
+> Note: The `-j$(nproc)` flag tells make to compile using all available CPU cores in parallel, significantly reducing build times.
+
+
+**Generating the Initial Ramdisk (initrd)**
+
+If your root partition or storage controller drivers (such as NVMe or ext4) are compiled as modules, generate an initial ramdisk image for your custom kernel:
+
+```bash
+darkstar:~# mkinitrd -c -k 7.2.14 -f ext4 -r /dev/nvme0n1p2 -m nvme:ext4 -o /boot/initrd-custom.gz
+```
+
+
+**Configuring the Bootloader for NVMe Drives (LILO vs. ELILO)**
+
+On modern NVMe storage drives, device nodes follow the `/dev/nvmeXnY` naming scheme (for example, `/dev/nvme0n1`), with partitions designated by a `p` suffix (such as `/dev/nvme0n1p1` for the EFI System Partition and `/dev/nvme0n1p2` for the Linux root `/` partition).
+
+After compiling and installing your custom kernel, update your bootloader configuration to add an entry for the new kernel image while keeping the stock kernel entry intact for system recovery.
+
+
+**Configuring LILO (`/etc/lilo.conf`)**
+
+If your system uses traditional BIOS/CSM boot with LILO, edit `/etc/lilo.conf` to append an entry for your custom kernel:
+
+```text
+# Global Settings
+boot = /dev/nvme0n1
+prompt
+timeout = 50
+vga = normal
+
+# Stock Kernel Entry (Retain for Recovery)
+image = /boot/vmlinuz
+    root = /dev/nvme0n1p2
+    initrd = /boot/initrd.gz
+    label = Slack-Stock
+    read-only
+
+# Custom Compiled Kernel Entry
+image = /boot/vmlinuz-7.2.14-custom
+    root = /dev/nvme0n1p2
+    initrd = /boot/initrd-custom.gz
+    label = Slack-Custom
+    read-only
+```
+
+> Important: Whenever you modify `/etc/lilo.conf`, you must execute the lilo command as root to write the changes to the boot sector map:
+
+```bash
+darkstar:~# lilo
+```
+
+
+**Configuring ELILO (elilo.conf — UEFI Boot)**
+
+
+If your system boots using UEFI firmware, Slackware manages the startup process via ELILO. Because UEFI firmware reads files directly from the VFAT-formatted EFI System Partition (ESP), both the custom kernel binary and its matching initrd image must be copied into the ELILO directory located under /boot/efi.
+
+- **Step 1**: Copy Kernel and initrd Images to the ESP
+
+```bash
+darkstar:~# cp /boot/vmlinuz-7.2.14-custom /boot/efi/EFI/Slackware/vmlinuz-custom
+darkstar:~# cp /boot/initrd-custom.gz /boot/efi/EFI/Slackware/initrd-custom.gz
+```
+
+
+
+- **Step 2**: Edit /boot/efi/EFI/Slackware/elilo.conf
+
+> Note: File paths inside elilo.conf are relative to the directory where elilo.conf resides on the ESP.
+
+```bash
+darkstar:~# vi /boot/efi/EFI/Slackware/elilo.conf
+
+chooser=simple
+delay=1
+timeout=1
+
+# Stock Kernel Entry (Retain for Recovery)
+image=vmlinuz
+    label=vmlinuz
+    initrd=initrd.gz
+    read-only
+    append="root=/dev/sda4 vga=normal ro"
+
+# Custom Compiled Kernel Entry
+image=vmlinuz-custom
+    label=vmlinuz-custom
+    initrd=initrd-custom.gz
+    read-only
+    append="root=/dev/sda4 vga=normal ro"
+```
+
+> Note for ELILO: Unlike LILO, ELILO does not require running an updater binary after saving changes. The UEFI firmware reads elilo.conf directly from the EFI FAT partition during system startup.
+
+After reboot the machine, you'll select que kernel in boot menu, like you can show in the image below.
+
+![image](img/boot-choice-custom-kernel.png)
+
+
+
+
