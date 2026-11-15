@@ -1,3 +1,6 @@
+2026-11-15
+- Chapter-13 update, brunorusso
+- Chapter-20 slackware live - new, brunorusso
 2026-11-10
 - Chapter-18 update, brunorusso
 2026-11-08

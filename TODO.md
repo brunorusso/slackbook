@@ -20,14 +20,14 @@
  - [X] Check if chapter 10 need improve
  - [X] Check if chapter 11 need improve
  - [X] Check if chapter 12 need improve
- - [ ] Check if chapter 13 need improve. Is it necessary? (in progress)
+ - [X] Check if chapter 13 need improve. Is it necessary? Yes
  - [ ] Update chapter 14. Network
  - [ ] Update chapter 15. Wireless Network
- - [ ] Check if chapter 16 need improve
+ - [ ] Check if chapter 16 need improve. Add Curl
  - [ ] Check if chapter 17 need improve.
  - [X] Check if chapter 18 need improve
  - [ ] Check if chapter 19 need improve  (in progress)
- - [ ] New chapter about: liveslack
+ - [X] New chapter about: slackware live
  - [ ] New chapter about: slackware docker image
  - [ ] New chapter about: kde/xfce
  - [ ] New chapter about: bluetooth
