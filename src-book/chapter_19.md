@@ -201,19 +201,23 @@ Running `make menuconfig` opens an `ncurses-driven`, menu-based interface. It al
 
 **Compiling and Installing the Kernel**
 
-
-Once configuration is complete, compile the compressed kernel image (bzImage) and its loadable modules:
+Once configuration is complete, compile the compressed kernel image (bzImage) and its loadable modules in a single step:
 
 ```bash
 darkstar:/usr/src/linux# make -j$(nproc)
+```
+
+> Note: The `-j$(nproc)` flag tells make to compile using all available CPU cores in parallel, significantly reducing build times.
+
+
+After compilation completes without errors, install the kernel modules into `/lib/modules/` and copy the newly generated kernel binary, symbol map, and configuration file into `/boot`:
+
+```bash
 darkstar:/usr/src/linux# make modules_install
 darkstar:/usr/src/linux# cp arch/x86/boot/bzImage /boot/vmlinuz-7.2.14-custom
 darkstar:/usr/src/linux# cp System.map /boot/System.map-7.2.14-custom
 darkstar:/usr/src/linux# cp .config /boot/config-7.2.14-custom
 ```
-
-> Note: The `-j$(nproc)` flag tells make to compile using all available CPU cores in parallel, significantly reducing build times.
-
 
 **Generating the Initial Ramdisk (initrd)**
 
@@ -224,11 +228,13 @@ darkstar:~# mkinitrd -c -k 7.2.14 -f ext4 -r /dev/nvme0n1p2 -m nvme:ext4 -o /boo
 ```
 
 
-**Configuring the Bootloader for NVMe Drives (LILO vs. ELILO)**
+**Configuring the Bootloader for NVMe Drives**
 
 On modern NVMe storage drives, device nodes follow the `/dev/nvmeXnY` naming scheme (for example, `/dev/nvme0n1`), with partitions designated by a `p` suffix (such as `/dev/nvme0n1p1` for the EFI System Partition and `/dev/nvme0n1p2` for the Linux root `/` partition).
 
-After compiling and installing your custom kernel, update your bootloader configuration to add an entry for the new kernel image while keeping the stock kernel entry intact for system recovery.
+
+After compiling the kernel and generating the `initrd`, update your bootloader configuration to register the new custom kernel while retaining the stock kernel entry as a safe recovery option.
+
 
 
 **Configuring LILO (`/etc/lilo.conf`)**
@@ -266,8 +272,8 @@ darkstar:~# lilo
 
 **Configuring ELILO (elilo.conf — UEFI Boot)**
 
+If your system boots using UEFI firmware, Slackware manages the startup process via ELILO. Because UEFI firmware reads files directly from the VFAT-formatted EFI System Partition (ESP), both the custom kernel binary and its matching `initrd-custom.gz` image must be copied into the ELILO directory located under `/boot/efi/EFI/Slackware/`.
 
-If your system boots using UEFI firmware, Slackware manages the startup process via ELILO. Because UEFI firmware reads files directly from the VFAT-formatted EFI System Partition (ESP), both the custom kernel binary and its matching initrd image must be copied into the ELILO directory located under /boot/efi.
 
 - **Step 1**: Copy Kernel and initrd Images to the ESP
 
@@ -304,9 +310,11 @@ image=vmlinuz-custom
     append="root=/dev/sda4 vga=normal ro"
 ```
 
-> Note for ELILO: Unlike LILO, ELILO does not require running an updater binary after saving changes. The UEFI firmware reads elilo.conf directly from the EFI FAT partition during system startup.
+> Note for ELILO: Unlike LILO, ELILO does not require running an updater binary after saving changes. The UEFI firmware reads `elilo.conf` directly from the EFI FAT partition during system startup.
 
-After reboot the machine, you'll select que kernel in boot menu, like you can show in the image below.
+
+
+After rebooting your system, select your custom kernel from the boot menu, as shown in the image below:
 
 ![image](img/boot-choice-custom-kernel.png)
 
