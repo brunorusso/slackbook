@@ -11,23 +11,23 @@
  - [X] Update chapter 1. About slackware
  - [ ] Update chapter 2. Installation to new slackware version, maybe 16.0. Add information about gdisk
  - [ ] Update chapter 3. Booting add information about nvme
- - [X] Check if chapter 4 need improve
- - [X] Check if chapter 5 need improve
- - [X] Check if chapter 6 need improve
- - [ ] Update chapter 7 X windows has any updates like wayland
- - [ ] Check if chapter 8 need improve
- - [ ] Check if chapter 9 need improve
- - [X] Check if chapter 10 need improve
- - [X] Check if chapter 11 need improve
- - [X] Check if chapter 12 need improve
- - [X] Check if chapter 13 need improve. Is it necessary? Yes
- - [ ] Update chapter 14. Network
- - [ ] Update chapter 15. Wireless Network
- - [ ] Check if chapter 16 need improve. Add Curl
- - [ ] Check if chapter 17 need improve.
- - [X] Check if chapter 18 need improve
- - [ ] Check if chapter 19 need improve  (in progress)
- - [X] New chapter about: slackware live
+ - [X] Check if chapter 4. Basic Shell Commands
+ - [X] Check if chapter 5. The Bourne Again Shell
+ - [X] Check if chapter 6. Process Control
+ - [ ] Update chapter 7. The X Window System -  X windows has any updates like wayland
+ - [ ] Check if chapter 8. Printing - need improve
+ - [ ] Check if chapter 9. Users and Groups - need improve
+ - [X] Check if chapter 10. Filesystem Permissions
+ - [X] Check if chapter 11. Working with Filesystems
+ - [X] Check if chapter 12. vi
+ - [X] Check if chapter 13. Emacs
+ - [ ] Update chapter 14. Networking
+ - [ ] Update chapter 15. Wireless Networking
+ - [ ] Check if chapter 16. Basic Networking Utilities - need improve. Add Curl
+ - [ ] Check if chapter 17. Package Management - need improve.
+ - [X] Check if chapter 18. Keeping Track of Updates
+ - [ ] Check if chapter 19. The Linux Kernel - need improve  (in progress)
+ - [X] New chapter about: 20. Slackware Live Edition
  - [ ] New chapter about: slackware docker image
  - [ ] New chapter about: kde/xfce
  - [ ] New chapter about: bluetooth
