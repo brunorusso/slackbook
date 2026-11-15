@@ -60,20 +60,17 @@ Modules in `/liveslak/system/`, `/liveslak/addons/`, and `/liveslak/optional/` f
 
 ## 20.3 Available ISO Variants (Flavors)
 
-The `liveslak` framework supports building multiple official ISO variants tailored to different hardware constraints and workflow requirements:
+The flagship **Slackware Live Edition** (based on Slackware `-current`) is the most comprehensive and feature-complete ISO variant. It delivers a full Slackware system pre-packaged with a rich selection of desktop environments, window managers, and display servers out-of-the-box, allowing you to choose your preferred graphical session directly from the login manager:
 
-| Variant Name | Target Desktop Environment | ISO Size | Description & Key Features |
-| :--- | :--- | :--- | :--- |
-| **`SLACKWARE`** | KDE Plasma | ~4.5 GB | Complete 64-bit Slackware installation containing all official package series. |
-| **`XFCE`** | XFCE (with XDM) | ~1.1 GB | Lightweight, compact edition designed to fit on 1 GB USB drives; ideal for older hardware. |
-| **`LEAN`** | Minimal Plasma | ~2.5 GB | Reduced package set based on Plasma Desktop without extra heavyweight applications. |
-| **`DAW`** | Plasma Desktop | ~3.6 GB | Digital Audio Workstation flavor loaded with digital audio, MIDI, and music production tools. |
-| **`MATE`** | MATE (GNOME 2 fork) | ~4.2 GB | Replaces KDE Plasma with the MATE desktop environment. |
-| **`CINNAMON`** | Cinnamon | ~4.2 GB | Replaces KDE Plasma with the Cinnamon desktop environment. |
+* **KDE Plasma:** The default, feature-rich desktop environment for modern workstations.
+* **XFCE:** A fast, highly efficient desktop environment ideal for daily use and lighter hardware.
+* **WindowMaker:** A classic, ultra-lightweight NeXTSTEP-like window manager for maximum speed.
+* **labwc:** A lightweight Wayland stacking compositor inspired by Openbox, bringing modern Wayland support out-of-the-box.
 
-*(Note: Legacy variants such as `DLACKWARE` and `STUDIOWARE` were discontinued after Slackware 14.2).*
+In addition to traditional X11 display sessions, modern Slackware Live builds include native **Wayland** support for compatible desktop environments and compositors.
 
----
+> **Official Documentation Note:** For specialized builds, historical flavors, or architecture-specific ISO images, consult the official documentation page at [https://docs.slackware.com/slackware:liveslak#iso_variants](https://docs.slackware.com/slackware:liveslak#iso_variants).
+
 
 ## 20.4 Downloading Slackware Live
 
@@ -90,14 +87,36 @@ Always verify the downloaded ISO file against its provided MD5 checksum prior to
 darkstar:~$ md5sum -c slackware64-live-current.iso.md5
 ```
 
----
+## 20.5 Starting Slack Live
 
-## 20.5 Booting and Hardware Compatibility
+After downloading the ISO image and writing it to a bootable USB flash drive or DVD, boot your machine from the live media.
+
+Upon startup, the initial Slackware Live boot menu will appear, as shown below:
+
+![image](img/slackware-live-boot-menu.png)
+
+
+If no key is pressed within 30 seconds, the system will automatically boot into the default desktop environment and present the graphical login manager, as shown below:
+
+
+![image](img/slackware-live-login-menu.png)
+
+
+Once logged in, you have a fully functional Slackware Live system ready for use. The screenshot below shows a desktop session running KDE Plasma:
+
+
+![image](img/slackware-live-kde-screen.png)
+
+
+Notice the **Install Slackware** icon located directly on the desktop. Double-clicking this shortcut launches the `setup2hd` utility, allowing you to permanently install Slackware onto your local hard drive or NVMe SSD directly from the live environment.
+
+
+## 20.6 Booting and Hardware Compatibility
 
 Slackware Live Edition ISOs are **hybrid ISOs**, meaning they can be burned directly to optical DVDs or copied verbatim to raw USB block devices using `dd` or `cp`:
 
 ```text
-darkstar:~# dd if=slackware64-live-xfce-current.iso of=/dev/sdX bs=1M status=progress; sync
+darkstar:~# dd if=slackware64-live-current.iso of=/dev/sdX bs=1M status=progress; sync
 ```
 
 ### BIOS Booting (Syslinux)
@@ -119,215 +138,3 @@ Starting with `liveslak-1.5.0`, 64-bit Slackware Live ISOs include full support 
    ```text
    darkstar:~# mokutil --import liveslak.der
    ```
-
----
-
-## 20.6 Transferring to USB with Persistence (`iso2usb.sh`)
-
-While `dd`-ing an ISO to a USB drive creates a functional bootable drive, it results in an immutable read-only system. The `iso2usb.sh` script transforms a raw USB drive into a fully persistent, multi-partition Slackware Live system.
-
-### USB Disk Partition Layout
-
-Running `iso2usb.sh` wipes and partitions the target USB device into three (or four) partitions:
-
-1. **Partition 1 (1 MB FAT):** Reserved for alternative bootloaders or storing LUKS keyfiles.
-2. **Partition 2 (100 MB VFAT):** EFI System Partition (ESP) containing GRUB2, Syslinux, kernels, and `initrd`.
-3. **Partition 3 (Linux ext4):** Occupies remaining free space; stores `/liveslak` SquashFS modules, persistent system changes, and user files.
-4. **Partition 4 (Optional):** Reserved custom unformatted partition specified via `-y|--layout`.
-
-### `iso2usb.sh` Command Reference
-
-```text
-darkstar:~# ./iso2usb.sh -i <path-to-iso> -o /dev/sdX [options]
-```
-
-Key command-line parameters include:
-
-* **`-i|--infile <file>`:** Full path to the input Slackware Live ISO file.
-* **`-o|--outdev <device>`:** Target USB device node (e.g., `/dev/sdX`—specify the whole drive, not a partition).
-* **`-c|--crypt <size|perc>`:** Creates a **LUKS-encrypted `/home`** partition/container (e.g., `-c 2G`, `-c 25%`).
-* **`-C|--cryptpersistfile <size|perc>`:** Creates a **LUKS-encrypted persistence container** file instead of a plain directory.
-* **`-P|--persistfile`:** Creates an unencrypted sparse container file for persistence (useful on VFAT file systems).
-* **`-F|--filesystem <fs>`:** Specifies file system type for Linux partitions (`ext4` [default], `btrfs`, `xfs`, `f2fs`).
-* **`-r|--refresh`:** Refreshes system modules on an existing Live USB without wiping user data or reformatting.
-* **`-w|--wait <seconds>`:** Increases USB storage detection delay during boot (essential for slow USB media).
-
-### Practical `iso2usb.sh` Examples
-
-* **Create a standard Live USB with encrypted `/home` (750 MB):**
-  ```text
-  darkstar:~# ./iso2usb.sh -i slackware64-live-current.iso -o /dev/sdX -c 750M -w 10
-  ```
-* **Create a fully encrypted USB (30% space for LUKS `/home`, 500 MB LUKS persistence):**
-  ```text
-  darkstar:~# ./iso2usb.sh -i slackware64-live-current.iso -o /dev/sdX -c 30% -C 500M
-  ```
-* **Refresh system modules on an existing Live USB drive:**
-  ```text
-  darkstar:~# ./iso2usb.sh -i slackware64-live-current.iso -r -s
-  ```
-
----
-
-## 20.7 Direct ISO Booting and Ventoy Integration (`isocomp.sh`)
-
-Slackware Live supports booting directly from an ISO image stored on a local hard drive or multiboot USB drive (such as **Ventoy**).
-
-### Booting ISO Files via GRUB2
-
-To boot a downloaded ISO directly from a local partition without extracting it, add an entry to `/boot/grub/grub.cfg`:
-
-```text
-menuentry "Slackware Live ISO (XFCE)" {
-    set iso='/data/ISOS/slackware64-live-xfce-current.iso'
-    set bootparms='load_ramdisk=1 prompt_ramdisk=0 rw kbd=us tz=America/New_York lang=en_US'
-    search -f $iso --set=root
-    loopback loop $iso
-    linux (loop)/boot/generic livemedia=scandev:$iso $bootparms
-    initrd (loop)/boot/initrd.img
-}
-```
-
-### Adding Persistence to ISO Booting with `isocomp.sh`
-
-Because ISO files are inherently read-only, booting directly from an ISO normally lacks persistence. The companion script **`isocomp.sh`** overcomes this by generating encrypted LUKS container files (`.icc`) and directory structures alongside the ISO file on disk.
-
-#### Common `isocomp.sh` Operations
-
-* **Create a 2 GB encrypted persistence container for a Ventoy ISO:**
-  ```text
-  darkstar:~# ./isocomp.sh -p /mnt/Ventoy/livefiles/persistence.icc -P 2G
-  ```
-* **Create a 4 GB encrypted `/home` container:**
-  ```text
-  darkstar:~# ./isocomp.sh -l /mnt/Ventoy/livefiles/slhome.icc -L 4G -i /mnt/Ventoy/slackware64-live-current.iso
-  ```
-* **Create custom module directory structures (`/liveslak/addons/` and `/liveslak/optional/`):**
-  ```text
-  darkstar:~# ./isocomp.sh -d /mnt/Ventoy/custom_liveslak -i /mnt/Ventoy/slackware64-live-current.iso
-  ```
-
-Settings generated by `isocomp.sh` are saved in a `.cfg` file alongside the ISO (e.g., `slackware64-live-current.cfg`) and automatically parsed by `liveslak` during startup.
-
----
-
-## 20.8 Custom Modules and Package Creation (`makemod`)
-
-The **`makemod`** utility converts any standard Slackware package (`.txz`/`.tgz`) or compiled directory tree into a SquashFS `.sxz` Live module.
-
-### `makemod` Usage Syntax
-
-```text
-darkstar:~# makemod <package-or-directory> <output-module.sxz>
-```
-
-### Step-by-Step Workflow
-
-1. Convert a custom Slackware package into a Live module:
-   ```text
-   darkstar:~# makemod htop-3.2.2-x86_64-1.txz 0040-htop-3.2.2-x86_64.sxz
-   ```
-2. Place the resulting module into the Live environment:
-   * **Automatic Loading:** Copy to `/liveslak/addons/` on your persistent USB drive.
-   * **On-Demand Loading:** Copy to `/liveslak/optional/` (activated at boot via `load=htop`).
-
----
-
-## 20.9 Hard Drive Installation (`setup2hd`)
-
-Slackware Live Edition includes **`setup2hd`**, a specialized version of the standard Slackware installer that allows transferring the Live OS directly onto a local hard drive.
-
-### Key Advantages of `setup2hd`
-
-* **Graphical Environment Execution:** `setup2hd` can be launched from an X terminal emulator inside runlevel 4. Users can continue web browsing, listening to music, or working while the installation proceeds in the background.
-* **Automatic Partitioning Prompts:** Automatically launches `fdisk` or `gdisk` if no target Linux partitions are configured.
-* **Integrated User Creation:** Prompts for non-root user account creation and root password setup during the installation flow.
-* **Optional Automated Firewall Setup:** Prompts to configure a basic stateful iptables firewall during setup.
-
-To launch the installer, open a terminal as `root` and run:
-
-```text
-darkstar:~# setup2hd
-```
-
-`setup2hd` extracts all currently active SquashFS modules directly onto the designated hard drive partitions, converts the Live setup into a standard installation, and runs `lilo`/`elilo` configuration before rebooting.
-
----
-
-## 20.10 Kernel Upgrades and Maintenance (`upslak.sh`)
-
-Managing and updating a persistent Live USB drive over time is handled by the **`upslak.sh`** administrative tool.
-
-### Primary Functions of `upslak.sh`
-
-* **Upgrade Kernel and Modules:** Replaces the kernel image and initrd on the USB boot partition, automatically generating a matching `kernelmodules` SquashFS addon module in `/liveslak/addons/`.
-* **Restore Backed-Up Kernel:** Restores previous kernel binaries (`.prev`) if a new kernel fails to boot.
-* **Extend LUKS Container Size:** Expands pre-existing encrypted `/home` or persistence containers without touching user data.
-* **Consolidate Persistence into an Addon Module:** Captures accumulated persistent changes and compresses them into a timestamped SquashFS addon module (`0099-slackware__customchanges-YYYYMMDDhhmmss.sxz`), resetting the persistence storage space.
-
-### Practical `upslak.sh` Examples
-
-* **Upgrade kernel on USB device `/dev/sdX` using new TXZ packages:**
-  ```text
-  darkstar:~# ./upslak.sh -o /dev/sdX -k kernel-generic-5.15.19-x86_64-1.txz -m kernel-modules-5.15.19-x86_64-1.txz
-  ```
-* **Extend an encrypted home container (`slhome.img`) by 3 GB:**
-  ```text
-  darkstar:~# ./upslak.sh -s -x /slhome.img -X 3G
-  ```
-* **Bundle accumulated persistence changes into a permanent addon module:**
-  ```text
-  darkstar:~# ./upslak.sh -o /dev/sdX -p
-  ```
-
----
-
-## 20.11 Network Booting and PXE Server (`pxeserver`)
-
-Slackware Live Edition can function both as a **PXE network boot client** and as a **standalone PXE boot server**.
-
-### Functioning as a PXE Client
-
-To boot Slackware Live over the network from an NFS export, configure your TFTP/PXE bootloader (`pxelinux.cfg/default`) with the `nfsroot` boot parameter:
-
-```text
-label liveslak
-    kernel slackware-live/boot/generic
-    append initrd=slackware-live/boot/initrd.img rw nfsroot=192.168.1.10:/tftpboot/slackware-live dhcpwait=30 hostname=pxelive
-```
-
-### Running a Standalone PXE Server (`pxeserver`)
-
-The `pxeserver` script allows a running Live USB session to transform the host machine into a network boot server for an entire local area network (LAN):
-
-```text
-darkstar:~# pxeserver eth0
-```
-
-1. **Service Orchestration:** Starts `dnsmasq` (providing DHCP, DNS, and TFTP services) and configures NFS/RPC exports.
-2. **RAM Optimization (`toram`):** Recommends booting the host with `toram` so that disk I/O from multiple network clients does not saturate USB flash drive bandwidth.
-3. **Automatic Routing & NAT:** Automatically configures IP forwarding and optional IP masquerading (NAT) if the server machine possesses a secondary network interface connected to the Internet.
-
----
-
-## 20.12 Reference: Essential Boot Parameters
-
-Custom boot parameters can be appended at the Syslinux or GRUB prompt to modify Slackware Live behavior:
-
-### System & Localization Options
-
-* **`0` | `1` | `2` | `3` | `4` | `5` | `S`:** Specifies boot runlevel (default is `4` for graphical login; `3` for console mode).
-* **`kbd=us` / `xkb=us`:** Sets console keyboard mapping and X11 keyboard layout/variants.
-* **`locale=en_US.utf8` / `tz=America/New_York`:** Sets system locale and timezone.
-* **`livepw="secret"` / `rootpw="secret"`:** Sets plain-text passwords for `live` and `root` accounts (`livepw=""` removes password).
-* **`hostname=myhost` / `domain=mydomain`:** Configures custom network hostname and domain.
-
-### Module & Storage Control
-
-* **`load=mod1,mod2`:** Forces loading specified SquashFS modules from `/liveslak/optional/`.
-* **`noload=mod1,mod2`:** Prevents loading specified SquashFS modules from `/liveslak/addons/`.
-* **`toram` / `toram=all`:** Copies all SquashFS modules into physical RAM on boot, allowing safe removal of USB media.
-* **`toram=core`:** Loads only minimal rescue Console OS modules into RAM.
-* **`nop`:** Disables persistence, booting into a clean virgin state.
-* **`nop=wipe`:** Wipes all persistent data from the persistence directory/container upon boot.
-* **`luksvol=/slhome.img:/home`:** Specifies LUKS container path and target mount point.
