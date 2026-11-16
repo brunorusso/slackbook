@@ -32,8 +32,8 @@
  - [ ] New chapter about: kde/xfce
  - [ ] New chapter about: bluetooth
  - [ ] New chapter about: udev
- - [ ] New chapter about: Install on ARM archtecture
- - [ ] New Chapter about: slackbuilds.org and Third-party repositories
+ - [ ] New chapter about: Install on ARM archtecture (in progress)
+ - [ ] New Chapter about: slackbuilds.org and Third-party repositories (in progress)
 
 
 # Instructions
