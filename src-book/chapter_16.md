@@ -192,7 +192,7 @@ slackware.com.		86400	IN	NS	ns1.cwo.com.
 
 Let's take a took at the command-line options used above. The `@207.69.188.185` argument tells `dig` what DNS server to query. If it is not specified, `dig` will simply use whatever servers are listed in `/etc/resolv.conf` . The `a` argument at the end is the type of DNS record to lookup. In this case we looked for an "A" record which returned an IPv4 address.
 
-### 16.1.9 finger
+### 16.1.9 finger  <<<<<<<<<<<<<<<<----- REMOVE???
 
 `finger` (1) isn't exactly a network diagnostic tool as much as it is a network-user diagnostic tool. Using `finger` , you can gather a handful of useful information about users on servers running the `fingerd` (8) daemon. Today very few servers still offer `fingerd` , but for those that do it can be a useful tool for keeping track of your friends and co-workers.
 
@@ -214,6 +214,10 @@ No mail.
 No Plan.
 
 ```
+
+
+### 16.1.10 curl
+
 
 ## 16.2 Web Browsers
 
