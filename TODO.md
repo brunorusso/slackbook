@@ -16,7 +16,7 @@
  - [X] Updated chapter 6. Process Control
  - [ ] Update chapter 7. The X Window System -  X windows has any updates like wayland
  - [ ] Need Update chapter 8. Printing - need improve
- - [ ] Need Update chapter 9. Users and Groups - need improve (in progress)
+ - [X] Need Update chapter 9. Users and Groups
  - [X] Updated chapter 10. Filesystem Permissions
  - [X] Updated chapter 11. Working with Filesystems
  - [X] Updated chapter 12. vi

@@ -1,3 +1,5 @@
+2026-11-19
+ - Chapter-09 update, brunorusso
 2026-11-17
  - Chapter-17 update, brunorusso
  - Chapter-21 slackbuilds - new, brunorusso
