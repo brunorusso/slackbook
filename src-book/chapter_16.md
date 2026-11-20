@@ -1,97 +1,228 @@
-# 16. Basic Networking Utilities
+# 16. Basic Command-Line Networking Utilities
 
-So you've finally managed to setup your network connection, now what? How do you know that it's working? How do you know that you set it up correctly? And just what do you do now that it's setup? Well this chapter is for you.
+So you have finally set up your network connection—now what? How do you verify that it is functioning correctly? How do you confirm that your configuration is accurate, and what tools do you use to diagnose issues or interact with remote hosts? 
+
+This chapter explores the foundational command-line networking utilities included with Slackware Linux, covering network diagnostics, remote administration, console web browsing, and file transfer tools.
 
 ## 16.1 Network Diagnostic Tools
 
-Slackware Linux includes a great many networking tools for troubleshooting and diagnosing network connection troubles, or just for seeing what's out there on the network. Most of these tools are command-line tools, so you can run them from a virtual terminal or in a console window on your graphical desktop. A few of them even have graphical front-ends, but we're going to deal almost exclusively with command-line tools for now.
+Slackware Linux includes a rich selection of networking tools for troubleshooting connectivity, monitoring network traffic, and discovering active hosts. While a few utilities offer graphical interfaces, command-line tools remain the primary choice for remote server administration, quick terminal diagnostics, and shell scripting.
 
-### 16.1.1 ping
+This section explores foundational diagnostic utilities—ranging from basic connectivity checks (`ping`, `traceroute`) to secure administration (`ssh`, `telnet`), packet inspection (`tcpdump`), port scanning (`nmap`), and DNS troubleshooting (`host`, `dig`).
 
-`ping` (8) is a handy tool for determining if a computer is operational on your network or on the Internet at large. You can think of as a type of sonar for computers. By using it, you send out a "ping" and listen for an echo to determine if another computer or network device is listening. By default, `ping` checks for the remote computer once per second indefinitely, but you can change the interval between checks and the total number of checks easily, just check the man page. You can terminate the application at any time with <kbd>CTRL</kbd> - <kbd>c</kbd> . When `ping` is finished, it displays a handy summary of its activity. `ping` is very useful for determining if a computer on your network or the Internet is available, but some systems block the packets `ping` sends, so sometimes a system may be functioning properly, but still not send replies.
+
+### 16.1.1 `ping` — Testing Network Reachability
+
+The `ping` utility is the fundamental diagnostic tool for verifying whether a host is active and reachable across a local network or the Internet. Conceptually, `ping` acts like sonar for IP networks: it transmits ICMP (Internet Control Message Protocol) **ECHO_REQUEST** packets to a target IP address or hostname and waits for a corresponding **ECHO_REPLY**.
+
+
+By default on Linux, `ping` continues to send one packet per second until manually interrupted by pressing `<CTRL>-c`. Upon termination, it presents a statistical summary detailing packet loss and Round-Trip Time (RTT) latency. In the example below, `-c 3` is used to send exactly three packets before exiting automatically:
 
 ```text
-
 darkstar:~# ping -c 3 www.slackware.com 
-64 bytes from slackware.com (64.57.102.34): icmp_seq=1 ttl=47 time=87.1 ms 
-64 bytes from slackware.com (64.57.102.34): icmp_seq=2 ttl=47 time=86.2 ms 
-64 bytes from slackware.com (64.57.102.34): icmp_seq=3 ttl=47 time=86.7 ms 
+PING e9788.dscx.akamaiedge.net (2.19.10.212) 56(84) bytes of data.
+64 bytes from a2-19-10-212.deploy.static.akamaitechnologies.com (2.19.10.212): icmp_seq=1 ttl=53 time=4.39 ms
+64 bytes from a2-19-10-212.deploy.static.akamaitechnologies.com (2.19.10.212): icmp_seq=2 ttl=53 time=19.2 ms
+64 bytes from a2-19-10-212.deploy.static.akamaitechnologies.com (2.19.10.212): icmp_seq=3 ttl=53 time=4.50 ms
 
---- slackware.com ping statistics --- 
-3 packets transmitted, 3 received, 0% packet loss, time 2004ms 
-rtt min/avg/max/mdev = 86.282/86.718/87.127/0.345 ms
-
+--- e9788.dscx.akamaiedge.net ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 4.387/9.346/19.156/6.936 ms
 ```
 
-### 16.1.2 traceroute
 
-`traceroute` (8) is a handy tool for determining what route your packets take to reach some other computer. It's mainly of use for determining which computers are "near" or "far" from you. This distance isn't strictly geographical, as your Internet Service Provider may route traffic from your computer in strange ways. `traceroute` shows you each router between your computer and any other machine you wish to connect to. Unfortunately, many providers, firewalls, and routers will block `traceroute` so you might not get a complete picture when using it. Still, it remains a handy tool for network troubleshooting.
+**Understanding the Output Fields**
+
+- **bytes from**: Confirms that a response packet was received and displays its payload size (typically 64 bytes).
+- **icmp_seq**: The sequence number of the packet, allowing you to detect dropped packets or out-of-order delivery.
+- **ttl (Time to Live)**: The remaining hop count. Each router along the path decrements this value by 1, preventing lost packets from looping endlessly.
+- **time**: The total round-trip time (in milliseconds) required for the packet to reach the target and return.
+- **rtt min/avg/max/mdev**: Summary statistics calculated at the end of the session, showing minimum, average, maximum latency, and mean deviation.
+
+**Common ping Command Flags**
+
+| Flag | Description | Example|
+| ---- | ----------- | ------ |
+| -c <count> | Stops after sending a specified number of packets. | ping -c 4 www.slackware.com | 
+| -i <seconds> | Adjusts the time interval between packets (default is 1 second). | ping -i 0.5 www.slackware.com | 
+| -s <bytes> | Specifies the ICMP packet payload size (default is 56 bytes). | ping -s 1000 www.slackware.com | 
+| -W <seconds> | Sets the timeout waiting for a reply for each packet. | ping -W 2 www.slackware.com | 
+| -4 / -6 | Forces IPv4 or IPv6 resolution explicitly. | ping -6 www.slackware.com | 
+
+
+> **Security Note on ICMP Filtering**: While ping is an excellent tool for verifying connectivity, many network firewalls and routers are configured to drop ICMP Echo requests for security or anti-reconnaissance reasons. Consequently, a host may fail to reply to ping even though its HTTP, SSH, or other services are fully operational.
+
+
+### 16.1.2 `traceroute` — Tracing Network Hops
+
+
+The `traceroute` utility maps the path (route) that IP packets travel from your local system to a remote destination host. It identifies every intermediate router (hop) along the route while measuring the round-trip latency for each jump.
+
+Conceptually, `traceroute` works by transmitting a sequence of probe packets with incrementally increasing **Time to Live (TTL)** values—starting at `TTL=1`. The first router along the path decrements the TTL to `0`, drops the packet, and sends an ICMP **Time Exceeded** message back to your machine. `traceroute` logs the router's IP address and latency, then increments the TTL to `2`, repeating the process hop-by-hop until the target destination is reached.
+
+
 
 ```text
 
 darkstar:~# traceroute www.slackware.com
-traceroute to slackware.com (64.57.102.34), 30 hops max, 46 byte
-packets
- 1  gw.ctsmacon.com (192.168.1.254)  1.468 ms  2.045 ms  1.387 ms
- 2  10.0.0.1 (10.0.0.1)  7.642 ms  8.019 ms  6.006 ms
- 3  68.1.8.49 (68.1.8.49)  10.446 ms  9.739 ms  7.003 ms
- 4  68.1.8.69 (68.1.8.69)  11.564 ms  6.235 ms  7.971 ms
- 5  dalsbbrj01-ae0.r2.dl.cox.net (68.1.0.142)  43.859 ms  43.287 ms 44.125 ms
- 6  dpr1-ge-2-0-0.dallasequinix.savvis.net (204.70.204.146)  41.927 ms 58.247 ms  44.989 ms
- 7  cr2-tengige0-7-5-0.dallas.savvis.net (204.70.196.29)  42.577 ms 46.110 ms  43.977 ms
- 8  cr1-pos-0-3-3-0.losangeles.savvis.net (204.70.194.53)  78.070 ms 76.735 ms  76.145 ms
- 9  bpr1-ge-3-0-0.LosAngeles.savvis.net (204.70.192.222)  77.533 ms 108.328 ms  120.096 ms
-10  wiltel-communications-group-inc.LosAngeles.savvis.net (208.173.55.186)  79.607 ms  76.847 ms  75.998 ms
-11  tg9-4.cr01.lsancarc.integra.net (209.63.113.57)  84.789 ms  85.436 ms  85.575 ms
-12  tg13-1.cr01.sntdcabl.integra.net (209.63.113.106)  87.608 ms 84.278 ms  86.922 ms
-13  tg13-4.cr02.sntdcabl.integra.net (209.63.113.134)  87.284 ms 85.924 ms  86.102 ms
-14  tg13-1.cr02.rcrdcauu.integra.net (209.63.114.169)  85.578 ms 85.285 ms  84.148 ms
-15  209.63.99.166 (209.63.99.166)  84.515 ms  85.424 ms  85.956 ms
-16  208.186.199.158 (208.186.199.158)  86.557 ms  85.822 ms  86.072 ms
-17  sac-main.cwo.com (209.210.78.20)  88.105 ms  87.467 ms  87.526 ms
-18  slackware.com (64.57.102.34)  85.682 ms  86.322 ms  85.594 ms
+traceroute to www.slackware.com (2.19.10.216), 30 hops max, 60 byte packets
+ 1  192.168.1.1 (192.168.1.1)  6.792 ms  6.740 ms  6.719 ms
+ 2  * * *
+ 3  201-1-230-94.dsl.telesp.net.br (201.1.230.94)  9.902 ms 201-1-230-92.dsl.telesp.net.br (201.1.230.92)  9.880 ms  9.860 ms
+ 4  179-88-6-72.user.vivozap.com.br (179.88.6.72)  9.842 ms 152-255-169-246.user.vivozap.com.br (152.255.169.246)  9.817 ms 152-255-183-228.user.vivozap.com.br (152.255.183.228)  9.799 ms
+ 5  187-100-57-102.dsl.telesp.net.br (187.100.57.102)  9.818 ms  9.798 ms  9.776 ms
+ 6  84.16.7.106 (84.16.7.106)  9.756 ms  5.982 ms  5.909 ms
+ 7  5.53.0.85 (5.53.0.85)  10.267 ms  14.243 ms  14.178 ms
+ 8  * * *
+ 9  * * *
+10  * * *
+11  a2-19-10-216.deploy.static.akamaitechnologies.com (2.19.10.216)  6.736 ms  6.690 ms  12.074 ms
 
 ```
 
-### 16.1.3 telnet
+**Understanding the Output Fields**
 
-Once upon a time, `telnet` (1) was the greatest thing since sliced bread. Basically, `telnet` opens an unencrypted network connection between two computers and hands control of the session to the user rather than some other application. Using `telnet` , people could connect to shells on other computers and execute commands as if they were physically present. Due to its unencrypted nature this is no longer recommended; however, `telnet` is still used for this purpose by many devices.
+- **Hop Number (Column 1)**: The sequential distance (number of routers traversed) from your system.
+- **Hostname / IP Address (Column 2)**: The domain name (if reverse DNS resolution succeeds) and IP address of the intermediate router interface.
+- **RTT Probes (Columns 3–5)**: By default, traceroute sends three probe packets per hop, displaying the latency in milliseconds (ms) for each attempt.
 
-Today, `telnet` is put to better use as a network diagnostic tool. Because it passes control of the session directly to the user, it can be used for a great variety of testing purposes. As long as you know what ASCII commands to send to the receiving computer, you can do any number of activies, such as read web pages or check your e-mail. Simply inform `telnet` what network port to use, and you're all set.
+
+
+**Common traceroute Command Flags**
+
+| Flag | Description | Example |
+| ---- | ----------- | ------- | 
+| -n | Disables reverse DNS lookups (displays numerical IP addresses only, speeding up output). | traceroute -n www.slackware.com | 
+| -I | Uses ICMP ECHO requests instead of default high-port UDP datagrams. | traceroute -I www.slackware.com | 
+| -T | Uses TCP SYN packets (useful for tracing paths through strict firewalls on port 80/443). | traceroute -T -p 80 www.slackware.com | 
+| -m <hops> | Sets the maximum hop limit (default is 30 hops). | traceroute -m 15 www.slackware.com | 
+| -w <seconds> | Sets the timeout duration waiting for a response (default is 5 seconds). | traceroute -w 2 www.slackware.com | 
+
+> **Handling Asterisks (* * *)**: If a hop displays asterisks (* * *) instead of latency times, it indicates that the intermediate router dropped the probe or was configured to suppress ICMP Time Exceeded responses. This does not necessarily mean a network failure unless all subsequent hops also fail to respond.
+
+
+### 16.1.3 `telnet` — Testing Raw TCP Connections
+
+Historically, `telnet` was the standard utility for accessing remote UNIX shells over a network. `telnet` establishes an unencrypted text connection between two host computers and hands direct control of the terminal session to the user. However, because `telnet` transmits all data—including usernames and passwords—in cleartext over the network, using it for remote shell administration has been superseded by `ssh`.
+
+Today, `telnet` remains an indispensable network diagnostic tool. Because it creates a raw TCP connection to any arbitrary port, system administrators use it to test socket availability and interact manually with text-based network protocols (such as HTTP, SMTP, or POP3).
+
+
+**Testing Raw Port Connectivity**
+
+To test whether a remote service is listening on a specific port, specify the target hostname (or IP address) followed by the port number:
+
 
 ```text
 
-darkstar:~$ telnet www.slackware.com 80 
-Trying 64.57.102.34... 
-Connected to www.slackware.com. 
-Escape character is '^]'. 
-HEAD / HTTP/1.1 
-Host: www.slackware.com 
+darkstar:~$ telnet 127.0.0.1 80
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+get
+HTTP/1.1 400 Bad Request
+Date: Fri, 20 Nov 2026 20:39:03 GMT
+Server: Apache/2.4.71 (Unix)
+Content-Length: 266
+Connection: close
+Content-Type: text/html; charset=iso-8859-1
 
-HTTP/1.1 200 OK 
-Date: Thu, 04 Feb 2010 18:01:35 GMT 
-Server: Apache/1.3.27 (Unix) PHP/4.3.1 
-Last-Modified: Fri, 28 Aug 2009 01:30:27 GMT 
-ETag: "61dc2-5374-4a973333" 
-Accept-Ranges: bytes 
-Content-Length: 21364 
-Content-Type: text/html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<title>400 Bad Request</title>
+</head><body>
+<h1>Bad Request</h1>
+<p>Your browser sent a request that this server could not understand.<br />
+</p>
+</body></html>
+Connection closed by foreign host.
 
 ```
 
-### 16.1.4 ssh
+If the port is open and listening, `telnet` displays `Connected to <hostname>`. Once connected, you can type raw protocol commands directly into the socket (such as sending a `GET / HTTP/1.1` request to a web server).
 
-As we mentioned, `telnet` may be useful as a diagnostic tool, but its unencrypted nature makes it a security concern for shell access. Thankfully, there's the secure shell protocol. Nearly every Linux, UNIX, and BSD distribution today makes use of OpenSSH, or `ssh` (1) for short. It is one of the most commonly used network tools today and makes use of the strongest cryptographic techniques. `ssh` has many features, configuration options, and neat hacks, enough to fill its own book, so we'll only go into the basics here. Simply run `ssh` with the user name and the host and you'll be connected to it quickly and safely. If this is the first time you are connecting to this computer, `ssh` will ask you to confirm your desire, and make a local copy of the encryption key to use. Should this key later change, `ssh` will warn you and refuse to connect because it is possible that some one is attempting to hijack the connection using what is known as a man-in-the-middle attack.
+**Escaping and Closing a Session**
+
+When interacting with a raw TCP socket, the remote server may not close the connection automatically. To manually break out of an active `telnet` session:
+
+1. Press `<CTRL>-]` (Control + Right Bracket) to trigger the escape sequence.
+2. At the telnet> prompt, type `quit` (or `close`) and press ENTER:
+
+> **Security Warning**: Never use `telnet` across untrusted or public networks to authenticate or execute remote shell commands. For all secure remote administration, use OpenSSH (`ssh`).
+
+
+
+### 16.1.4 `ssh` — Secure Shell Remote Access
+
+While `telnet` serves well as a raw TCP diagnostic tool, its cleartext nature makes it entirely unsuited for remote shell administration. Modern operating systems rely on the Secure Shell protocol via **OpenSSH**, or `ssh`, to provide encrypted, authenticated network communication across untrusted networks.
+
+`ssh` uses strong public-key cryptography to encrypt all traffic—including user credentials, interactive shell sessions, and transferred files—protecting sessions against eavesdropping, connection hijacking, and packet tampering.
+
+
+
+**Basic Connection Syntax**
+
+To open a secure terminal session on a remote server, specify the remote username and hostname (or IP address):
+
+```bash
+darkstar:~# ssh username@remote.host
+username@remote.host\`s password: secret
+```
+
+If your local username matches your remote login name, you can omit username@ and simply specify the host: `ssh remote.host`
+
+
+**First-Time Connection and Host Verification**
+
+When connecting to a host for the first time, `ssh` prompts you to verify and store the server's public host key fingerprint locally in `~/.ssh/known_hosts`:
 
 ```text
-
-darkstar:~# ssh alan@slackware.com 
-alan@slackware.com's password: secret 
-alan@slackware.com:~$
-
+The authenticity of host 'remote.host (192.168.1.50)' can't be established.
+ED25519 key fingerprint is SHA256:x8K9+.../vT4.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'remote.host' (ED25519) to the list of known hosts.
+username@remote.host's password: 
 ```
 
-The user and hostname are in the same form used by e-mail addresses. If you leave off the username part, `ssh` will use your current username when establishing the connection.
+Once accepted, `ssh` remembers the host key. On subsequent connections, `ssh` automatically validates the server's identity against `~/.ssh/known_hosts` before prompting for credentials.
+
+
+**Host Key Mismatches and Man-in-the-Middle (MITM) Protection**
+
+If a remote server's host key changes after your initial connection, `ssh` halts the connection process immediately and displays a prominent security warning:
+
+```text
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+```
+
+This error usually indicates one of two scenarios:
+
+1. **Security Attack**: An unauthorized third party is intercepting your connection attempt (Man-in-the-Middle attack).
+2. **Administrative Change**: The remote server was reinstalled or its SSH host keys were legitimately regenerated.
+
+
+If the change was planned, you must remove the old host key entry from `~/.ssh/known_hosts` (using `ssh-keygen -R remote.host`) before ssh will allow you to reconnect.
+
+
+**Common ssh Command Flags**
+
+| Flag | Description | Example | 
+| ---- | ----------- | ------- | 
+| -p <port> | Specifies a non-standard SSH port (default is port 22). | ssh -p 2222 username@10.0.0.1 |
+| -i <identity_file> | Selects a specific private SSH key file for public-key authentication. | ssh -i ~/.ssh/id_ed25519 username@10.0.0.1 |
+| -X / -Y | Enables X11 forwarding, allowing remote graphical applications to render locally.  | ssh -X username@remote.slackware.com |
+| -v / -vvv | Enables verbose debugging mode, invaluable for troubleshooting connection failures. | 
+ssh -v username@10.0.0.1 |
+| -L <local>:<host>:<port> | Configures local port forwarding (SSH tunneling). | ssh -L 8080:localhost:80 user@remote.host |
+
+
+>>>>> STOP HERE
+>>>>> STOP HERE
+>>>>> STOP HERE
 
 ### 16.1.5 tcpdump
 
