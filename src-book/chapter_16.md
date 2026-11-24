@@ -214,7 +214,7 @@ If the change was planned, you must remove the old host key entry from `~/.ssh/k
 | ---- | ----------- | ------- | 
 | -p <port> | Specifies a non-standard SSH port (default is port 22). | ssh -p 2222 username@10.0.0.1 |
 | -i <identity_file> | Selects a specific private SSH key file for public-key authentication. | ssh -i ~/.ssh/id_ed25519 username@10.0.0.1 |
-| -X / -Y | Enables X11 forwarding, allowing remote graphical applications to render locally.  | ssh -X username@remote.slackware.com |
+| -X / -Y | Enables X11 forwarding, allowing remote graphical applications to render locally.  | ssh -X username@remote.host |
 | -v / -vvv | Enables verbose debugging mode, invaluable for troubleshooting connection failures. | 
 ssh -v username@10.0.0.1 |
 | -L <local>:<host>:<port> | Configures local port forwarding (SSH tunneling). | ssh -L 8080:localhost:80 user@remote.host |
@@ -619,6 +619,7 @@ slackware.com.
 **Common dig Options and Flags**
 
 | Flag / Option | Description | Example |
+| ------------- | ----------- | ------- |
 | @server | Directs the query to a specific DNS server instead of local system defaults. | dig @1.1.1.1 slackware.com |
 | -t <type> | Specifies the record type (A, AAAA, MX, NS, TXT, SOA, ANY). | dig slackware.com -t TXT |
 | -x <IP> | Performs a reverse DNS lookup for an IP address. | dig -x 64.57.102.34 |
@@ -743,7 +744,8 @@ darkstar:~# curl -v https://www.slackware.com
 
 **Common curl Diagnostic Flags**
 
-| Flag | Description | Example
+| Flag | Description | Example |
+| ---- | ----------- | ------- |
 | -I | Fetches HTTP response headers only (HEAD request). | curl -I https://slackware.com |
 | -L | Follows HTTP Location: redirects automatically. | curl -I -L http://slackware.com |
 | -v | Enables verbose output, showing raw request/response headers and TLS data. | curl -v https://slackware.com |
@@ -949,7 +951,7 @@ Unlike minimal command-line mail utilities, `alpine` features an intuitive, text
   O OTHER CMDS N NEXTMSG    Spc NEXTPG   D DELETE
 ```
 
-![image](ps-imgs/pine.png)
+![image](img/pine.png)
 
 
 
@@ -985,7 +987,7 @@ For users who demand maximum control, deep customizability, and raw speed, `mutt
 Adhering strictly to the UNIX philosophy—building focused tools that do one task exceptionally well—`mutt` focuses primarily on composing, reading, and sorting email. While modern versions include built-in support for IMAP, POP3, and SMTP, `mutt` is traditionally paired with specialized external utilities for mail retrieval and delivery.
 
 
-![image](ps-imgs/mutt.png)
+![image](img/mutt.png)
 
 
 **Key Features and Architecture**
