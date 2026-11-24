@@ -2,14 +2,38 @@
 
 ## 8.1 Choosing A Printer
 
-Linux hasn't always had a great history with printers. For many years, printing was a black art to many Linux users, and very few printers worked reliably. Today, most printers will work well with Linux, but some still do not. If you're purchasing a new printer, be aware that many of the cheap inkjet models aren't as well supported in Linux as more expensive laser printers. If you're unsure about a printer, you can check online to see if others have had success with it.
+Historically, printer configuration on Linux required navigating complex spoolers and custom filter scripts, making hardware support hit-or-miss. Today, the vast majority of modern printers work seamlessly with Linux out of the box, although hardware compatibility can still vary depending on the manufacturer and model.
 
-All these warnings are perhaps a bit overkill though, as the large majority of printers work with Linux after only a brief and simple setup. The progress in this direction is largely due to the efforts of the Common UNIX Printing System, (CUPS). CUPS is a printing system used by Slackware and most other Linux distributions today. It primarily uses a graphical setup procedure accessed via a web browser. In order to setup a printer with CUPS, you'll need to open a web browser such as firefox, konqueror, or links and go to http://localhost:631 .
+
+When selecting a new printer for a Slackware environment:
+
+* **Laser Printers:** Generally offer the best out-of-the-box compatibility, particularly models supporting standard printer command languages like PostScript or PCL.
+* **Inkjet Printers:** Entry-level or budget inkjet models often rely on proprietary host-based rasterization protocols ("Winprinters") that may lack native Linux driver support.
+
+If you are uncertain about hardware compatibility prior to purchase, consult community resources such as OpenPrinting.org to verify driver availability and user reports.
+
+
+**The Common UNIX Printing System (CUPS)**
+
+Slackware manages printing services using **CUPS** (Common UNIX Printing System), the industry-standard printing environment across UNIX-like operating systems. CUPS manages print queues, rasterizes documents, converts job formats (such as PDF or PostScript), and communicates with physical local and network devices.
+
+CUPS features a built-in web-based administration interface that allows users and administrators to add printers, configure options, and monitor active print jobs.
+
+
+**Accessing the CUPS Web Interface**
+
+To configure a printer using CUPS, launch any web browser (such as `firefox` or console browsers like `links`) and navigate to:
+
+```text
+http://localhost:631
+```
 
 ![image](img/cups-01.png)
 
-You might find that a quick click-through of CUPS configures your printer nearly automatically. Or, you may find that further configuration is required. To learn more about how printing works or how to get a stubborn printer configured, read on.
 
+
+
+>>>>>>>>STOP HERE
 ## 8.2 Getting the driver
 
 There are, essentially, three types of printer drivers:
