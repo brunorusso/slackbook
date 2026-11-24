@@ -1,3 +1,5 @@
+2026-11-22
+ - Chapter-16 update, brunorusso
 2026-11-19
  - Chapter-09 update, brunorusso
 2026-11-17

@@ -23,7 +23,7 @@
  - [X] Updated chapter 13. Emacs
  - [ ] Need Update chapter 14. Networking
  - [ ] Need Update chapter 15. Wireless Networking
- - [ ] Need Update chapter 16. Basic Networking Utilities - need improve. Add Curl -  (in progress)
+ - [X] Need Update chapter 16. Basic Networking Utilities - need improve. Add Curl
  - [X] Updated chapter 17. Package Management
  - [X] Updated chapter 18. Keeping Track of Updates
  - [X] Updated chapter 19. The Linux Kernel
