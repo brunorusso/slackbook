@@ -33,7 +33,7 @@
  - [ ] New chapter about: slackware docker image - (in progress)
  - [ ] New chapter about: kde/xfce
  - [ ] New chapter about: bluetooth ??
- - [ ] New chapter about: Server Application (httpd, mariaDB, FTP and others)
+ - [ ] New chapter about: Server Application (httpd, mariaDB, FTP and others) - (in progress)
 
 
 # Instructions
