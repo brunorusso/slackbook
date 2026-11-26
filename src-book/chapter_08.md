@@ -208,3 +208,24 @@ darkstar:~\$ pr -h "Quarterly Report" -l 60 document.txt | lpr
 | -n | Prepends line numbers to each line of formatted text. | pr -n document.txt |
 | -m | Formats and prints multiple files side-by-side in parallel columns. | pr -m file1.txt file2.txt |
 
+
+## 8.5 Printing from Graphical Applications
+
+Once a printer is configured in CUPS, it is instantly available across all Desktop Environments (such as KDE Plasma or XFCE) and graphical applications running on Slackware.
+
+Modern Linux applications rely on standardized GTK and Qt print dialog backends that communicate directly with the local CUPS daemon (`cupsd`).
+
+
+**Using standard Print Dialogs (`Ctrl+P`)**
+
+Whether you are editing a document in **LibreOffice**, viewing a PDF in **Okular**, or browsing the web in **Firefox**, sending a document to the printer follows a unified workflow:
+
+1. **Open the Print Dialog:** Press **`Ctrl` + `P`** (or navigate to **File → Print** in the application menu).
+2. **Select the Printer:** Choose your configured printer queue (e.g., `Photosmart_C4400`) from the destination list.
+3. **Adjust Print Options:** Graphical dialogs automatically query CUPS for the printer's PPD capabilities, allowing you to configure:
+   * **Page Range & Copies:** Print specific pages or collate multiple copies.
+   * **Color & Quality:** Toggle between monochrome (grayscale) and full color, or adjust print resolution.
+   * **Layout & Duplex:** Select paper orientation (Portrait/Landscape) and enable double-sided (duplex) printing if supported by the hardware.
+4. **Print:** Click **Print** to send the processed document to the CUPS queue.
+
+Because CUPS handles queue management globally, print jobs submitted from graphical applications appear alongside CLI jobs in the CUPS web interface status page (`http://localhost:631/jobs`).
