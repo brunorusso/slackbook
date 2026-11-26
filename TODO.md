@@ -10,7 +10,7 @@
  # New version
  - [X] Updated chapter 1. About slackware
  - [ ] Need Update chapter 2. Installation to new slackware version, maybe 16.0. Add inf. about gdisk
- - [ ] Need Update chapter 3. Booting add information about nvme and runlevel
+ - [ ] Need Update chapter 3. Booting add information about nvme and runlevel - (in progress)
  - [X] Updated chapter 4. Basic Shell Commands
  - [X] Updated chapter 5. The Bourne Again Shell
  - [X] Updated chapter 6. Process Control
