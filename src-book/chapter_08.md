@@ -124,6 +124,8 @@ ErrorPolicy stop-printer
 </DefaultPrinter>
 ```
 
+As shown in the screenshot below, the newly configured printer is now visible and active within the CUPS web administration interface, displaying its status as Idle and ready to accept print jobs:
+
 
 ![image](img/cups-02.png)
 
