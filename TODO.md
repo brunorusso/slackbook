@@ -30,7 +30,7 @@
  - [X] Added chapter 20. Slackware Live Edition
  - [X] Added chapter 21. slackbuilds.org and Third-party repositories
  - [X] Added chapter 22. Install on ARM archtecture
- - [ ] New chapter about: slackware docker image
+ - [ ] New chapter about: slackware docker image - (in progress)
  - [ ] New chapter about: kde/xfce
  - [ ] New chapter about: bluetooth ??
  - [ ] New chapter about: Server Application (httpd, mariaDB, FTP and others)
