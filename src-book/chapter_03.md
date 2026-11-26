@@ -1,6 +1,16 @@
 # 3. Booting
 
-Ok, now that you've gotten Slackware installed on your system, you should learn exactly what controls the boot sequence of your machine, and how to fix it should you manage to break it somehow. If you use Linux long enough, sooner or later you will make a mistake that breaks your bootloader. Fortunately, this doesn't require a reinstall to fix. Unlike many other operating systems that hide the underlying details of how they work, Linux (and in particular, Slackware) gives you full control over the boot process. Simply by editing a configuration file or two and re-running the bootloader installer, you can quickly and easily change (or break) your system. Slackware even makes it easy to dual-boot multiple operating systems, such as other Linux distributions or Microsoft Windows.
+Now that you have successfully installed Slackware on your system, it is essential to understand how the machine's boot sequence works and how to recover if configuration issues arise. If you use Linux long enough, you will eventually encounter a situation where a misconfiguration prevents the system from booting. Fortunately, resolving boot issues in Slackware rarely requires a system reinstallation.
+
+Unlike operating systems that obscure their internal boot mechanics, Linux — and Slackware in particular — provides complete transparency and direct control over the boot process. By modifying text-based configuration files and updating the bootloader, you can customize system startup, tune kernel parameters, or configure multi-boot environments alongside other operating systems such as Windows or secondary Linux distributions.
+
+In this chapter, we will explore:
+* The differences between **huge** and **generic** kernels, and how to generate an initial ramdisk with `mkinitrd`.
+* Bootloader configuration, management, and dual-boot setups.
+* Practical recovery steps when the boot process fails.
+
+
+>>>>> STOP HERE
 
 ## 3.1 mkinitrd
 
