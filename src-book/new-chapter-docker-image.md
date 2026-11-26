@@ -174,10 +174,22 @@ When the command completes:
 3. The container self-destructs (`--rm`), leaving your host system untouched.
 
 
-
 ## 23.4 Automated Custom Builder Images (`build-builder-image.sh`)
 
-For administrators maintaining custom build environments or private container registries, Eric Hameleers [Alien BOB](https://blog.slackware.nl/) created the `build-builder-image.sh` automation script.
+For system administrators and developers maintaining custom build environments or private container registries, Eric Hameleers [Alien BOB](https://blog.slackware.nl/) maintains the official container build scripts and Dockerfiles on the Slackware Community Forge:
+
+* **Repository Location:** [https://forge.slackware.nl/slackware/docker-images](https://forge.slackware.nl/slackware/docker-images)
+
+**Obtaining the Build Scripts**
+
+Before generating custom images, clone the repository to your host system using `git`:
+
+```bash
+darkstar:~\$ git clone https://forge.slackware.nl/slackware/docker-images.git
+darkstar:~\$ cd docker-images/scripts
+```
+
+This repository contains the build-builder-image.sh script alongside the full set of Dockerfile templates and configuration files required to build both base and development images.
 
 
 **How Image Verification Works**
