@@ -265,7 +265,9 @@ darkstar:~# ./build-builder-image.sh --version current --arch x86_64 --force
 
 When writing custom `Dockerfile` scripts based on Slackware, follow these guidelines:
 
-1. **Chain Commands in a Single `RUN` Block:** Combine package installation and cache cleanup in a single layer to minimize final image size.
+1. **Chain Commands in a Single `RUN` Block:** Combine package updates, software installation, and cache cleanup into a single layer to minimize the final image footprint.
+
+
 
 ```dockerfile
 FROM registry.slackware.nl/slackware/slackware:current
@@ -278,10 +280,15 @@ RUN slackpkg -batch=on update && \
 
 
 2. **Set Non-Interactive Environment Variables:** Disable interactive prompts during script execution.
-3. **Use Specific Image Tags:** Avoid using `:latest` in production Dockerfiles; pin your images to specific release tags like `:15.0`.
+3. **Use Specific Image Tags:** Avoid using `:latest` in production Dockerfiles; pin your base images to specific tag such as `:15.0` or `:current`.
 
 
-To build image run:
+**Building and Verifying Custom Docker Images**
+
+1. **Building the Container Image**
+
+To compile your custom image using the local Dockerfile, run docker build:
+
 
 ```text
 darkstar:~# docker build -t slack:1 .
@@ -299,14 +306,21 @@ darkstar:~# docker build -t slack:1 .
  => => naming to docker.io/library/slack:1   
 ```
 
-To check the image, run:
+2. **Inspecting the Generated Image**
+
+Verify that the image is available in your host's Docker storage:
+
 
 ```bash
 darkstar:~# docker images | grep slack
 slack                                               1         ea29deb58d9a   2 minutes ago       418MB
 ```
 
-To run Slackware docker image and interactive with docker shell, run:
+3. **Launching an Interactive Shell**
+
+To test the environment inside your new custom container:
+
+
 
 ```bash
 darkstar:~# docker run -it --rm slack:1 /bin/bash
