@@ -203,10 +203,51 @@ To prevent unnecessary rebuilds, the build script uses a smart base digest check
 
 The build script supports arguments for targeting specific releases and architectures:
 
-```bash
+```text
 # Build the builder image for Slackware 15.0 (x86_64)
 darkstar:~# ./build-builder-image.sh --version current --arch x86_64
+brusso@maria ~/t/d/scripts (master)> ./build-builder-image.sh --version current --arch x86_64
+[2026-11-26 07:44:10] [builder] === registry.slackware.nl/slackware/slackware-builder:current ===
+[2026-11-26 07:44:10] [builder]   Pulling base image registry.slackware.nl/slackware/slackware:current...
+current: Pulling from slackware/slackware
+0bb4c137ba13: Pull complete 
+Digest: sha256:b2fabf622982a24d698818584865d127e1bd69dee6421d42cba297b4a55fd0be
+Status: Downloaded newer image for registry.slackware.nl/slackware/slackware:current
+registry.slackware.nl/slackware/slackware:current
+[2026-11-26 07:44:36] [builder]   Base image changed; rebuilding.
+[2026-11-26 07:44:36] [builder]     Was : ...
+[2026-11-26 07:44:36] [builder]     Now : registry.slackware.nl/slackware/slackware@sha256:b2fabf62298...
+[2026-11-26 07:44:36] [builder]   Building registry.slackware.nl/slackware/slackware-builder:current...
+[+] Building 1113.8s (7/7) FINISHED                                                                                                                                                                                          docker:default
+ => [internal] load build definition from Dockerfile                                                                                                                                                                                   0.0s
+ => => transferring dockerfile: 3.03kB                                                                                                                                                                                                 0.0s
+ => WARN: NoEmptyContinuation: Empty continuation line (line 110)                                                                                                                                                                      0.0s
+ => [internal] load metadata for registry.slackware.nl/slackware/slackware:current                                                                                                                                                     0.0s
+ => [internal] load .dockerignore                                                                                                                                                                                                      0.0s
+ => => transferring context: 2B                                                                                                                                                                                                        0.0s
+ => [1/3] FROM registry.slackware.nl/slackware/slackware:current                                                                                                                                                                       0.0s
+ => [2/3] RUN LC_ALL=C slackpkg -batch=on -default_answer=y update                                                                                                                                                                   103.8s
+ => [3/3] RUN LC_ALL=C slackpkg -delall=on -batch=on -default_answer=y install     gcc     gcc-g++     gcc-gfortran     gccmakedep     binutils     google-go-lang     llvm     rust     rust-bindgen     cargo-c     cargo-vendor-  989.8s
+ => exporting to image                                                                                                                                                                                                                20.0s 
+ => => exporting layers                                                                                                                                                                                                               20.0s 
+ => => writing image sha256:f334343167c32eabb64890fcff96f4603423e709920cec12bf680bfb290ff848                                                                                                                                           0.0s 
+ => => naming to registry.slackware.nl/slackware/slackware-builder:current                                                                                                                                                             0.0s 
+                                                                                                                                                                                                                                            
+ 1 warning found (use docker --debug to expand):                                                                                                                                                                                            
+ - NoEmptyContinuation: Empty continuation line (line 110)
+[2026-11-26 08:03:10] [builder]   Pushing registry.slackware.nl/slackware/slackware-builder:current...
+The push refers to repository [registry.slackware.nl/slackware/slackware-builder]
+22717905d3e9: Preparing 
+28573a68af2b: Preparing 
+62bb7b183f43: Preparing 
+unauthorized: reqPackageAccess
 
+
+darkstar:~#  docker images | grep slackware
+registry.slackware.nl/slackware/slackware-builder   current   f334343167c3   57 minutes ago   7.1GB
+```
+
+```bash
 # Force a rebuild even if the base image digest has not changed
 darkstar:~# ./build-builder-image.sh --version current --arch x86_64 --force
 ```
@@ -235,7 +276,47 @@ RUN slackpkg -batch=on update && \
     rm -rf /var/cache/slackpkg/* /tmp/*
 ```
 
+
 2. **Set Non-Interactive Environment Variables:** Disable interactive prompts during script execution.
 3. **Use Specific Image Tags:** Avoid using `:latest` in production Dockerfiles; pin your images to specific release tags like `:15.0`.
+
+
+To build image run:
+
+```text
+darkstar:~# docker build -t slack:1 .
+[+] Building 30.4s (6/6) FINISHED                                                                                                                                                                                            docker:default
+ => [internal] load build definition from Dockerfile                                                                                                                                                                                   0.0s
+ => => transferring dockerfile: 255B                                                                                                                                                                                                   0.0s
+ => [internal] load metadata for registry.slackware.nl/slackware/slackware:current                                                                                                                                                     0.0s
+ => [internal] load .dockerignore                                                                                                                                                                                                      0.0s
+ => => transferring context: 2B                                                                                                                                                                                                        0.0s
+ => CACHED [1/2] FROM registry.slackware.nl/slackware/slackware:current                                                                                                                                                                0.0s
+ => [2/2] RUN slackpkg -batch=on update &&     slackpkg -batch=on install python3 libffi &&     slackpkg -batch=on clean &&     rm -rf /var/cache/slackpkg/* /tmp/*                                                                   30.3s
+ => exporting to image                                                                                                                                                                                                                 0.0s
+ => => exporting layers                                                                                                                                                                                                                0.0s
+ => => writing image sha256:ea29deb58d9aece5e7497fed8de2332d77102479de6984b9ae15aa569152fe72                                                                                                                                           0.0s
+ => => naming to docker.io/library/slack:1   
 ```
+
+To check the image, run:
+
+```bash
+darkstar:~# docker images | grep slack
+slack                                               1         ea29deb58d9a   2 minutes ago       418MB
+```
+
+To run Slackware docker image and interactive with docker shell, run:
+
+```bash
+darkstar:~# docker run -it --rm slack:1 /bin/bash
+
+bash-5.3# ps xau
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.1  0.0   4840  4052 pts/0    Ss   12:08   0:00 /bin/bash
+root           7  0.0  0.0   6924  3976 pts/0    R+   12:09   0:00 ps xau
+
+
+```
+
 
