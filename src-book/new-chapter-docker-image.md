@@ -4,6 +4,7 @@ Containerization has revolutionized software development, deployment, and testin
 
 Official and community-maintained container images for Slackware are available via the community registry at `registry.slackware.nl`. These images support both `15.0` (stable) and `-current` (development) releases across `x86_64` and `i586` architectures.
 
+> **Note:** The release tags and supported architectures described in this chapter reflect the repository status as of November 2026 (Slackware 15.0 and `-current`). As future stable versions—such as Slackware 16.0—are released, new image tags will be made available. Always consult `registry.slackware.nl` for the most up-to-date list of available tags.
 
 
 ## 23.1 Image Architecture: Base vs. Builder
