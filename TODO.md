@@ -14,7 +14,7 @@
  - [X] Updated chapter 4. Basic Shell Commands
  - [X] Updated chapter 5. The Bourne Again Shell
  - [X] Updated chapter 6. Process Control
- - [ ] Update chapter 7. The X Window System -  X windows has any updates like wayland
+ - [ ] Update chapter 7. The X Window System -  X windows has any updates like wayland. add: kde/xfce
  - [ ] Need Update chapter 8. Printing - need improve -  (in progress)
  - [X] Need Update chapter 9. Users and Groups
  - [X] Updated chapter 10. Filesystem Permissions
@@ -31,7 +31,6 @@
  - [X] Added chapter 21. slackbuilds.org and Third-party repositories
  - [X] Added chapter 22. Install on ARM archtecture
  - [ ] New chapter about: slackware docker image - (in progress)
- - [ ] New chapter about: kde/xfce
  - [ ] New chapter about: bluetooth ??
  - [ ] New chapter about: Server Application (httpd, mariaDB, FTP and others) - (in progress)
 
