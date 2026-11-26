@@ -177,7 +177,7 @@ When the command completes:
 
 ## 23.4 Automated Custom Builder Images (`build-builder-image.sh`)
 
-For administrators maintaining custom build environments or private container registries, Eric Hameleers (Alien BOB)[https://blog.slackware.nl/] created the `build-builder-image.sh` automation script.
+For administrators maintaining custom build environments or private container registries, Eric Hameleers [Alien BOB](https://blog.slackware.nl/) created the `build-builder-image.sh` automation script.
 
 
 **How Image Verification Works**
