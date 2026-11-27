@@ -137,29 +137,40 @@ darkstar:~# /etc/rc.d/rc.nfsd start
 
 ### 24.2.5 FTP Daemons (`vsftpd` / `proftpd`)
 * **Packages:** `vsftpd` (Very Secure FTP Daemon) / `proftpd`
-* **Init Scripts:** `/etc/rc.d/rc.vsftpd` / `/etc/rc.d/rc.proftpd`
+* **Init Scripts:** `/etc/rc.d/rc.inetd` / `/etc/rc.d/rc.inetd`
 * **Description:** Secure, high-speed FTP server implementations.
 * **Official Web site:** [https://security.appspot.com/vsftpd.html](https://security.appspot.com/vsftpd.html) and [http://www.proftpd.org/](http://www.proftpd.org/)
 
 ```bash
 # To enable vsftpd:
-darkstar:~# chmod +x /etc/rc.d/rc.vsftpd
-darkstar:~# /etc/rc.d/rc.vsftpd start
+darkstar:~# vi /etc/inetd.conf
 ```
 
-### 24.2.6 Rsync Server (`rsync`)
-* **Package:** `rsync`
-* **Init Script:** `/etc/rc.d/rc.rsyncd`
-* **Configuration:** `/etc/rsyncd.conf`
-* **Description:** Runs `rsync` as a daemon for high-efficiency differential directory mirroring.
-* **Official Web site:** [https://rsync.samba.org/](https://rsync.samba.org/)
+Uncomment the line, removing the symbol `#`
+
+```text
+ftp     stream  tcp     nowait  root    /usr/sbin/tcpd  vsftpd
+```
 
 ```bash
-darkstar:~# chmod +x /etc/rc.d/rc.rsyncd
-darkstar:~# /etc/rc.d/rc.rsyncd start
+# To enable proftpd:
+darkstar:~# vi /etc/inetd.conf
 ```
 
-### 24.2.7. Domain Name System (DNS) and DHCP
+Uncomment the line, removing the symbol `#`
+
+```text
+ftp     stream  tcp     nowait  root    /usr/sbin/tcpd  proftpd
+```
+
+And restart the service inetd
+
+```bash
+darkstar:~# chmod +x /etc/rc.d/rc.inetd
+darkstar:~# /etc/rc.d/rc.inetd restart
+```
+
+### 24.2.6 Domain Name System (DNS) and DHCP
 
 **BIND DNS Server (`bind`)**
 * **Package:** `bind`
@@ -185,7 +196,7 @@ darkstar:~# chmod +x /etc/rc.d/rc.dnsmasq
 darkstar:~# /etc/rc.d/rc.dnsmasq start
 ```
 
-### 24.2.8. Mail Services (MTA / IMAP / POP3)
+### 24.2.7. Mail Services (MTA / IMAP / POP3)
 
 **Postfix Mail Transfer Agent (`postfix`)**
 * **Package:** `postfix`
@@ -211,7 +222,7 @@ darkstar:~# chmod +x /etc/rc.d/rc.dovecot
 darkstar:~# /etc/rc.d/rc.dovecot start
 ```
 
-### 24.2.9. Network Infrastructure and Security
+### 24.2.8. Network Infrastructure and Security
 
 **Network Time Protocol (`ntp`)**
 * **Package:** `ntp`
@@ -225,7 +236,7 @@ darkstar:~# chmod +x /etc/rc.d/rc.ntpd
 darkstar:~# /etc/rc.d/rc.ntpd start
 ```
 
-### 24.2.10 OpenVPN Server (`openvpn`)
+### 24.2.9 OpenVPN Server (`openvpn`)
 * **Package:** `openvpn`
 * **Init Script:** `/etc/rc.d/rc.openvpn`
 * **Configuration:** `/etc/openvpn/`
