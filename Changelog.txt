@@ -1,3 +1,5 @@
+2026-11-27
+ - Chapter-24 Configuring and Enabling Core Server Services - new, brunorusso
 2026-11-26
  - Chapter-08 update, brunorusso
  - Chapter-23 Slackware docker image - new, brunorusso

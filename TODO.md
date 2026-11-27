@@ -9,8 +9,8 @@
 
  # New version
  - [X] Updated chapter 1. About slackware
- - [ ] Need Update chapter 2. Installation to new slackware version, maybe 16.0. Add inf. about gdisk
- - [ ] Need Update chapter 3. Booting add information about nvme and runlevel - (in progress)
+ - [ ] Need Update chapter 2. Installation to new slackware version, maybe 16.0. Add inf. about gdisk - (in progress)
+ - [ ] Need Update chapter 3. Booting add information about nvme and runlevel - (in progress -> hold)
  - [X] Updated chapter 4. Basic Shell Commands
  - [X] Updated chapter 5. The Bourne Again Shell
  - [X] Updated chapter 6. Process Control
@@ -31,8 +31,8 @@
  - [X] Added chapter 21. slackbuilds.org and Third-party repositories
  - [X] Added chapter 22. Install on ARM archtecture
  - [X] Added chapter 23. Slackware docker image
+ - [X] Added chapter 24. Configuring and Enabling Core Server Services
  - [ ] New chapter about: bluetooth ??
- - [ ] New chapter about: Server Application (httpd, mariaDB, FTP and others) - (in progress)
 
 
 # Instructions
