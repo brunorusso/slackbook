@@ -78,13 +78,15 @@ darkstar:~# mariadb-secure-installation
 ```
 
 **PHP Scripting Language Engine (`php`)**
-* **Package:** `php`
+* **Package:** `php` is a general-purpose scripting language geared toward web development.
 * **Configuration:** `/etc/httpd/mod_php.conf` and `/etc/php.ini`
 * **Description:** Enables PHP execution within the Apache web server.
 * **Activation:** Uncomment the PHP module loader line inside `/etc/httpd/httpd.conf`:
+
   ```apache
   Include /etc/httpd/mod_php.conf
   ```
+  
 * **Official Web site:** [https://www.php.net/](https://www.php.net/)
 
 
@@ -92,7 +94,7 @@ darkstar:~# mariadb-secure-installation
 ### 24.2.2. Secure Remote Access and Management
 
 **OpenSSH Daemon (`openssh`)**
-* **Package:** `openssh`
+* **Package:** `openssh` is the premier connectivity tool for remote login with the SSH protocol.
 * **Init Script:** `/etc/rc.d/rc.sshd`
 * **Configuration:** `/etc/ssh/sshd_config`
 * **Description:** Encrypted remote shell access and secure file transfer (SFTP/SCP).
@@ -107,7 +109,7 @@ darkstar:~# /etc/rc.d/rc.sshd start
 ### 24.2.3. File Sharing and Network Storage
 
 **Samba File and Print Server (`samba`)**
-* **Package:** `samba`
+* **Package:** `samba` is the most feature-rich Open Source implementation of the SMB and Active Directory protocols for Linux and UNIX-like systems.
 * **Init Script:** `/etc/rc.d/rc.samba`
 * **Configuration:** `/etc/samba/smb.conf`
 * **Description:** Provides SMB/CIFS file and print sharing for Windows, macOS, and Linux clients, as well as Active Directory integration.
@@ -123,7 +125,7 @@ darkstar:~# /etc/rc.d/rc.samba start
 
 ### 24.2.4 Network File System (`nfs-utils`)
 
-* **Package:** `nfs-utils`
+* **Package:** `nfs-utils` is a protocol allowing remote access to a filesystem through the network
 * **Init Script:** `/etc/rc.d/rc.nfsd`
 * **Configuration:** `/etc/exports`
 * **Description:** High-performance native UNIX/Linux network file sharing.
@@ -136,13 +138,15 @@ darkstar:~# /etc/rc.d/rc.nfsd start
 ```
 
 ### 24.2.5 FTP Daemons (`vsftpd` / `proftpd`)
-* **Packages:** `vsftpd` (Very Secure FTP Daemon) / `proftpd`
+* **Packages:** `vsftpd` (Very Secure FTP Daemon) / `proftpd` (ftp server written for use on Unix and Unix-a-like operating systems)
 * **Init Scripts:** `/etc/rc.d/rc.inetd` / `/etc/rc.d/rc.inetd`
 * **Description:** Secure, high-speed FTP server implementations.
 * **Official Web site:** [https://security.appspot.com/vsftpd.html](https://security.appspot.com/vsftpd.html) and [http://www.proftpd.org/](http://www.proftpd.org/)
 
+
+**To enable vsftpd**
+
 ```bash
-# To enable vsftpd:
 darkstar:~# vi /etc/inetd.conf
 ```
 
@@ -152,8 +156,9 @@ Uncomment the line, removing the symbol `#`
 ftp     stream  tcp     nowait  root    /usr/sbin/tcpd  vsftpd
 ```
 
+**To enable proftpd**
+
 ```bash
-# To enable proftpd:
 darkstar:~# vi /etc/inetd.conf
 ```
 
@@ -173,7 +178,7 @@ darkstar:~# /etc/rc.d/rc.inetd restart
 ### 24.2.6 Domain Name System (DNS) and DHCP
 
 **BIND DNS Server (`bind`)**
-* **Package:** `bind`
+* **Package:** `bind` is a DNS server
 * **Init Script:** `/etc/rc.d/rc.bind`
 * **Configuration:** `/etc/named.conf`
 * **Description:** The Internet standard Domain Name System (`named`) daemon for authoritative and caching name servers.
@@ -185,7 +190,7 @@ darkstar:~# /etc/rc.d/rc.bind start
 ```
 
 **Dnsmasq DNS/DHCP Server (`dnsmasq`)**
-* **Package:** `dnsmasq`
+* **Package:** `dnsmasq` provides network infrastructure for networks
 * **Init Script:** `/etc/rc.d/rc.dnsmasq`
 * **Configuration:** `/etc/dnsmasq.conf`
 * **Description:** A lightweight DNS forwarder, DHCP server, and router advertisement daemon ideal for small business networks or home routers.
@@ -199,7 +204,7 @@ darkstar:~# /etc/rc.d/rc.dnsmasq start
 ### 24.2.7. Mail Services (MTA / IMAP / POP3)
 
 **Postfix Mail Transfer Agent (`postfix`)**
-* **Package:** `postfix`
+* **Package:** `postfix`  is mail server and as an alternative to the widely-used Sendmail program.
 * **Init Script:** `/etc/rc.d/rc.postfix`
 * **Configuration:** `/etc/postfix/main.cf`
 * **Description:** High-performance, secure SMTP mail transfer agent. Slackware also includes classic `sendmail` as an alternative.
@@ -211,7 +216,7 @@ darkstar:~# /etc/rc.d/rc.postfix start
 ```
 
 **Dovecot IMAP/POP3 Server (`dovecot`)**
-* **Package:** `dovecot`
+* **Package:** `dovecot` is an open source email server for Linux/UNIX-like systems
 * **Init Script:** `/etc/rc.d/rc.dovecot`
 * **Configuration:** `/etc/dovecot/dovecot.conf`
 * **Description:** Secure, enterprise-grade IMAP and POP3 server for mail client access.
@@ -225,7 +230,7 @@ darkstar:~# /etc/rc.d/rc.dovecot start
 ### 24.2.8. Network Infrastructure and Security
 
 **Network Time Protocol (`ntp`)**
-* **Package:** `ntp`
+* **Package:** `ntp` is a protocol designed to synchronize the clocks of computers over a network to a common timebase
 * **Init Script:** `/etc/rc.d/rc.ntpd`
 * **Configuration:** `/etc/ntp.conf`
 * **Description:** Keeps system clock precisely synchronized across the network.
@@ -237,11 +242,11 @@ darkstar:~# /etc/rc.d/rc.ntpd start
 ```
 
 ### 24.2.9 OpenVPN Server (`openvpn`)
-* **Package:** `openvpn`
+* **Package:** `openvpn`  is a full-featured open source SSL VPN solution
 * **Init Script:** `/etc/rc.d/rc.openvpn`
 * **Configuration:** `/etc/openvpn/`
 * **Description:** SSL/TLS Virtual Private Network server for secure site-to-site or road-warrior access.
-* **Official Web site:** [https://openvpn.net/](https://openvpn.net/)
+* **Official Web site:** [https://community.openvpn.net/](https://community.openvpn.net/)
 
 ```bash
 darkstar:~# chmod +x /etc/rc.d/rc.openvpn
