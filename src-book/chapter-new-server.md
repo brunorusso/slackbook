@@ -38,6 +38,9 @@ darkstar:~# /etc/rc.d/rc.<service> status
 
 Below is a categorized breakdown of the primary server-grade daemons included in the default Slackware software repositories (from the `n/`, `ap/`, and `a/` package sets).
 
+> **Note:** The goal of this section is not to provide an in-depth technical explanation of how each underlying protocol or service functions, but rather to show you how to enable, configure, and manage these daemons within a Slackware environment.
+
+
 
 ### 24.2.1. Web and Database Stack (LAMP)
 
@@ -47,6 +50,8 @@ Below is a categorized breakdown of the primary server-grade daemons included in
 * **Init Script:** `/etc/rc.d/rc.httpd`
 * **Configuration:** `/etc/httpd/httpd.conf`
 * **Description:** The industry-standard Apache web server. Out-of-the-box, it includes support for SSL/TLS, Virtual Hosts, and module integration (such as PHP).
+* **Official Web site:** [https://httpd.apache.org/](https://httpd.apache.org/)
+
 
 **Enabling and starting Apache:**
 ```bash
@@ -60,6 +65,8 @@ darkstar:~# /etc/rc.d/rc.httpd start
 * **Init Script:** `/etc/rc.d/rc.mysqld`
 * **Configuration:** `/etc/my.cnf` and `/etc/my.cnf.d/`
 * **Description:** Enterprise open-source relational database server.
+* **Official Web site:** [https://mariadb.org/](https://mariadb.org/)
+
 
 **Initial Setup & Activation:**
 Before launching MariaDB for the first time, initialize the system database files:
@@ -78,6 +85,8 @@ darkstar:~# mariadb-secure-installation
   ```apache
   Include /etc/httpd/mod_php.conf
   ```
+* **Official Web site:** [https://www.php.net/](https://www.php.net/)
+
 
   
 ### 24.2.2. Secure Remote Access and Management
@@ -87,6 +96,7 @@ darkstar:~# mariadb-secure-installation
 * **Init Script:** `/etc/rc.d/rc.sshd`
 * **Configuration:** `/etc/ssh/sshd_config`
 * **Description:** Encrypted remote shell access and secure file transfer (SFTP/SCP).
+* **Official Web site:** [https://www.openssh.org/](https://www.openssh.org/)
 
 **Enabling OpenSSH:**
 ```bash
@@ -101,6 +111,7 @@ darkstar:~# /etc/rc.d/rc.sshd start
 * **Init Script:** `/etc/rc.d/rc.samba`
 * **Configuration:** `/etc/samba/smb.conf`
 * **Description:** Provides SMB/CIFS file and print sharing for Windows, macOS, and Linux clients, as well as Active Directory integration.
+* **Official Web site:** [https://www.samba.org/](https://www.samba.org/)
 
 **Enabling Samba:**
 ```bash
@@ -116,6 +127,7 @@ darkstar:~# /etc/rc.d/rc.samba start
 * **Init Script:** `/etc/rc.d/rc.nfsd`
 * **Configuration:** `/etc/exports`
 * **Description:** High-performance native UNIX/Linux network file sharing.
+* **Official Web site:** [https://linux-nfs.org/](https://linux-nfs.org/)
 
 **Enabling NFS Server:**
 ```bash
@@ -127,6 +139,7 @@ darkstar:~# /etc/rc.d/rc.nfsd start
 * **Packages:** `vsftpd` (Very Secure FTP Daemon) / `proftpd`
 * **Init Scripts:** `/etc/rc.d/rc.vsftpd` / `/etc/rc.d/rc.proftpd`
 * **Description:** Secure, high-speed FTP server implementations.
+* **Official Web site:** [https://security.appspot.com/vsftpd.html](https://security.appspot.com/vsftpd.html) and [http://www.proftpd.org/](http://www.proftpd.org/)
 
 ```bash
 # To enable vsftpd:
@@ -139,6 +152,7 @@ darkstar:~# /etc/rc.d/rc.vsftpd start
 * **Init Script:** `/etc/rc.d/rc.rsyncd`
 * **Configuration:** `/etc/rsyncd.conf`
 * **Description:** Runs `rsync` as a daemon for high-efficiency differential directory mirroring.
+* **Official Web site:** [https://rsync.samba.org/](https://rsync.samba.org/)
 
 ```bash
 darkstar:~# chmod +x /etc/rc.d/rc.rsyncd
@@ -152,6 +166,7 @@ darkstar:~# /etc/rc.d/rc.rsyncd start
 * **Init Script:** `/etc/rc.d/rc.bind`
 * **Configuration:** `/etc/named.conf`
 * **Description:** The Internet standard Domain Name System (`named`) daemon for authoritative and caching name servers.
+* **Official Web site:** [https://www.isc.org/bind/](https://www.isc.org/bind/)
 
 ```bash
 darkstar:~# chmod +x /etc/rc.d/rc.bind
@@ -163,6 +178,7 @@ darkstar:~# /etc/rc.d/rc.bind start
 * **Init Script:** `/etc/rc.d/rc.dnsmasq`
 * **Configuration:** `/etc/dnsmasq.conf`
 * **Description:** A lightweight DNS forwarder, DHCP server, and router advertisement daemon ideal for small business networks or home routers.
+* **Official Web site:** [https://thekelleys.org.uk/dnsmasq/doc.html](https://thekelleys.org.uk/dnsmasq/doc.html)
 
 ```bash
 darkstar:~# chmod +x /etc/rc.d/rc.dnsmasq
@@ -176,6 +192,7 @@ darkstar:~# /etc/rc.d/rc.dnsmasq start
 * **Init Script:** `/etc/rc.d/rc.postfix`
 * **Configuration:** `/etc/postfix/main.cf`
 * **Description:** High-performance, secure SMTP mail transfer agent. Slackware also includes classic `sendmail` as an alternative.
+* **Official Web site:** [https://www.postfix.org/](https://www.postfix.org/)
 
 ```bash
 darkstar:~# chmod +x /etc/rc.d/rc.postfix
@@ -187,6 +204,7 @@ darkstar:~# /etc/rc.d/rc.postfix start
 * **Init Script:** `/etc/rc.d/rc.dovecot`
 * **Configuration:** `/etc/dovecot/dovecot.conf`
 * **Description:** Secure, enterprise-grade IMAP and POP3 server for mail client access.
+* **Official Web site:** [https://dovecot.org/](https://dovecot.org/)
 
 ```bash
 darkstar:~# chmod +x /etc/rc.d/rc.dovecot
@@ -200,6 +218,7 @@ darkstar:~# /etc/rc.d/rc.dovecot start
 * **Init Script:** `/etc/rc.d/rc.ntpd`
 * **Configuration:** `/etc/ntp.conf`
 * **Description:** Keeps system clock precisely synchronized across the network.
+* **Official Web site:** [https://www.ntp.org/](https://www.ntp.org/)
 
 ```bash
 darkstar:~# chmod +x /etc/rc.d/rc.ntpd
@@ -211,6 +230,7 @@ darkstar:~# /etc/rc.d/rc.ntpd start
 * **Init Script:** `/etc/rc.d/rc.openvpn`
 * **Configuration:** `/etc/openvpn/`
 * **Description:** SSL/TLS Virtual Private Network server for secure site-to-site or road-warrior access.
+* **Official Web site:** [https://openvpn.net/](https://openvpn.net/)
 
 ```bash
 darkstar:~# chmod +x /etc/rc.d/rc.openvpn
