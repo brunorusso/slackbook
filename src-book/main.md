@@ -27,4 +27,5 @@ title: "The Slack Book"
 - [Chapter 20](chapter_20.md)
 - [Chapter 21](chapter_21.md)
 - [Chapter 22](chapter_22.md)
+- [Chapter 23](chapter_23.md)
 - [Appendix: Emacspeak](appendix_emacspeak.md)
