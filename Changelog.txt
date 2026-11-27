@@ -1,6 +1,7 @@
 2026-11-26
  - Chapter-08 update, brunorusso
- 2026-11-22
+ - Chapter-23 Slackware docker image - new, brunorusso
+2026-11-22
  - Chapter-16 update, brunorusso
 2026-11-19
  - Chapter-09 update, brunorusso
