@@ -1,79 +1,104 @@
 # 2. Installation
 
-Slackware's installation is a bit more simplistic than that of most other Linux distributions and is very reminiscent of installing one of the varieties of BSD operating systems. If you're familiar with those, you should feel right at home. If you've never installed Slackware or have only used distributions that make use of graphical installers, you may feel a bit overwhelmed at first. Don't panic! The installation is very easy once you understand it, and it works on just about any x86 or x86_64 platform.
+Slackware's installation process is minimalist, transparent, and strongly reminiscent of traditional BSD operating systems. If you are accustomed to distributions that rely on modern graphical installers, Slackware's menu-driven text installer (`setup`) may feel unfamiliar at first. However, its simplicity is its greatest strength: it provides complete visibility and control over disk partitioning, package set selection, and initial system configuration without hidden abstractions.
 
-The latest versions of Slackware Linux are distributed on DVD or CD media, but Slackware can be installed in a variety of other ways. We're only going to focus on the most common method - booting from a DVD - in this book. If you don't have a CD or DVD drive, you might wish to take a look at the various README files inside the `usb-and-pxe-installers` directory at your favorite Slackware mirror. This directory includes the necessary files and instructions for booting the Slackware installer from a USB flash drive or from a network card that support PXE. The files there are the best source of information available for such boot methods.
+While Slackware has historically been distributed on CD and DVD media, modern installations are most frequently performed using bootable USB flash drives, virtual machine ISO images, or dedicated installation media. While this chapter focuses on standard bootable media installations, alternative deployment methods—such as PXE network booting—are fully supported using the tools and documentation located within the `usb-and-pxe-installers` directory on official Slackware mirrors.
 
-## 2.1 Booting the Installer
 
-Booting the installer is simply a process of inserting the Slackware install disk into your CD or DVD drive and rebooting. You may have to enter your computer's BIOS and alter the boot order to place the optical drive at a higher boot priority than your hard drives. Some computers allow you to change the boot order on the fly by pressing a specific function key during system boot-up. Since every computer is different, we can't offer instructions on how to do this, but the method is simple on nearly all machines.
+## 2.1 Hardware Requirements
 
-Once your computer boots from the CD you'll be taken to a screen that allows you to enter any special kernel parameters. This is here primarily to allow you to use the installer as a sort of rescue disk. Some systems may need special kernel parameters in order to boot, but these are very rare exceptions to the norm. Most users can simply press enter to let the kernel boot.
+Slackware is renowned for being lightweight, efficient, and capable of running on a wide range of hardware—from legacy x86 systems to high-performance x86_64 servers and workstations.
 
-```text
+**Recommended System Specifications**
 
-Welcome to Slackware version 14.0 (Linux kernel 3.2.27)! 
+* **Processor (CPU):** Any standard x86 or x86_64 processor.
+* **System Memory (RAM):** 
+  * **Server / Command Line:** 512 MB to 1 GB RAM minimum.
+  * **Desktop / Graphical Environments (KDE, XFCE, Web Browsers):** 2 GB RAM or more is strongly recommended for a smooth desktop experience.
+* **Disk Space:**
+  * **Full Installation:** A complete installation of all package series requires approximately 16–18 GB of raw disk space.
+  * **Recommended Allocation:** A minimum partition size of **25 GB to 50 GB** is recommended to allow adequate room for temporary build files, system logs, and user data.
+  * **Minimal Installation:** If disk space is severely constrained, you can perform a custom installation containing only the core base system (Series `A`), requiring significantly less space.
 
-If you need to pass extra parameters to the kernel, enter them at the prompt 
-below after the name of the kernel to boot (huge.s etc). 
 
-In a pinch, you can boot your system from here with a command like: 
+**Storage and Controller Support**
 
-boot: huge.s root=/dev/sda1 rdinit= ro 
+Slackware's boot kernel include built-in support for nearly all modern and legacy storage controllers, including:
 
-In the example above, /dev/sda1 is the / Linux partition. 
+* **Storage Interfaces:** NVMe, SATA (AHCI), SAS, and traditional SCSI devices.
+* **Advanced Storage Layouts:** Software RAID (RAID 0, 1, 5, 6, 10), Logical Volume Manager (LVM), and full-disk LUKS encryption.
 
-To test your memory with memtest86+, enter memtest on the boot line below. 
 
-This prompt is just for entering extra parameters. If you don't need to enter 
-any parameters, hit ENTER to boot the default kernel "huge.s" or press [F2] 
-for a listing of more kernel choices.
+**Boot Media**
 
-```
+While installation ISO images can be burned to optical media (DVDs), the vast majority of modern Slackware installations are performed using **bootable USB flash drives**. 
 
-After pressing <kbd>ENTER</kbd> you should see a lot of text go flying across your screen. Don't be alarmed, this is all perfectly normal. The text you see is generated by the kernel during boot-up as it discovers your hardware and prepares to load the operating system (in this case, the installer). You can later read these messages with the `dmesg` (1) command if you're interested. Often these messages are very important for troubleshooting any hardware problems you may have. Once the kernel has completed its hardware discovery, the messages should stop and you'll be given an option to load support for non-us keyboards.
+If your target machine lacks local media options, network deployments via PXE (Preboot Execution Environment) are fully supported using the documentation and scripts provided in the `usb-and-pxe-installers` directory on official Slackware mirrors.
 
-```text
 
-<OPTION TO LOAD SUPPORT FOR NON-US KEYBOARD> 
+## 2.2 Booting the Installer
 
-If you are not using a US keyboard, you may need to load a different 
-keyboard map. To select a different keyboard map, please enter 1 
-now. To continue using the US map, just hit enter. 
+Booting the Slackware installer requires starting your system from your prepared installation media—most commonly a bootable USB flash drive, a DVD, or a virtual ISO image mounted inside a hypervisor.
 
-Enter 1 to select a keyboard map: _
 
-```
+**Accessing the Boot Menu (BIOS / UEFI)**
 
-Entering <kbd>1</kbd> and pressing <kbd>ENTER</kbd> will give you a list of keyboard mappings. Simply select the mapping that matches your keyboard type and continue on.
+To boot from your installation media:
 
-```text
+1. Insert the bootable USB drive or optical media, or attach the ISO file to your virtual machine.
+2. Restart the computer and access the system's **Boot Menu** by pressing the vendor-specific function key during post-screen power-on (typically **F12**, **F11**, **F8**, **F2**, or **Del**).
+3. Select your USB drive or optical media from the boot menu.
 
-Welcome to the Slackware Linux installation disk! (version 14.0) 
+> **UEFI vs. Legacy BIOS Note:** Modern systems support both UEFI and Legacy (CSM) boot modes. Slackware fully supports both. Ensure you select the boot mode that matches your intended disk layout (UEFI for GPT disks, or Legacy for traditional MBR disks).
 
-'###### IMPORTANT! READ THE INFORMATION BELOW CAREFULLY. ###### 
 
-- You will need one or more partitions of type 'Linux' prepared. It is also 
-  recommended that you create a swap partition (type 'Linux swap') prior 
-  to installation. For more information, run 'setup' and read the help file. 
-- If you're having problems that you think might be related to low memory, you 
-  can try activating a swap partition before you run setup. After making a 
-  swap partition (type 82) with cfdisk or fdisk, activate it like this: 
-    mkswap /dev/<partition> ; swapon /dev/<partition> 
-- Once you have prepared the disk partitions for Linux, type 'setup' to begin 
-  the installation process. 
-- If you do not have a color monitor, type: TERM=vt100 
-  before you start 'setup'. 
+**The Bootloader Prompt & Kernel Options**
 
-You may now login as 'root'. 
+Once the installation media loads, you will be presented with the Slackware bootloader screen (ISOLINUX for Legacy BIOS or GRUB for UEFI systems):
 
-slackware login: root
+* **Standard Boot:** On nearly all machines, simply press **`Enter`** to load the default `generic.s` Linux kernel.
+* **Custom Kernel Parameters:** If your hardware requires special boot options (such as disabling specific power management features or forcing screen resolutions), you can type kernel arguments at the prompt before pressing `Enter`.
 
-```
 
-Unlike other Linux distributions which boot you directly into a dedicated installer program, Slackware's installer places you in a limited Linux distribution loaded into your system's RAM. This limited distribution is then used to run all the installation programs manually, or can be used in emergencies to fix a broken system that fails to boot. Now that you're logged in as root (there is no password within the installer) it's time to start setting up your disks. At this point, you may setup software RAID or LVM support if you wish or even an encrypted root partition, but those topics are outside of the scope of this book. I encourage you to refer to the excellent `README_RAID.TXT` , `README_LVM.TXT` , and `README_CRYPT.TXT` files on your CD if you desire to setup your system with these advanced tools. Most users won't have any need to do so and should proceed directly to partitioning.
+![image](img/01-installation-boot-menu.png)
 
-## 2.2 Partitioning
+
+In the image below you see the boot process;
+
+![image](img/02-installation-boot-start.png)
+
+
+**Initial Prompts: Keyboard Selection and Logging In**
+
+After the kernel finishes loading drivers into memory, the installer presents its first interactive prompt:
+
+- **Keyboard Map Selection:** If you are using a non-US keyboard layout (such as Brazilian ABNT2, AZERTY, or German), press **`1`** to enter the keyboard selection menu, select your keymap, and test your keys. If you use a standard US keyboard, simply press **`Enter`**.
+
+
+![image](img/03-installation-select-keyboard.png)
+
+
+You can select the keyboard layout.
+
+![image](img/04-installation-select-keyboard-layout.png)
+
+To validate the keyboard, you can test in the space showed in the below image. Type **1** to exit or **2** to change layout.
+
+![image](img/05-installation-select-keyboard-layout-test.png)
+
+
+
+- **Logging In:** Next, you will reach the command prompt. Log in as **`root`** (no password is required) to begin:
+
+
+> **Note: Understanding the Slackware Installer Environment**
+> Unlike distributions that boot directly into a dedicated wizard installer, Slackware boots into a minimal, RAM-based Linux live environment. This shell provides all the utilities needed to partition disks, format filesystems, and launch the `setup` program manually—or serve as an emergency rescue environment to recover a non-booting system.  
+>
+> If your hardware requires advanced storage layouts—such as Software RAID, Logical Volume Manager (LVM), or full-disk encryption (LUKS)—you can configure them directly from this shell before launching `setup`. Comprehensive step-by-step guides for these advanced configurations are available in `README_RAID.TXT`, `README_LVM.TXT`, and `README_CRYPT.TXT` located on the installation media.
+
+
+
+## 2.3 Partitioning
 
 Unlike many other Linux distributions, Slackware does not make use of a dedicated graphical disk partitioning tool in its installer. Rather, Slackware makes use of the traditional Linux partitioning tools, the very same tools that you will have available once you've installed Slackware. Traditionally, partitioning is performed with either `fdisk` (8) or `cfdisk` (8), both of which are console tools. `cfdisk` is preferred by many people because it is curses menu-based, but either works well. Additionally, Slackware includes `sfdisk` (8) and `gdisk` (8). These are more powerful command-line partitioning tools. `gdisk` is required to alter GUID partition tables found on some of today's larger hard drives. In this book, we're going to focus on using `fdisk` , but the other tools are similar. You can find additional instructions for using these other tools online or in their man pages.
 
